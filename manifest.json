@@ -14,8 +14,8 @@
     "scripts": ["dist/random-sp-episode.js"]
   },
   "permissions": [
+    "history",
     "tabs",
-    "activeTab",
     "https://*/*",
     "http://*/*",
     "storage"
