@@ -1,16 +1,23 @@
 {
+  "name": "Random South Park Episode",
+  "description": "Open up a random South Park episode in a new tab",
+  "version": "1.0.0",
   "manifest_version": 2,
-
-  "name": "randomSPepisode",
-  "description": "randuumz",
-  "version": "1.0",
-
+  "author": [
+    "Tõnis Tenno",
+    "Uku Pattak"
+  ],
   "browser_action": {
-  "default_title": "Click here!"
-  
+    "default_title": "Watch random South Park episode"
+  },
+  "background": {
+    "scripts": ["dist/random-sp-episode.js"]
   },
   "permissions": [
+    "tabs",
     "activeTab",
-    "https://ajax.googleapis.com/"
+    "https://*/*",
+    "http://*/*",
+    "storage"
   ]
 }

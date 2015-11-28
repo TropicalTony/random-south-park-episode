@@ -1,0 +1,16 @@
+{
+  "name": "random-sp-episode",
+  "version": "1.0.0",
+  "description": "Open up a random South Park episode in a new tab",
+  "author": [
+    "Tõnis Tenno",
+    "Uku Pattak"
+  ],
+  "scripts": {
+      "start": "babel src/*.js -o dist/random-sp-episode.js -w"
+  },
+  "dependencies": {
+    "babel-cli": "^6.2.0"
+  },
+  "license": "MIT"
+}
