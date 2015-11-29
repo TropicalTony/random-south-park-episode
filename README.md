@@ -6,9 +6,3 @@
 ```
 $ npm install && npm start
 ```
-
-### Test
-
-```
-$ npm install && npm test
-```
