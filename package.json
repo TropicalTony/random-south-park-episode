@@ -7,8 +7,7 @@
     "Uku Pattak"
   ],
   "scripts": {
-    "start": "watchify src/*.js -o dist/random-sp-episode.js -t [ babelify --presets [ es2015 ] ]",
-    "test": "./node_modules/karma/bin/karma start"
+    "start": "watchify src/*.js -o dist/random-sp-episode.js -t [ babelify --presets [ es2015 ] ]"
   },
   "devDependencies": {
     "babel-cli": "^6.2.0",
