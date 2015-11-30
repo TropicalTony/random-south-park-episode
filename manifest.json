@@ -18,7 +18,8 @@
     "tabs",
     "https://*/*",
     "http://*/*",
-    "storage"
+    "storage",
+	"https://en.wikipedia.org/wiki/List_of_South_Park_episodes"
   ],
   "icons": {
     "48": "img/icon-48.png",
