@@ -11,7 +11,7 @@
     "default_title": "Watch random South Park episode"
   },
   "background": {
-    "scripts": ["dist/random-sp-episode.js"]
+    "scripts": ["src/Extension.js", "src/randomEpisode.js", "src/Storage.js"]
   },
   "permissions": [
     "history",

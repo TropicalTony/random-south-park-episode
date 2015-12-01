@@ -6,11 +6,17 @@ class Extension {
         chrome.browserAction.onClicked.addListener(this.go);
     }
 
+
+
     go() {
-        // TODO
-        var season = '05';
-        var episode = '08';
-        var url = 'http://southpark.cc.com/full-episodes/s' + season + 'e' + episode;
+        if(JSON.parse(localStorage.getItem('hasSeasons')) != true){
+            initSeasons();
+        }
+        
+        var randomEpisode = getRandomEpisode();
+        var season = randomEpisode.season;
+        var episode = randomEpisode.episode;
+        var url = 'http://southpark.cc.com/full-episodes/s' + episodeToString(season) + 'e' + episodeToString(episode);
 
         chrome.tabs.create({ url: url });
     }

@@ -11,7 +11,6 @@ function initSeasons(){
 			data = data[0].getElementsByTagName("tbody"); 
 			data = data[0].getElementsByTagName("tr"); 
 			var totalSeasons = data.length - 2 ;
-			
 			for(i = 0; i < totalSeasons; i++)
 			{
 				var seasonRow = data[i+2].getElementsByTagName("td");
@@ -24,40 +23,14 @@ function initSeasons(){
 				var spSeason = "SouthParkSeason" + (i+1).toString();
 				localStorage.setItem(spSeason,JSON.stringify(episodeArray));
 			}
-			//var result = JSON.parse(localStorage.getItem('SouthParkSeason19'));
-			//alert(result);
+
 			
 			var seasonsInit = true;
 			localStorage.setItem("hasSeasons",JSON.stringify(seasonsInit));	
 			localStorage.setItem("totalSeasons",JSON.stringify(totalSeasons));
+			
 		}
 	  }
 	}
 	xhr.send();
-}
-
-function randomInt(min,max)
-{
-    return Math.floor(Math.random()*(max-min+1)+min);
-}
-
-function getRandomEpisode()
-{
-	var Season = randomInt(1,JSON.parse(localStorage.getItem('totalSeasons')));
-	var ep = JSON.parse(localStorage.getItem('SouthParkSeason' + Season));
-	var Episode = randomInt(1,ep.length);
-	return {season: Season, episode : Episode};
-}
-
-
-if(JSON.parse(localStorage.getItem('hasSeasons')) == true)
-{
-	var randomEpisode = getRandomEpisode();
-	var result = JSON.parse(localStorage.getItem('SouthParkSeason' + randomEpisode.season));
-	alert("Season: " + randomEpisode.season + "Episode: " + randomEpisode.episode + "      " + result.length );
-	
-}
-else
-{
-	initSeasons();
 }
