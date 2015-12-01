@@ -9,10 +9,11 @@ class Extension {
 
 
     go() {
+        //Checking if seasons are initalized in local storage.
         if(JSON.parse(localStorage.getItem('hasSeasons')) != true){
             initSeasons();
         }
-        
+
         var randomEpisode = getRandomEpisode();
         var season = randomEpisode.season;
         var episode = randomEpisode.episode;

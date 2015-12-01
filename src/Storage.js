@@ -24,10 +24,15 @@ function initSeasons(){
 				localStorage.setItem(spSeason,JSON.stringify(episodeArray));
 			}
 
-			
-			var seasonsInit = true;
-			localStorage.setItem("hasSeasons",JSON.stringify(seasonsInit));	
-			localStorage.setItem("totalSeasons",JSON.stringify(totalSeasons));
+			if(JSON.parse(localStorage.getItem('SouthParkSeason' + totalSeasons.toString())) != null){
+				var seasonsInit = true;
+				localStorage.setItem("hasSeasons",JSON.stringify(seasonsInit));	
+				localStorage.setItem("totalSeasons",JSON.stringify(totalSeasons));
+			}
+			else{
+				alert("Something went wrong");
+			}
+
 			
 		}
 	  }
