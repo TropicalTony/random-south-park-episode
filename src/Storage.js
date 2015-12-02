@@ -11,6 +11,7 @@ function initSeasons(){
 			data = data[0].getElementsByTagName("tbody"); 
 			data = data[0].getElementsByTagName("tr"); 
 			var totalSeasons = data.length - 2 ;
+			var seasonLengths = [];
 			for(i = 0; i < totalSeasons; i++)
 			{
 				var seasonRow = data[i+2].getElementsByTagName("td");
@@ -22,15 +23,17 @@ function initSeasons(){
 				}
 				var spSeason = "SouthParkSeason" + (i+1).toString();
 				localStorage.setItem(spSeason,JSON.stringify(episodeArray));
+				seasonLengths[i] = episodeArray.length;
 			}
 
 			if(JSON.parse(localStorage.getItem('SouthParkSeason' + totalSeasons.toString())) != null){
 				var seasonsInit = true;
 				localStorage.setItem("hasSeasons",JSON.stringify(seasonsInit));	
 				localStorage.setItem("totalSeasons",JSON.stringify(totalSeasons));
+				localStorage.setItem("seasonLengths",JSON.stringify(seasonLengths));
 			}
 			else{
-				alert("Something went wrong");
+				console.log("Something went wrong initalizing seasons.");
 			}
 
 			

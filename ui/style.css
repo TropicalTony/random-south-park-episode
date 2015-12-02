@@ -1,0 +1,33 @@
+body{
+	width:100%;
+
+}
+.bodyLayout{
+	background-color: rgb(225, 225, 209);
+	width:20%;	
+
+
+}
+.mainHeading{
+	text-align: center;
+}
+
+.bodyContainer{
+	display:block;
+	width:100%;
+}
+
+.seasonContainer{
+	padding-top:15px;
+
+}
+#seasonList, .buttonContainer, #myBtn, .bodyLayout{
+	display:block;
+	margin-left: auto;
+	margin-right: auto;
+}
+.buttonContainer{
+	padding-top:15px;
+	padding-bottom: 15px;
+
+}

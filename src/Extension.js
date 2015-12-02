@@ -19,7 +19,6 @@ class Extension {
         var episode = randomEpisode.episode;
         var url = 'http://southpark.cc.com/full-episodes/s' + episodeToString(season) + 'e' + episodeToString(episode);
         removeEpisodeFromStorage(season, episode);
-        console.log("wtf");
         chrome.tabs.create({ url: url });
         
     }
