@@ -39,3 +39,17 @@ function initSeasons(){
 	}
 	xhr.send();
 }
+
+
+function isInArray(value, array) {
+  return array.indexOf(value) > -1;
+}
+
+function removeEpisodeFromStorage(season, episode){
+	var episodeArray = JSON.parse(localStorage.getItem('SouthParkSeason' + season.toString()));
+	if(isInArray(episode, episodeArray)){
+		episodeArray.splice(episodeArray.indexOf(episode), 1);
+		localStorage.setItem("SouthParkSeason" + season.toString() ,JSON.stringify(episodeArray));
+
+	}
+}

@@ -13,10 +13,9 @@ function getRandomEpisode()
 			var index = unwatchedSeasons.length;
 			unwatchedSeasons[index] = i+1;
 		}
-
 	}
 	var seasonIndex = randomInt(1,unwatchedSeasons.length);
-	unwatchedEpisodes = JSON.parse(localStorage.getItem('SouthParkSeason' + (unwatchedSeasons[seasonIndex].toString())));
+	unwatchedEpisodes = JSON.parse(localStorage.getItem('SouthParkSeason' + (unwatchedSeasons[seasonIndex])));
 	var episodeIndex = randomInt(1,unwatchedEpisodes.length);
 	return {season: unwatchedSeasons[seasonIndex], episode : unwatchedEpisodes[episodeIndex]};
 }
