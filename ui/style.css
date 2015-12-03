@@ -21,7 +21,7 @@ body{
 	padding-top:15px;
 
 }
-#seasonList, .buttonContainer, #myBtn, .bodyLayout{
+#seasonList, .buttonContainer, #saveButton, .bodyLayout{
 	display:block;
 	margin-left: auto;
 	margin-right: auto;
@@ -30,4 +30,11 @@ body{
 	padding-top:15px;
 	padding-bottom: 15px;
 
+}
+#episodeList{
+	margin-left:30px;
+}
+label{
+	margin-left:5px;
+	margin-right:5px;
 }
