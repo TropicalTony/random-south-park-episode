@@ -8,8 +8,11 @@ body{
 
 
 }
-.mainHeading{
+.mainHeading, .output{
 	text-align: center;
+}
+.output{
+	color:red;
 }
 
 .bodyContainer{
@@ -21,7 +24,7 @@ body{
 	padding-top:15px;
 
 }
-#seasonList, .buttonContainer, #saveButton, .bodyLayout{
+#seasonList, .buttonContainer, #saveButton, .bodyLayout, .output{
 	display:block;
 	margin-left: auto;
 	margin-right: auto;

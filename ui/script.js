@@ -14,6 +14,7 @@ function buildSeasonList(season){
 } 
 
 function buildEpisodeList(season){
+	document.getElementsByClassName("output")[0].innerHTML = "";
 	var div = document.getElementById("episodeList");
 	var currentSeason = JSON.parse(localStorage.getItem('SouthParkSeason'+ season.toString()) );
 	//console.log("Current season: " + season.toString());
@@ -60,4 +61,5 @@ document.getElementById("saveButton").onclick = function(){
 		}
 	}
 	localStorage.setItem("SouthParkSeason" + selectedSeason.toString() ,JSON.stringify(newEpisodes));
+	document.getElementsByClassName("output")[0].innerHTML = "Season " + selectedSeason.toString() + " successfully saved.";
 };
