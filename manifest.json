@@ -13,7 +13,7 @@
     "default_title": "Watch random South Park episode"
   },
   "background": {
-    "scripts": ["src/Extension.js", "src/randomEpisode.js", "src/Storage.js"]
+    "scripts": ["dist/random-sp-episode.js"]
   },
 
   "permissions": [
@@ -22,7 +22,7 @@
     "https://*/*",
     "http://*/*",
     "storage",
-	"https://en.wikipedia.org/wiki/List_of_South_Park_episodes"
+	  "https://en.wikipedia.org/wiki/List_of_South_Park_episodes"
   ],
   "icons": {
     "48": "img/icon-48.png",

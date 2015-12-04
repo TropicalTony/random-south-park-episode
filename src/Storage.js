@@ -1,4 +1,4 @@
-function initSeasons(){
+export function initSeasons(){
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "https://en.wikipedia.org/wiki/List_of_South_Park_episodes", true);
 	xhr.responseType = "document";
@@ -64,7 +64,7 @@ function isInArray(value, array) {
   return array.indexOf(value) > -1;
 }
 
-function removeEpisodeFromStorage(season, episode){
+export function removeEpisodeFromStorage(season, episode){
 	var episodeArray = JSON.parse(localStorage.getItem('SouthParkSeason' + season.toString()));
 	if(isInArray(episode, episodeArray)){
 		episodeArray.splice(episodeArray.indexOf(episode), 1);

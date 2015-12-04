@@ -7,7 +7,6 @@ export default class History {
     }
 
     search(callback) {
-        
         chrome.history.search({text: 'http://southpark.cc.com/full-episodes/'}, this.collectFrom);
     }
 
