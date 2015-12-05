@@ -2,13 +2,13 @@
   "name": "random-sp-episode",
   "version": "1.0.0",
   "description": "Open up a random South Park episode in a new tab",
-  "main": "src/Extension.js",
+  "main": "src/js/Main.js",
   "author": [
     "Tõnis Tenno",
     "Uku Pattak"
   ],
   "scripts": {
-    "start": "./node_modules/.bin/watchify src/Extension.js -o dist/random-sp-episode.js -t [ babelify --presets [ es2015 ] ]"
+    "start": "./node_modules/.bin/watchify src/js/Main.js -o dist/random-sp-episode.js -t [ babelify --presets [ es2015 ] ]"
   },
   "devDependencies": {
     "babel-cli": "^6.2.0",

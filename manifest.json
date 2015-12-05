@@ -3,7 +3,7 @@
   "description": "Open up a random South Park episode in a new tab",
   "version": "1.0.0",
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-  "options_page": "ui/options.html",
+  "options_page": "src/ui/options.html",
   "manifest_version": 2,
   "author": [
     "Tõnis Tenno",
@@ -15,17 +15,16 @@
   "background": {
     "scripts": ["dist/random-sp-episode.js"]
   },
-
   "permissions": [
     "history",
     "tabs",
     "https://*/*",
     "http://*/*",
     "storage",
-	  "https://en.wikipedia.org/wiki/List_of_South_Park_episodes"
+    "https://en.wikipedia.org/wiki/List_of_South_Park_episodes"
   ],
   "icons": {
-    "48": "img/icon-48.png",
-    "128": "img/icon-128.png"
+    "48": "src/img/icon-48.png",
+    "128": "src/img/icon-128.png"
   }
 }
