@@ -1,9 +1,11 @@
 'use strict';
 
-import {parseDataFromWiki} from './WikiParser';
+import {parseInfoFromWiki} from './WikiParser';
+
+let namespace = 'randomSpEpisodeExt';
 
 export function hasToInitSeriesInfo() {
-    return !JSON.parse(localStorage.getItem('hasSeasons'));
+    return get('hasSeriesInfo');
 }
 
 export function initSeriesInfoAnd(callback) {
@@ -17,7 +19,7 @@ export function initSeriesInfoAnd(callback) {
             var xmlDoc = xhr.responseXML;
 
             if (xmlDoc)
-                parseDataFromWiki(xmlDoc);
+                saveSeriesInfo(parseInfoFromWiki(xmlDoc));
 
             callback();
         }
@@ -31,10 +33,26 @@ export function markAsWatched(season, episode) {
     if (episodes && isInArray(episode, episodes)) {
         episodes.splice(episodes.indexOf(episode), 1);
 
-        localStorage.setItem('SouthParkSeason' + season.toString(), JSON.stringify(episodes));
+        // TODO set('season' + season.toString(), JSON.stringify(episodes));
     }
+}
+
+function saveSeriesInfo(info) {
+    set('hasSeriesInfo', info.hasSeriesInfo);
+    set('totalSeasons', info.totalSeasons);
+    set('seasonLengths', info.seasonLengths);
+
+    // TODO
 }
 
 function isInArray(value, array) {
     return array.indexOf(value) > -1;
+}
+
+function set(key, data) {
+    localStorage.setItem(namespace + '.' + key, data);
+}
+
+function get(key) {
+    return JSON.parse(localStorage.getItem(namespace + '.' + key));
 }

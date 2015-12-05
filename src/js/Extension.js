@@ -6,7 +6,7 @@ import {hasToInitSeriesInfo, initSeriesInfoAnd, markAsWatched} from './Storage';
 export function Extension() {
 
     function continueOnClick() {
-        if (hasToInitSeriesInfo())
+        if (!hasToInitSeriesInfo())
             initSeriesInfoAnd(show);
         else
             show();
@@ -38,5 +38,3 @@ export function Extension() {
         }
     };
 }
-
-Extension().init();
