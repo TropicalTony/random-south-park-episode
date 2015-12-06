@@ -1,10 +1,12 @@
 'use strict';
 
 import {parseInfoFromWiki} from './WikiParser';
+import {History} from './History';
 
-let namespace = 'randomSpEpisodeExt';
+const NAMESPACE = 'randomSpEpisodeExt';
 
 export function hasToInitSeriesInfo() {
+    // TODO @tonis lets update data from wiki after a given date
     return get('hasSeriesInfo');
 }
 
@@ -21,6 +23,7 @@ export function initSeriesInfoAnd(callback) {
             if (xmlDoc)
                 saveSeriesInfo(parseInfoFromWiki(xmlDoc));
 
+            setWatchedEpisodesFromHistory();
             callback();
         }
     }
@@ -28,31 +31,41 @@ export function initSeriesInfoAnd(callback) {
 }
 
 export function markAsWatched(season, episode) {
-    var episodes = JSON.parse(localStorage.getItem('SouthParkSeason' + season.toString()));
+    var unwatchedEpisodes = get('unwatchedEpisodes');
 
-    if (episodes && isInArray(episode, episodes)) {
-        episodes.splice(episodes.indexOf(episode), 1);
+    if (unwatchedEpisodes[season - 1].indexOf(episode) === -1)
+        return;
 
-        // TODO set('season' + season.toString(), JSON.stringify(episodes));
-    }
+    unwatchedEpisodes[season - 1].splice(unwatchedEpisodes.indexOf(episode), 1);
+    set('unwatchedEpisodes', unwatchedEpisodes);
+}
+
+export function getUnwatchedEpisodes() {
+    return get('unwatchedEpisodes');
 }
 
 function saveSeriesInfo(info) {
     set('hasSeriesInfo', info.hasSeriesInfo);
     set('totalSeasons', info.totalSeasons);
     set('seasonLengths', info.seasonLengths);
-
-    // TODO
+    set('episodeNames', info.episodeNames);
+    set('unwatchedEpisodes', info.unwatchedEpisodes);
 }
 
-function isInArray(value, array) {
-    return array.indexOf(value) > -1;
+function setWatchedEpisodesFromHistory() {
+    // TODO date limit @tonis
+    var historyLimit = new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000).getTime();
+
+    new History(historyLimit).search(function (seen) {
+        for (var i = 0; i < seen.length; i ++)
+            markAsWatched(seen[i].season, seen[i].episode);
+    });
 }
 
 function set(key, data) {
-    localStorage.setItem(namespace + '.' + key, data);
+    localStorage.setItem(NAMESPACE + '.' + key, JSON.stringify(data));
 }
 
 function get(key) {
-    return JSON.parse(localStorage.getItem(namespace + '.' + key));
+    return JSON.parse(localStorage.getItem(NAMESPACE + '.' + key));
 }

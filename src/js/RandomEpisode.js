@@ -1,35 +1,29 @@
 'use strict';
 
-export function getRandomEpisode() {
-    var unwatchedSeasons = [];
-    var unwatchedEpisodes;
+import {getUnwatchedEpisodes} from './Storage';
 
-    for (var i = 0; i < JSON.parse(localStorage.getItem('totalSeasons')); i++) {
-        unwatchedEpisodes = JSON.parse(localStorage.getItem('SouthParkSeason' + (i + 1).toString()));
+export class RandomEpisode {
 
-        if (unwatchedEpisodes && unwatchedEpisodes.length != 0) {
-            unwatchedSeasons[unwatchedSeasons.length] = i + 1;
-        }
+    generate() {
+        var unwatchedEpisodes = getUnwatchedEpisodes();
+
+        var season = this.randomInt(1, unwatchedEpisodes.length + 1);
+        var episode = this.randomInt(1, unwatchedEpisodes[season - 1].length + 1);
+
+        return {
+            season: this.format(season),
+            episode: this.format(episode)
+        };
     }
-    var seasonIndex = randomInt(1, unwatchedSeasons.length);
 
-    unwatchedEpisodes = JSON.parse(localStorage.getItem('SouthParkSeason' + unwatchedSeasons[seasonIndex]));
+    randomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    }
 
-    var episodeIndex = randomInt(1, unwatchedEpisodes.length);
+    format(seriesInfo) {
+        if (seriesInfo < 10)
+            return '0' + seriesInfo.toString();
 
-    return {
-        season: trim(unwatchedSeasons[seasonIndex]),
-        episode: trim(unwatchedEpisodes[episodeIndex])
-    };
-}
-
-function trim(seriesInfo) {
-    if (seriesInfo < 10)
-        return '0' + seriesInfo.toString();
-
-    return seriesInfo.toString();
-}
-
-function randomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
+        return seriesInfo.toString();
+    }
 }

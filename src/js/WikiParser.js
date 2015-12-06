@@ -3,44 +3,58 @@
 export function parseInfoFromWiki(xmlDoc) {
     var parsed = {};
 
-    var data = xmlDoc.getElementsByClassName('wikitable plainrowheaders');
+    var html = xmlDoc.getElementsByClassName('wikitable plainrowheaders');
+    html = html[0].getElementsByTagName('tbody')[0].getElementsByTagName('tr');
 
-    data = data[0].getElementsByTagName('tbody');
-    data = data[0].getElementsByTagName('tr');
+    var totalSeasons = html.length - 2;
 
-    var totalSeasons = data.length - 2;
-    var seasonLengths = [];
+    html = xmlDoc.getElementsByClassName('wikitable plainrowheaders');
 
-    data = xmlDoc.getElementsByClassName('wikitable plainrowheaders');
+    parsed.episodeNames = parseEpisodeNames(html, totalSeasons);
+    parsed.seasonLengths = parseSeasonLengths(html, totalSeasons);
+    parsed.unwatchedEpisodes = calculateEpisodeList(totalSeasons, parsed.seasonLengths);
+    parsed.hasSeriesInfo = true;
+    parsed.totalSeasons = totalSeasons;
+
+    return parsed;
+}
+
+function parseEpisodeNames(html, totalSeasons) {
+    var names = [];
 
     for (var i = 0; i < totalSeasons; i++) {
-        var episodeTable = data[i + 2].getElementsByTagName('tbody');
-        episodeTable = episodeTable[0].getElementsByTagName('tr');
         var episodeNames = [];
-        seasonLengths[i] = episodeTable.length - 1;
+        var episodeTable = getEpisodeTableFrom(html, i);
 
-        for (j = 0; j < episodeTable.length - 1; j++) {
-            var episodeName = episodeTable[j + 1].getElementsByTagName('td')[1].textContent;
-            episodeNames[j] = episodeName;
-        }
+        for (var j = 0; j < episodeTable.length - 1; j++)
+            episodeNames.push(episodeTable[j + 1].getElementsByTagName('td')[1].textContent);
 
-        var episodeArray = [];
-
-        for (var j = 0; j < episodeTable.length - 1; j++) {
-            episodeArray[j] = j + 1;
-        }
-        parsed['SouthParkSeason' + (i + 1).toString()] = JSON.stringify(episodeArray);
-        parsed['EpisodeNames' + (i + 1).toString()] = JSON.stringify(episodeNames);
+        names.push(episodeNames);
     }
-    if (JSON.parse(localStorage.getItem('SouthParkSeason' + totalSeasons.toString())) != null) {
-        parsed['hasSeriesInfo'] = JSON.stringify(true);
-        parsed['totalSeasons'] = JSON.stringify(totalSeasons);
-        parsed['seasonLengths'] = JSON.stringify(seasonLengths);
+    return names;
+}
 
-        console.log('Seasons successfully initalized.');
-    } else {
-        console.log('Something went wrong initalizing seasons.');
+function parseSeasonLengths(html, totalSeasons) {
+    var seasonLengths = [];
+
+    for (var i = 0; i < totalSeasons; i++) {
+        seasonLengths.push(getEpisodeTableFrom(html, i).length - 1);
     }
-    console.log(parsed);
-    return parsed;
+    return seasonLengths;
+}
+
+function getEpisodeTableFrom(html, index) {
+    return html[index + 2].getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+}
+
+function calculateEpisodeList(totalSeasons, seasonLengths) {
+    var episodes = [];
+
+    for (var t = 0; t < totalSeasons; t++) {
+        episodes.push([]);
+
+        for (var s = 0; s < seasonLengths[t]; s ++)
+            episodes[t].push(s + 1);
+    }
+    return episodes;
 }

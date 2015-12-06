@@ -2,4 +2,4 @@
 
 import {Extension} from './Extension';
 
-Extension().init();
+new Extension();

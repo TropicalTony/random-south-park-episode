@@ -1,16 +1,16 @@
 'use strict';
 
-export default class History {
+export class History {
 
     constructor(limit) {
         this.limit = limit;
     }
 
     search(callback) {
-        chrome.history.search({text: 'http://southpark.cc.com/full-episodes/'}, this.collectFrom);
+        chrome.history.search({text: 'http://southpark.cc.com/full-episodes/'}, (results) => this.collectFrom(results, callback));
     }
 
-    collectFrom(results) {
+    collectFrom(results, callback) {
         var seen = [];
         var found;
 
@@ -21,7 +21,7 @@ export default class History {
             found = results[i].url.match(/s\d+e\d+/);
 
             if (found)
-                seen.push({ season: found[0].match(/\d+/g)[0], episode: found[0].match(/\d+/g)[1] });
+                seen.push({ season: found[0].match(/\d+/g)[0], episode: parseInt(found[0].match(/\d+/g)[1]) });
         }
         callback(seen);
     }

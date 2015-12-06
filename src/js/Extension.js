@@ -1,26 +1,30 @@
 'use strict';
 
-import {getRandomEpisode} from './RandomEpisode';
+import {RandomEpisode} from './RandomEpisode';
 import {hasToInitSeriesInfo, initSeriesInfoAnd, markAsWatched} from './Storage';
 
-export function Extension() {
+export class Extension {
 
-    function continueOnClick() {
-        if (!hasToInitSeriesInfo())
-            initSeriesInfoAnd(show);
-        else
-            show();
+    constructor() {
+        chrome.browserAction.onClicked.addListener(() => this.continueOnClick());
     }
 
-    function show() {
-        var random = getRandomEpisode();
+    continueOnClick() {
+        if (hasToInitSeriesInfo())
+            initSeriesInfoAnd(() => this.show());
+        else
+            this.show();
+    }
+
+    show() {
+        var random = new RandomEpisode().generate();
         var url = 'http://southpark.cc.com/full-episodes/s' + random.season + 'e' + random.episode;
 
-        openEpisode(url);
         markAsWatched(random.season, random.episode);
+        this.openEpisode(url);
     }
 
-    function openEpisode(url) {
+    openEpisode(url) {
         chrome.tabs.getSelected(null, function (tab) {
             var activeUrl = tab.url;
 
@@ -30,11 +34,4 @@ export function Extension() {
                 chrome.tabs.create({ url: url });
         });
     }
-
-    return {
-
-        init: function () {
-            chrome.browserAction.onClicked.addListener(continueOnClick);
-        }
-    };
 }
