@@ -6,10 +6,12 @@ import {hasToInitSeriesInfo, initSeriesInfoAnd, markAsWatched} from './Storage';
 export class Extension {
 
     constructor() {
+        // TODO @tonis sometimes chrome.browserAction is undefined at start, resolve issue
         chrome.browserAction.onClicked.addListener(() => this.continueOnClick());
     }
 
     continueOnClick() {
+        // TODO @tonis we should init before click, maybe difficult, PS to test initing turn this if off
         if (hasToInitSeriesInfo())
             initSeriesInfoAnd(() => this.show());
         else

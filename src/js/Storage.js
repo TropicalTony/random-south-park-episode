@@ -7,7 +7,7 @@ const NAMESPACE = 'randomSpEpisodeExt';
 
 export function hasToInitSeriesInfo() {
     // TODO @tonis lets update data from wiki after a given date
-    return get('hasSeriesInfo');
+    return !get('hasSeriesInfo');
 }
 
 export function initSeriesInfoAnd(callback) {
@@ -20,11 +20,11 @@ export function initSeriesInfoAnd(callback) {
         if (xhr.readyState == 4) {
             var xmlDoc = xhr.responseXML;
 
-            if (xmlDoc)
+            if (xmlDoc) {
                 saveSeriesInfo(parseInfoFromWiki(xmlDoc));
-
-            setWatchedEpisodesFromHistory();
-            callback();
+                setWatchedEpisodesFromHistory();
+                callback();
+            }
         }
     }
     xhr.send();
@@ -32,11 +32,12 @@ export function initSeriesInfoAnd(callback) {
 
 export function markAsWatched(season, episode) {
     var unwatchedEpisodes = get('unwatchedEpisodes');
+    episode = parseInt(episode);
 
     if (unwatchedEpisodes[season - 1].indexOf(episode) === -1)
         return;
 
-    unwatchedEpisodes[season - 1].splice(unwatchedEpisodes.indexOf(episode), 1);
+    unwatchedEpisodes[season - 1].splice(unwatchedEpisodes[season - 1].indexOf(episode), 1);
     set('unwatchedEpisodes', unwatchedEpisodes);
 }
 
