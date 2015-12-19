@@ -47,7 +47,7 @@
             div.appendChild(checkbox);
 
             var label = document.createElement('label');
-            label.htmlFor = 'Episode' + (i + 1).toString();
+            label.htmlFor = i + 1;
             label.appendChild(document.createTextNode(i + 1 + '. ' + episodeNames[i].replace(/['"]+/g, '')));
 
             div.appendChild(label);
