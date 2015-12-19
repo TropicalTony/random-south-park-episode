@@ -65,6 +65,11 @@
         document.getElementsByClassName('output')[0].innerHTML = 'Season ' + selectedSeason.toString() + ' successfully saved.';
     };
 
+    document.getElementById('updateHistory').onclick = function(){
+        var daysToCheck = document.getElementById('historyBox').value;
+        setWatchedEpisodesFromHistory();
+    };
+
     function set(key, data) {
         localStorage.setItem('randomSpEpisodeExt.' + key, JSON.stringify(data));
     }
@@ -72,4 +77,13 @@
     function get(key) {
         return JSON.parse(localStorage.getItem('randomSpEpisodeExt.' + key));
     }
+    function setWatchedEpisodesFromHistory() {
+    // TODO date limit @tonis
+    var historyLimit = new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000).getTime();
+
+    new History(historyLimit).search(function (seen) {
+        for (var i = 0; i < seen.length; i ++)
+            markAsWatched(seen[i].season, seen[i].episode);
+    });
+}
 })();

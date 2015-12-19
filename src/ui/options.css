@@ -24,7 +24,7 @@ body{
 	padding-top:15px;
 
 }
-#seasonList, .buttonContainer, #saveButton, .bodyLayout, .output{
+#seasonList, .buttonContainer, #saveButton, .bodyLayout, .output, #updateHistory, #historyBox{
 	display:block;
 	margin-left: auto;
 	margin-right: auto;
