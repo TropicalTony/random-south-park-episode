@@ -6,8 +6,14 @@ import {hasToInitSeriesInfo, initSeriesInfoAnd, markAsWatched} from './Storage';
 export class Extension {
 
     constructor() {
-        // TODO @tonis sometimes chrome.browserAction is undefined at start, resolve issue
-        chrome.browserAction.onClicked.addListener(() => this.continueOnClick());
+        this.addListener();
+    }
+
+    addListener() {
+        if (chrome)
+            chrome.browserAction.onClicked.addListener(() => this.continueOnClick());
+        else
+            setTimeout(this.addListener, 250);
     }
 
     continueOnClick() {

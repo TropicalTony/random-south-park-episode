@@ -1,43 +1,81 @@
-body{
-	width:100%;
-
+body {
+    background: #333333;
 }
-.bodyLayout{
-	background-color: rgb(225, 225, 209);
-	width:20%;	
-
-
+header {
+    width: 400px;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 60px;
 }
-.mainHeading, .output{
-	text-align: center;
+h1 {
+    color: #F7CB44;
+    font-size: 32px;
 }
-.output{
-	color:red;
+header h2 {
+    margin: 0;
+    line-height: 0;
+    font-size: 24px;
+    color: #fff;
 }
-
-.bodyContainer{
-	display:block;
-	width:100%;
+select {
+    margin-bottom: 20px;
 }
-
-.seasonContainer{
-	padding-top:15px;
-
+.bodyLayout {
+    background-color: #F7CB44;
+    border-radius: 5px;
+    width: 400px;
+    margin-bottom: 60px;
 }
-#seasonList, .buttonContainer, #saveButton, .bodyLayout, .output{
-	display:block;
-	margin-left: auto;
-	margin-right: auto;
+.mainHeading {
+    text-align: center;
+    width: 250px;
+    margin: 0 auto;
+    margin-bottom: 20px;
 }
-.buttonContainer{
-	padding-top:15px;
-	padding-bottom: 15px;
-
+.bodyContainer {
+    overflow: hidden;
+    display: block;
+    width: 100%;
 }
-#episodeList{
-	margin-left:30px;
+.seasonContainer {
+    padding-top: 15px;
 }
-label{
-	margin-left:5px;
-	margin-right:5px;
+.seasonContainer:first-child {
+    text-align: center;
+}
+#seasonList, .buttonContainer, #saveButton, .bodyLayout, .output {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.buttonContainer {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+#episodeList {
+    margin: 0 30px 30px 30px;
+}
+label {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+input[type=number] {
+    width: 60px;
+    height: 30px;
+    font-size: 18px;
+    text-align: center;
+    border: 2px solid #eee;
+    border-radius: 2px;
+}
+footer {
+    text-align: center;
+    margin-bottom: 20px;
+}
+footer a {
+    color: #5B5B5B;
+    text-decoration: none;
+    transition: .5s;
+}
+footer a:hover {
+    color: #F7CB44;
 }

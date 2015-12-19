@@ -1,5 +1,12 @@
 (function () {
 
+    document.getElementById('seasonList').onchange = function () {
+        document.getElementById('episodeList').innerHTML = '';
+        buildEpisodeList(document.getElementById('seasonList').value);
+    };
+
+    document.getElementById('historyLimit').addEventListener('blur', save);
+
     function buildSeasonList(season) {
         var div = document.getElementById('seasonList');
 
@@ -13,8 +20,6 @@
     }
 
     function buildEpisodeList(season) {
-        document.getElementsByClassName('output')[0].innerHTML = '';
-
         var div = document.getElementById('episodeList');
 
         var currentSeason = get('unwatchedEpisodes')[season - 1];
@@ -24,6 +29,9 @@
             var checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.value = 'Episode' + (i + 1).toString();
+            checkbox.onclick = function () {
+                save()
+            };
             checkbox.id = i + 1;
 
             if (currentSeason.indexOf(i + 1) === -1) {
@@ -35,35 +43,26 @@
 
             var label = document.createElement('label');
             label.htmlFor = 'Episode' + (i + 1).toString();
-            label.appendChild(document.createTextNode(episodeNames[i]));
+            label.appendChild(document.createTextNode(i + 1 + '. ' + episodeNames[i].replace(/['"]+/g, '')));
 
             div.appendChild(label);
             div.appendChild(document.createElement('br'));
         }
     }
 
-    buildSeasonList();
-
-    document.getElementById('seasonList').onchange = function () {
-        document.getElementById('episodeList').innerHTML = '';
-        buildEpisodeList(document.getElementById('seasonList').value);
-    };
-
-    document.getElementById('saveButton').onclick = function () {
+    function save() {
         var selectedSeason = document.getElementById('seasonList').value;
         var newEpisodes = [];
 
-        for (i = 0; i < get('seasonLengths')[selectedSeason - 1]; i++) {
-            if (!document.getElementById((i + 1).toString()).checked) {
+        for (i = 0; i < get('seasonLengths')[selectedSeason - 1]; i++)
+            if (!document.getElementById((i + 1).toString()).checked)
                 newEpisodes.push(i + 1);
-            }
-        }
+
         var unwatchedEpisodes = get('unwatchedEpisodes');
         unwatchedEpisodes[selectedSeason - 1] = newEpisodes;
 
         set('unwatchedEpisodes', unwatchedEpisodes);
-        document.getElementsByClassName('output')[0].innerHTML = 'Season ' + selectedSeason.toString() + ' successfully saved.';
-    };
+    }
 
     function set(key, data) {
         localStorage.setItem('randomSpEpisodeExt.' + key, JSON.stringify(data));
@@ -72,4 +71,6 @@
     function get(key) {
         return JSON.parse(localStorage.getItem('randomSpEpisodeExt.' + key));
     }
+
+    buildSeasonList();
 })();
