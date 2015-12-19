@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body{
 	width:100%;
 
@@ -41,3 +42,86 @@ label{
 	margin-left:5px;
 	margin-right:5px;
 }
+=======
+body {
+    background: #333333;
+}
+header {
+    width: 400px;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 60px;
+}
+h1 {
+    color: #F7CB44;
+    font-size: 32px;
+}
+header h2 {
+    margin: 0;
+    line-height: 0;
+    font-size: 24px;
+    color: #fff;
+}
+select {
+    margin-bottom: 20px;
+}
+.bodyLayout {
+    background-color: #F7CB44;
+    border-radius: 5px;
+    width: 400px;
+    margin-bottom: 60px;
+}
+.mainHeading {
+    text-align: center;
+    width: 250px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+.bodyContainer {
+    overflow: hidden;
+    display: block;
+    width: 100%;
+}
+.seasonContainer {
+    padding-top: 15px;
+}
+.seasonContainer:first-child {
+    text-align: center;
+}
+#seasonList, .buttonContainer, #saveButton, .bodyLayout, .output {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.buttonContainer {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+#episodeList {
+    margin: 0 30px 30px 30px;
+}
+label {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+input[type=number] {
+    width: 60px;
+    height: 30px;
+    font-size: 18px;
+    text-align: center;
+    border: 2px solid #eee;
+    border-radius: 2px;
+}
+footer {
+    text-align: center;
+    margin-bottom: 20px;
+}
+footer a {
+    color: #5B5B5B;
+    text-decoration: none;
+    transition: .5s;
+}
+footer a:hover {
+    color: #F7CB44;
+}
+>>>>>>> e60b4814fbd325dd2819f08d26cc001ea721de4f

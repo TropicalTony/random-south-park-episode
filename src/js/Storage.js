@@ -22,6 +22,7 @@ export function initSeriesInfoAnd(callback) {
 
             if (xmlDoc) {
                 saveSeriesInfo(parseInfoFromWiki(xmlDoc));
+                setHistoryLimit();
                 setWatchedEpisodesFromHistory();
                 callback();
             }
@@ -53,9 +54,12 @@ function saveSeriesInfo(info) {
     set('unwatchedEpisodes', info.unwatchedEpisodes);
 }
 
+function setHistoryLimit() {
+    set('historyLimit', get('historyLimit') || 30);
+}
+
 function setWatchedEpisodesFromHistory() {
-    // TODO date limit @tonis
-    var historyLimit = new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000).getTime();
+    var historyLimit = new Date(new Date().getTime() - get('historyLimit') * 24 * 60 * 60 * 1000).getTime();
 
     new History(historyLimit).search(function (seen) {
         for (var i = 0; i < seen.length; i ++)
