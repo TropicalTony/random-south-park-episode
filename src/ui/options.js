@@ -7,6 +7,11 @@
 
     document.getElementById('historyLimit').addEventListener('blur', save);
 
+    function init() {
+        buildSeasonList();
+        document.getElementById('historyLimit').value = get('historyLimit') || 30;
+    }
+
     function buildSeasonList(season) {
         var div = document.getElementById('seasonList');
 
@@ -61,6 +66,7 @@
         var unwatchedEpisodes = get('unwatchedEpisodes');
         unwatchedEpisodes[selectedSeason - 1] = newEpisodes;
 
+        set('historyLimit', document.getElementById('historyLimit').value || 30);
         set('unwatchedEpisodes', unwatchedEpisodes);
     }
 
@@ -72,5 +78,5 @@
         return JSON.parse(localStorage.getItem('randomSpEpisodeExt.' + key));
     }
 
-    buildSeasonList();
+    init();
 })();
