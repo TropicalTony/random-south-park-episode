@@ -18,7 +18,6 @@ export function initSeriesInfo(callback) {
         initHistory();
         saveSeriesInfo(parseInfoFromWiki(xmlDoc));
         setHistoryLimit();
-        setWatchedEpisodesFromHistory();
         setUpdateDate();
 
         if (callback)
@@ -50,7 +49,7 @@ export function getUnwatchedEpisodes() {
 }
 
 function initHistory() {
-    if(!get('hasSeriesInfo')){
+    if (get('hasSeriesInfo') != true){
         setWatchedEpisodesFromHistory();
     }
 
