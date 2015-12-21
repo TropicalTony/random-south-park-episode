@@ -2,10 +2,6 @@
 
 export class History {
 
-    constructor(limit) {
-        this.limit = limit;
-    }
-
     search(callback) {
         chrome.history.search({text: 'http://southpark.cc.com/full-episodes/', maxResults:1000, startTime:0}, (results) => this.collectFrom(results, callback));
     }

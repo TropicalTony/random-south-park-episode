@@ -31,6 +31,7 @@ export class Extension {
     show() {
         var random = new RandomEpisode().generate();
         var url = 'http://southpark.cc.com/full-episodes/s' + random.season + 'e' + random.episode;
+
         markAsWatched(random.season, random.episode);
         this.openEpisode(url);
     }

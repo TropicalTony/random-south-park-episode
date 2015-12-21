@@ -13,13 +13,16 @@ export function hasToUpdateSeriesInfo() {
     return get('updateDate') && get('updateDate') <= Date.now();
 }
 
-export function initSeriesInfo() {
+export function initSeriesInfo(callback) {
     callWikiAnd((xmlDoc) => {
         initHistory();
         saveSeriesInfo(parseInfoFromWiki(xmlDoc));
         setHistoryLimit();
         setWatchedEpisodesFromHistory();
         setUpdateDate();
+
+        if (callback)
+            callback();
     });
 }
 
