@@ -70,11 +70,6 @@
         set('unwatchedEpisodes', unwatchedEpisodes);
     }
 
-    document.getElementById('updateHistory').onclick = function(){
-        var daysToCheck = document.getElementById('historyBox').value;
-        setWatchedEpisodesFromHistory();
-    };
-
     function set(key, data) {
         localStorage.setItem('randomSpEpisodeExt.' + key, JSON.stringify(data));
     }
@@ -82,18 +77,6 @@
     function get(key) {
         return JSON.parse(localStorage.getItem('randomSpEpisodeExt.' + key));
     }
-<<<<<<< HEAD
-    function setWatchedEpisodesFromHistory() {
-    // TODO date limit @tonis
-    var historyLimit = new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000).getTime();
-
-    new History(historyLimit).search(function (seen) {
-        for (var i = 0; i < seen.length; i ++)
-            markAsWatched(seen[i].season, seen[i].episode);
-    });
-}
-=======
 
     init();
->>>>>>> e60b4814fbd325dd2819f08d26cc001ea721de4f
 })();

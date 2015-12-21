@@ -10,7 +10,7 @@ export class Extension {
     }
 
     addListener() {
-        if (chrome)
+        if (chrome || chrome.browserAction)
             chrome.browserAction.onClicked.addListener(() => this.continueOnClick());
         else
             setTimeout(this.addListener, 250);

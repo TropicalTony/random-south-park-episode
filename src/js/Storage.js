@@ -25,7 +25,7 @@ export function initSeriesInfoAnd(callback) {
 
 export function updateSeriesInfoAnd(callback) {
     callWikiAnd((xmlDoc) => {
-        saveSeriesInfo(parseInfoFromWiki(xmlDoc));
+        updateSeriesInfo(parseInfoFromWiki(xmlDoc));
         setUpdateDate();
         callback();
     });
@@ -65,6 +65,23 @@ function saveSeriesInfo(info) {
     set('seasonLengths', info.seasonLengths);
     set('episodeNames', info.episodeNames);
     set('unwatchedEpisodes', info.unwatchedEpisodes);
+}
+
+function updateSeriesInfo(info) {
+    var unwatchedEpisodes = get('unwatchedEpisodes');
+
+    for (; info.totalSeasons > get('totalSeasons'); info.totalSeasons --)
+        unwatchedEpisodes.push(info.unwatchedEpisodes[info.totalSeasons - 1]);
+
+    var lastSavedSeasonLength = get('seasonLengths')[get('totalSeasons') - 1];
+    var thatSeasonCurrentLength = info.seasonLengths[get('totalSeasons') - 1];
+
+    for (; lastSavedSeasonLength + 1 <= thatSeasonCurrentLength; lastSavedSeasonLength ++)
+        unwatchedEpisodes[get('totalSeasons') - 1].push(lastSavedSeasonLength + 1);
+
+    info.unwatchedEpisodes = unwatchedEpisodes;
+
+    saveSeriesInfo(info);
 }
 
 function setHistoryLimit() {
