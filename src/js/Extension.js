@@ -1,7 +1,7 @@
 'use strict';
 
 import {RandomEpisode} from './RandomEpisode';
-import {hasToInitSeriesInfo, initSeriesInfoAnd, markAsWatched} from './Storage';
+import {hasToInitSeriesInfo, initSeriesInfoAnd, markAsWatched, setWatchedEpisodesFromHistory} from './Storage';
 
 export class Extension {
 
@@ -27,7 +27,6 @@ export class Extension {
     show() {
         var random = new RandomEpisode().generate();
         var url = 'http://southpark.cc.com/full-episodes/s' + random.season + 'e' + random.episode;
-
         markAsWatched(random.season, random.episode);
         this.openEpisode(url);
     }

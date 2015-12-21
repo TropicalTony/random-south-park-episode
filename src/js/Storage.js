@@ -55,13 +55,11 @@ function saveSeriesInfo(info) {
 }
 
 function setHistoryLimit() {
-    set('historyLimit', get('historyLimit') || 30);
+    set('historyLimit', 90);
 }
 
-function setWatchedEpisodesFromHistory() {
-    var historyLimit = new Date(new Date().getTime() - get('historyLimit') * 24 * 60 * 60 * 1000).getTime();
-
-    new History(historyLimit).search(function (seen) {
+export function setWatchedEpisodesFromHistory() {
+    new History().search(function (seen) {
         for (var i = 0; i < seen.length; i ++)
             markAsWatched(seen[i].season, seen[i].episode);
     });

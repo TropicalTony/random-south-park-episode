@@ -7,7 +7,7 @@ export class History {
     }
 
     search(callback) {
-        chrome.history.search({text: 'http://southpark.cc.com/full-episodes/'}, (results) => this.collectFrom(results, callback));
+        chrome.history.search({text: 'http://southpark.cc.com/full-episodes/', maxResults:1000, startTime:0, endTime:24*60*60*1000*90}, (results) => this.collectFrom(results, callback));
     }
 
     collectFrom(results, callback) {
@@ -15,13 +15,11 @@ export class History {
         var found;
 
         for (var i = 0; i < results.length; i ++) {
-            if (results[i].lastVisitTime < this.limit)
-                continue;
 
             found = results[i].url.match(/s\d+e\d+/);
 
             if (found)
-                seen.push({ season: found[0].match(/\d+/g)[0], episode: parseInt(found[0].match(/\d+/g)[1]) });
+                seen.push({ season: parseInt(found[0].match(/\d+/g)[0]), episode: parseInt(found[0].match(/\d+/g)[1]) });
         }
         callback(seen);
     }
