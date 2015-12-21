@@ -4,21 +4,21 @@ import {getUnwatchedEpisodes, initSeriesInfo} from './Storage';
 
 export class RandomEpisode {
 
-    generate() {
+    generateAnd(callback) {
         var unwatchedEpisodes = getUnwatchedEpisodes();
         var seasonsWithEpisodes = this.getSeasonsWithEpisodes();
 
         if (seasonsWithEpisodes.length === 0)
-            return initSeriesInfo(() => this.generate());
+            return initSeriesInfo(() => this.generateAnd(callback));
 
         var seasonId = this.randomInt(1, seasonsWithEpisodes.length)-1;
         var episodeId = this.randomInt(1, unwatchedEpisodes[seasonId].length) - 1;
         var season = seasonsWithEpisodes[seasonId];
 
-        return {
+        callback({
             season: this.format(season),
             episode: this.format(unwatchedEpisodes[season - 1][episodeId])
-        };
+        });
     }
 
     getSeasonsWithEpisodes() {

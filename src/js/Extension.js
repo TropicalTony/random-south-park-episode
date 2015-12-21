@@ -23,13 +23,16 @@ export class Extension {
         if (hasToInitSeriesInfo())
             setTimeout(() => this.continueOnClick(), 250);
         else if (hasToUpdateSeriesInfo())
-            updateSeriesInfoAnd(() => this.show());
+            updateSeriesInfoAnd(() => this.start());
         else
-            this.show();
+            this.start();
     }
 
-    show() {
-        var random = new RandomEpisode().generate();
+    start() {
+        new RandomEpisode().generateAnd((random) => this.show(random));
+    }
+
+    show(random) {
         var url = 'http://southpark.cc.com/full-episodes/s' + random.season + 'e' + random.episode;
 
         markAsWatched(random.season, random.episode);
