@@ -1,7 +1,11 @@
 'use strict';
 
 import {RandomEpisode} from './RandomEpisode';
+<<<<<<< HEAD
 import {hasToInitSeriesInfo, initSeriesInfoAnd, markAsWatched, setWatchedEpisodesFromHistory} from './Storage';
+=======
+import {hasToInitSeriesInfo, hasToUpdateSeriesInfo, initSeriesInfoAnd, updateSeriesInfoAnd, markAsWatched} from './Storage';
+>>>>>>> 01d2b08e665024dda671967a737acb1d8396efaa
 
 export class Extension {
 
@@ -10,16 +14,17 @@ export class Extension {
     }
 
     addListener() {
-        if (chrome)
+        if (chrome || chrome.browserAction)
             chrome.browserAction.onClicked.addListener(() => this.continueOnClick());
         else
             setTimeout(this.addListener, 250);
     }
 
     continueOnClick() {
-        // TODO @tonis we should init before click, maybe difficult, PS to test initing turn this if off
         if (hasToInitSeriesInfo())
             initSeriesInfoAnd(() => this.show());
+        else if (hasToUpdateSeriesInfo())
+            updateSeriesInfoAnd(() => this.show());
         else
             this.show();
     }
