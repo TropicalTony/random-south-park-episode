@@ -1,6 +1,6 @@
 'use strict';
 
-import {getUnwatchedEpisodes,initSeriesInfoAnd} from './Storage';
+import {getUnwatchedEpisodes,initSeriesInfo} from './Storage';
 
 export class RandomEpisode {
 
@@ -13,7 +13,7 @@ export class RandomEpisode {
             }
         }
         if (seasonsWithEpisodes.length == 0) {
-            initSeriesInfoAnd();
+            initSeriesInfo();
         }
         var season = this.randomInt(1, seasonsWithEpisodes.length);
         season = seasonsWithEpisodes[season-1];

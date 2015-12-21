@@ -7,7 +7,7 @@ export class History {
     }
 
     search(callback) {
-        chrome.history.search({text: 'http://southpark.cc.com/full-episodes/', maxResults:1000, startTime:0, endTime:24*60*60*1000*90}, (results) => this.collectFrom(results, callback));
+        chrome.history.search({text: 'http://southpark.cc.com/full-episodes/', maxResults:1000, startTime:0}, (results) => this.collectFrom(results, callback));
     }
 
     collectFrom(results, callback) {

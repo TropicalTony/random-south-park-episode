@@ -15,6 +15,7 @@ export function hasToUpdateSeriesInfo() {
 
 export function initSeriesInfo() {
     callWikiAnd((xmlDoc) => {
+        initHistory();
         saveSeriesInfo(parseInfoFromWiki(xmlDoc));
         setHistoryLimit();
         setWatchedEpisodesFromHistory();
@@ -45,6 +46,12 @@ export function getUnwatchedEpisodes() {
     return get('unwatchedEpisodes');
 }
 
+function initHistory() {
+    if(!get('hasSeriesInfo')){
+        setWatchedEpisodesFromHistory();
+    }
+    
+}
 function callWikiAnd(callback) {
     var xhr = new XMLHttpRequest();
 
@@ -87,8 +94,9 @@ function setHistoryLimit() {
     set('historyLimit', 90);
 }
 
-export function setWatchedEpisodesFromHistory() {
+function setWatchedEpisodesFromHistory() {
     new History().search(function (seen) {
+        console.log(seen.length);
         for (var i = 0; i < seen.length; i ++)
             markAsWatched(seen[i].season, seen[i].episode);
     });
