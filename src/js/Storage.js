@@ -10,16 +10,15 @@ export function hasToInitSeriesInfo() {
 }
 
 export function hasToUpdateSeriesInfo() {
-    return !get('updateDate') || get('updateDate') <= Date.now();
+    return get('updateDate') && get('updateDate') <= Date.now();
 }
 
-export function initSeriesInfoAnd(callback) {
+export function initSeriesInfo() {
     callWikiAnd((xmlDoc) => {
         saveSeriesInfo(parseInfoFromWiki(xmlDoc));
         setHistoryLimit();
         setWatchedEpisodesFromHistory();
         setUpdateDate();
-        callback();
     });
 }
 
@@ -60,11 +59,11 @@ function callWikiAnd(callback) {
 }
 
 function saveSeriesInfo(info) {
-    set('hasSeriesInfo', info.hasSeriesInfo);
     set('totalSeasons', info.totalSeasons);
     set('seasonLengths', info.seasonLengths);
     set('episodeNames', info.episodeNames);
     set('unwatchedEpisodes', info.unwatchedEpisodes);
+    set('hasSeriesInfo', info.hasSeriesInfo);
 }
 
 function updateSeriesInfo(info) {

@@ -7,12 +7,12 @@ export class RandomEpisode {
     generate() {
         var unwatchedEpisodes = getUnwatchedEpisodes();
         var seasonsWithEpisodes = [];
-        for(var i = 0; i < unwatchedEpisodes.length - 1; i ++){
-            if(unwatchedEpisodes[i].length > 0){
+        for (var i = 0; i < unwatchedEpisodes.length - 1; i ++) {
+            if (unwatchedEpisodes[i].length > 0) {
                 seasonsWithEpisodes.push(i+1);
-            } 
+            }
         }
-        if(seasonsWithEpisodes.length == 0){
+        if (seasonsWithEpisodes.length == 0) {
             initSeriesInfoAnd();
         }
         var season = this.randomInt(1, seasonsWithEpisodes.length);

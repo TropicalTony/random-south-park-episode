@@ -1,20 +1,19 @@
 'use strict';
 
 import {RandomEpisode} from './RandomEpisode';
-<<<<<<< HEAD
-import {hasToInitSeriesInfo, initSeriesInfoAnd, markAsWatched, setWatchedEpisodesFromHistory} from './Storage';
-=======
-import {hasToInitSeriesInfo, hasToUpdateSeriesInfo, initSeriesInfoAnd, updateSeriesInfoAnd, markAsWatched} from './Storage';
->>>>>>> 01d2b08e665024dda671967a737acb1d8396efaa
+import {hasToInitSeriesInfo, hasToUpdateSeriesInfo, initSeriesInfo, updateSeriesInfoAnd, markAsWatched} from './Storage';
 
 export class Extension {
 
     constructor() {
+        if (hasToInitSeriesInfo())
+            initSeriesInfo();
+
         this.addListener();
     }
 
     addListener() {
-        if (chrome || chrome.browserAction)
+        if (chrome && chrome.browserAction)
             chrome.browserAction.onClicked.addListener(() => this.continueOnClick());
         else
             setTimeout(this.addListener, 250);
@@ -22,7 +21,7 @@ export class Extension {
 
     continueOnClick() {
         if (hasToInitSeriesInfo())
-            initSeriesInfoAnd(() => this.show());
+            setTimeout(() => this.continueOnClick(), 250);
         else if (hasToUpdateSeriesInfo())
             updateSeriesInfoAnd(() => this.show());
         else

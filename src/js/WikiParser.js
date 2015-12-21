@@ -3,7 +3,6 @@
 export function parseInfoFromWiki(xmlDoc) {
     var parsed = {};
 
-    // TODO @tonis refactor these next 4 lines of parsing html
     var html = xmlDoc.getElementsByClassName('wikitable plainrowheaders');
     html = html[0].getElementsByTagName('tbody')[0].getElementsByTagName('tr');
 
