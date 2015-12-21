@@ -6,29 +6,29 @@ import {History} from './History';
 const NAMESPACE = 'randomSpEpisodeExt';
 
 export function hasToInitSeriesInfo() {
-    // TODO @tonis lets update data from wiki after a given date
     return !get('hasSeriesInfo');
 }
 
+export function hasToUpdateSeriesInfo() {
+    return !get('updateDate') || get('updateDate') <= Date.now();
+}
+
 export function initSeriesInfoAnd(callback) {
-    var xhr = new XMLHttpRequest();
+    callWikiAnd((xmlDoc) => {
+        saveSeriesInfo(parseInfoFromWiki(xmlDoc));
+        setHistoryLimit();
+        setWatchedEpisodesFromHistory();
+        setUpdateDate();
+        callback();
+    });
+}
 
-    xhr.open('GET', 'https://en.wikipedia.org/wiki/List_of_South_Park_episodes', true);
-    xhr.responseType = 'document';
-
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4) {
-            var xmlDoc = xhr.responseXML;
-
-            if (xmlDoc) {
-                saveSeriesInfo(parseInfoFromWiki(xmlDoc));
-                setHistoryLimit();
-                setWatchedEpisodesFromHistory();
-                callback();
-            }
-        }
-    }
-    xhr.send();
+export function updateSeriesInfoAnd(callback) {
+    callWikiAnd((xmlDoc) => {
+        saveSeriesInfo(parseInfoFromWiki(xmlDoc));
+        setUpdateDate();
+        callback();
+    });
 }
 
 export function markAsWatched(season, episode) {
@@ -44,6 +44,19 @@ export function markAsWatched(season, episode) {
 
 export function getUnwatchedEpisodes() {
     return get('unwatchedEpisodes');
+}
+
+function callWikiAnd(callback) {
+    var xhr = new XMLHttpRequest();
+
+    xhr.open('GET', 'https://en.wikipedia.org/wiki/List_of_South_Park_episodes', true);
+    xhr.responseType = 'document';
+
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState == 4 && xhr.responseXML)
+            callback(xhr.responseXML);
+    };
+    xhr.send();
 }
 
 function saveSeriesInfo(info) {
@@ -65,6 +78,10 @@ function setWatchedEpisodesFromHistory() {
         for (var i = 0; i < seen.length; i ++)
             markAsWatched(seen[i].season, seen[i].episode);
     });
+}
+
+function setUpdateDate() {
+    set('updateDate', new Date().setDate(new Date().getDate() + 7));
 }
 
 function set(key, data) {

@@ -1,7 +1,7 @@
 'use strict';
 
 import {RandomEpisode} from './RandomEpisode';
-import {hasToInitSeriesInfo, initSeriesInfoAnd, markAsWatched} from './Storage';
+import {hasToInitSeriesInfo, hasToUpdateSeriesInfo, initSeriesInfoAnd, updateSeriesInfoAnd, markAsWatched} from './Storage';
 
 export class Extension {
 
@@ -17,9 +17,10 @@ export class Extension {
     }
 
     continueOnClick() {
-        // TODO @tonis we should init before click, maybe difficult, PS to test initing turn this if off
         if (hasToInitSeriesInfo())
             initSeriesInfoAnd(() => this.show());
+        else if (hasToUpdateSeriesInfo())
+            updateSeriesInfoAnd(() => this.show());
         else
             this.show();
     }
