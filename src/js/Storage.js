@@ -53,7 +53,7 @@ function initHistory() {
     if(!get('hasSeriesInfo')){
         setWatchedEpisodesFromHistory();
     }
-    
+
 }
 function callWikiAnd(callback) {
     var xhr = new XMLHttpRequest();
@@ -99,7 +99,6 @@ function setHistoryLimit() {
 
 function setWatchedEpisodesFromHistory() {
     new History().search(function (seen) {
-        console.log(seen.length);
         for (var i = 0; i < seen.length; i ++)
             markAsWatched(seen[i].season, seen[i].episode);
     });

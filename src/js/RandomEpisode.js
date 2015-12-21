@@ -9,7 +9,7 @@ export class RandomEpisode {
         var seasonsWithEpisodes = this.getSeasonsWithEpisodes();
 
         if (seasonsWithEpisodes.length === 0)
-            initSeriesInfo(() => this.generate());
+            return initSeriesInfo(() => this.generate());
 
         var seasonId = this.randomInt(1, seasonsWithEpisodes.length) - 1;
         var episodeId = this.randomInt(1, unwatchedEpisodes[seasonId].length) - 1;
