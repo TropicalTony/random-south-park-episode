@@ -87,9 +87,16 @@ footer a:hover {
 #checkAll{
     margin-top:20px;
     margin-bottom: 20px;
-    text-align:center;
+    margin-left:30px;
 }
-#checkAllBox{
-    position:relative;
-    left:235px;
+#checkAllLable{
+    font-weight: bold;
+}
+button {
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    display:inline-block;
+    width:45%;
+    float:left;
+    margin-bottom:15px;
 }

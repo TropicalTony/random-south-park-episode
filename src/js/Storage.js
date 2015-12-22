@@ -19,11 +19,12 @@ export function initSeriesInfo(callback) {
         saveSeriesInfo(parseInfoFromWiki(xmlDoc));
         setHistoryLimit();
         setUpdateDate();
+    });
 
         if (callback)
             callback();
-    });
-}
+    };
+
 
 export function updateSeriesInfoAnd(callback) {
     callWikiAnd((xmlDoc) => {

@@ -51,6 +51,7 @@
         }
 
         var labelCheckAll = document.createElement('label');
+        labelCheckAll.id = 'checkAllLable';
         labelCheckAll.appendChild(document.createTextNode('Check/Uncheck all'));
         checkAll.appendChild(labelCheckAll);
     }
