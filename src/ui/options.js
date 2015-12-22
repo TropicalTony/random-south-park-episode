@@ -5,6 +5,12 @@
         buildEpisodeList(document.getElementById('seasonList').value);
     };
 
+    document.getElementById('resetAll').onclick = function(){
+        var resetedList = calculateEpisodeList(get('totalSeasons'), get('seasonLengths'));
+        set('unwatchedEpisodes', resetedList);
+        buildEpisodeList(document.getElementById('seasonList').value);
+    }
+
     function init() {
         buildCheckAllButton();
         buildSeasonList();
@@ -50,19 +56,17 @@
     }
 
     function checkAllButtonStatus(season) {
-        console.log(get('unwatchedEpisodes')[season - 1]);
         if (get('unwatchedEpisodes')[season - 1].length === 0) {
             document.getElementById('checkAllBox').checked = true;
-            console.log('All episodes watched');
         }
         else {
-            console.log('All episodes not watched');
             document.getElementById('checkAllBox').checked = false;
         }
     }
 
     function buildEpisodeList(season) {
         checkAllButtonStatus(season);
+        document.getElementById('episodeList').innerHTML = '';
         var div = document.getElementById('episodeList');
 
         var currentSeason = get('unwatchedEpisodes')[season - 1];
@@ -125,6 +129,18 @@
 
     function get(key) {
         return JSON.parse(localStorage.getItem('randomSpEpisodeExt.' + key));
+    }
+
+    function calculateEpisodeList(totalSeasons, seasonLengths) {
+    var episodes = [];
+
+    for (var t = 0; t < totalSeasons; t++) {
+        episodes.push([]);
+
+        for (var s = 0; s < seasonLengths[t]; s ++)
+            episodes[t].push(s + 1);
+    }
+    return episodes;
     }
 
     init();
