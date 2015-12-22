@@ -6,6 +6,7 @@
     };
 
     function init() {
+        buildCheckAllButton();
         buildSeasonList();
     }
 
@@ -21,7 +22,47 @@
         buildEpisodeList(1);
     }
 
+    function buildCheckAllButton() {
+        var checkAll = document.getElementById('checkAll');
+        var checkAllInput = document.createElement('input');
+        checkAllInput.type = 'checkbox';
+        checkAllInput.id = 'checkAllBox'
+        checkAll.appendChild(checkAllInput);
+        checkAllInput.onclick = function(){
+            var seasonToCheck = document.getElementById('seasonList').value;
+            var checkedSeason = get('unwatchedEpisodes');
+            if (checkAllInput.checked === true) {
+                checkedSeason[seasonToCheck-1] = [];
+                set('unwatchedEpisodes', checkedSeason);
+
+            }
+            else {
+                buildFullSeason(seasonToCheck);
+            }
+            document.getElementById('episodeList').innerHTML = '';
+            buildEpisodeList(seasonToCheck);  
+
+        }
+
+        var labelCheckAll = document.createElement('label');
+        labelCheckAll.appendChild(document.createTextNode('Check/Uncheck all'));
+        checkAll.appendChild(labelCheckAll);
+    }
+
+    function checkAllButtonStatus(season) {
+        console.log(get('unwatchedEpisodes')[season - 1]);
+        if (get('unwatchedEpisodes')[season - 1].length === 0) {
+            document.getElementById('checkAllBox').checked = true;
+            console.log('All episodes watched');
+        }
+        else {
+            console.log('All episodes not watched');
+            document.getElementById('checkAllBox').checked = false;
+        }
+    }
+
     function buildEpisodeList(season) {
+        checkAllButtonStatus(season);
         var div = document.getElementById('episodeList');
 
         var currentSeason = get('unwatchedEpisodes')[season - 1];
@@ -49,6 +90,7 @@
 
             div.appendChild(label);
             div.appendChild(document.createElement('br'));
+
         }
     }
 
@@ -63,6 +105,17 @@
         var unwatchedEpisodes = get('unwatchedEpisodes');
         unwatchedEpisodes[selectedSeason - 1] = newEpisodes;
 
+        set('unwatchedEpisodes', unwatchedEpisodes);
+        checkAllButtonStatus(selectedSeason);
+    }
+
+    function buildFullSeason(season){
+        var fullSeason = [];
+        for(i = 0; i < get('seasonLengths')[season - 1]; i++) {
+            fullSeason[i] = i+1;
+        }
+        var unwatchedEpisodes = get('unwatchedEpisodes');
+        unwatchedEpisodes[season - 1] = fullSeason;
         set('unwatchedEpisodes', unwatchedEpisodes);
     }
 
