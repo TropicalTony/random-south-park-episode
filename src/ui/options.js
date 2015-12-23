@@ -5,7 +5,7 @@
         buildEpisodeList(document.getElementById('seasonList').value);
     };
 
-    document.getElementById('resetAll').onclick = function(){
+    document.getElementById('resetAll').onclick = function () {
         var resetedList = calculateEpisodeList(get('totalSeasons'), get('seasonLengths'));
         set('unwatchedEpisodes', resetedList);
         buildEpisodeList(document.getElementById('seasonList').value);
@@ -34,19 +34,18 @@
         checkAllInput.type = 'checkbox';
         checkAllInput.id = 'checkAllBox'
         checkAll.appendChild(checkAllInput);
-        checkAllInput.onclick = function(){
+        checkAllInput.onclick = function () {
             var seasonToCheck = document.getElementById('seasonList').value;
             var checkedSeason = get('unwatchedEpisodes');
             if (checkAllInput.checked === true) {
-                checkedSeason[seasonToCheck-1] = [];
+                checkedSeason[seasonToCheck - 1] = [];
                 set('unwatchedEpisodes', checkedSeason);
 
-            }
-            else {
+            } else {
                 buildFullSeason(seasonToCheck);
             }
             document.getElementById('episodeList').innerHTML = '';
-            buildEpisodeList(seasonToCheck);  
+            buildEpisodeList(seasonToCheck);
 
         }
 
@@ -59,8 +58,7 @@
     function checkAllButtonStatus(season) {
         if (get('unwatchedEpisodes')[season - 1].length === 0) {
             document.getElementById('checkAllBox').checked = true;
-        }
-        else {
+        } else {
             document.getElementById('checkAllBox').checked = false;
         }
     }
@@ -114,10 +112,10 @@
         checkAllButtonStatus(selectedSeason);
     }
 
-    function buildFullSeason(season){
+    function buildFullSeason(season) {
         var fullSeason = [];
-        for(i = 0; i < get('seasonLengths')[season - 1]; i++) {
-            fullSeason[i] = i+1;
+        for (i = 0; i < get('seasonLengths')[season - 1]; i++) {
+            fullSeason[i] = i + 1;
         }
         var unwatchedEpisodes = get('unwatchedEpisodes');
         unwatchedEpisodes[season - 1] = fullSeason;
@@ -133,15 +131,15 @@
     }
 
     function calculateEpisodeList(totalSeasons, seasonLengths) {
-    var episodes = [];
+        var episodes = [];
 
-    for (var t = 0; t < totalSeasons; t++) {
-        episodes.push([]);
+        for (var t = 0; t < totalSeasons; t++) {
+            episodes.push([]);
 
-        for (var s = 0; s < seasonLengths[t]; s ++)
-            episodes[t].push(s + 1);
-    }
-    return episodes;
+            for (var s = 0; s < seasonLengths[t]; s++)
+                episodes[t].push(s + 1);
+        }
+        return episodes;
     }
 
     init();
