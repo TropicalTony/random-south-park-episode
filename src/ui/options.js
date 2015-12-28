@@ -1,4 +1,9 @@
-(function () {
+'use strict';
+
+import {setWatchedEpisodesFromHistory, set, get} from '../js/Storage';
+import {calculateEpisodeList} from '../js/WikiParser';
+
+
 
     document.getElementById('seasonList').onchange = function () {
         document.getElementById('episodeList').innerHTML = '';
@@ -11,6 +16,10 @@
         buildEpisodeList(document.getElementById('seasonList').value);
     }
 
+    document.getElementById('resetHistory').onclick = function() {
+        setWatchedEpisodesFromHistory();
+    }
+
     function init() {
         buildCheckAllButton();
         buildSeasonList();
@@ -19,7 +28,7 @@
     function buildSeasonList(season) {
         var div = document.getElementById('seasonList');
 
-        for (i = 0; i < get('totalSeasons'); i++) {
+        for (var i = 0; i < get('totalSeasons'); i++) {
             var optionValue = document.createElement('option');
             optionValue.text = 'Season ' + (i + 1).toString();
             optionValue.value = (i + 1).toString();
@@ -71,7 +80,7 @@
         var currentSeason = get('unwatchedEpisodes')[season - 1];
         var episodeNames = get('episodeNames')[season - 1];
 
-        for (i = 0; i < get('seasonLengths')[season - 1]; i++) {
+        for (var i = 0; i < get('seasonLengths')[season - 1]; i++) {
             var checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.value = 'Episode' + (i + 1).toString();
@@ -101,7 +110,7 @@
         var selectedSeason = document.getElementById('seasonList').value;
         var newEpisodes = [];
 
-        for (i = 0; i < get('seasonLengths')[selectedSeason - 1]; i++)
+        for (var i = 0; i < get('seasonLengths')[selectedSeason - 1]; i++)
             if (!document.getElementById((i + 1).toString()).checked)
                 newEpisodes.push(i + 1);
 
@@ -114,7 +123,7 @@
 
     function buildFullSeason(season) {
         var fullSeason = [];
-        for (i = 0; i < get('seasonLengths')[season - 1]; i++) {
+        for (var i = 0; i < get('seasonLengths')[season - 1]; i++) {
             fullSeason[i] = i + 1;
         }
         var unwatchedEpisodes = get('unwatchedEpisodes');
@@ -122,25 +131,5 @@
         set('unwatchedEpisodes', unwatchedEpisodes);
     }
 
-    function set(key, data) {
-        localStorage.setItem('randomSpEpisodeExt.' + key, JSON.stringify(data));
-    }
-
-    function get(key) {
-        return JSON.parse(localStorage.getItem('randomSpEpisodeExt.' + key));
-    }
-
-    function calculateEpisodeList(totalSeasons, seasonLengths) {
-        var episodes = [];
-
-        for (var t = 0; t < totalSeasons; t++) {
-            episodes.push([]);
-
-            for (var s = 0; s < seasonLengths[t]; s++)
-                episodes[t].push(s + 1);
-        }
-        return episodes;
-    }
 
     init();
-})();

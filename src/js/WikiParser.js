@@ -47,7 +47,7 @@ function getEpisodeTableFrom(html, index) {
     return html[index + 2].getElementsByTagName('tbody')[0].getElementsByTagName('tr');
 }
 
-function calculateEpisodeList(totalSeasons, seasonLengths) {
+export function calculateEpisodeList(totalSeasons, seasonLengths) {
     var episodes = [];
 
     for (var t = 0; t < totalSeasons; t++) {

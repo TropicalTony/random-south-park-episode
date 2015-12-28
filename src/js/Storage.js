@@ -97,7 +97,7 @@ function setHistoryLimit() {
     set('historyLimit', 90);
 }
 
-function setWatchedEpisodesFromHistory() {
+export function setWatchedEpisodesFromHistory() {
     new History().search(function (seen) {
         for (var i = 0; i < seen.length; i ++)
             markAsWatched(seen[i].season, seen[i].episode);
@@ -108,10 +108,10 @@ function setUpdateDate() {
     set('updateDate', new Date().setDate(new Date().getDate() + 7));
 }
 
-function set(key, data) {
+export function set(key, data) {
     localStorage.setItem(NAMESPACE + '.' + key, JSON.stringify(data));
 }
 
-function get(key) {
+export function get(key) {
     return JSON.parse(localStorage.getItem(NAMESPACE + '.' + key));
 }
