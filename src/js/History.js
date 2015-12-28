@@ -2,8 +2,14 @@
 
 export class History {
 
+        constructor(limit) {
+        this.limit = limit;
+    }
+
     search(callback) {
-        chrome.history.search({text: 'http://southpark.cc.com/full-episodes/', maxResults:1000, startTime:0}, (results) => this.collectFrom(results, callback));
+        var currentTime = new Date().setDate(new Date().getDate());
+        var start  = this.limit; 
+        chrome.history.search({text: 'http://southpark.cc.com/full-episodes/', maxResults:1000, startTime: start, endTime: currentTime}, (results) => this.collectFrom(results, callback));
     }
 
     collectFrom(results, callback) {
@@ -11,7 +17,6 @@ export class History {
         var found;
 
         for (var i = 0; i < results.length; i ++) {
-
             found = results[i].url.match(/s\d+e\d+/);
 
             if (found)

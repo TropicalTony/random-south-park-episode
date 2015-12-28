@@ -19,7 +19,7 @@ import {calculateEpisodeList} from '../js/WikiParser';
     document.getElementById('resetHistory').onclick = function() {
         var resetedList = calculateEpisodeList(get('totalSeasons'), get('seasonLengths'));
         set('unwatchedEpisodes', resetedList);
-        setWatchedEpisodesFromHistory(buildEpisodeList);
+        setWatchedEpisodesFromHistory(new Date().setDate(new Date().getDate()) - 24*60*60*1000*90, buildEpisodeList);
     }
 
     function init() {
@@ -137,7 +137,6 @@ import {calculateEpisodeList} from '../js/WikiParser';
     function getActiveSeason() {
         if (document.getElementById('seasonList').value == undefined)
             return 1;
-
         return document.getElementById('seasonList').value;
     }
 

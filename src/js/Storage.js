@@ -50,8 +50,8 @@ export function getUnwatchedEpisodes() {
 }
 
 function initHistory() {
-    if (get('hasSeriesInfo') != true){
-        setWatchedEpisodesFromHistory();
+    if (get('hasSeriesInfo') != true) {
+        setWatchedEpisodesFromHistory(new Date().setDate(new Date().getDate()) - 24*60*60*1000*90);
     }
 
 }
@@ -97,8 +97,8 @@ function setHistoryLimit() {
     set('historyLimit', 90);
 }
 
-export function setWatchedEpisodesFromHistory(callback) {
-    new History().search(function (seen) {
+export function setWatchedEpisodesFromHistory(ms, callback) {
+    new History(ms).search(function (seen) {
         for (var i = 0; i < seen.length; i ++)
             markAsWatched(seen[i].season, seen[i].episode);
 
