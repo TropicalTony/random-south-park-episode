@@ -7,17 +7,17 @@ import {calculateEpisodeList} from '../js/WikiParser';
 
     document.getElementById('seasonList').onchange = function () {
         document.getElementById('episodeList').innerHTML = '';
-        buildEpisodeList(document.getElementById('seasonList').value);
+        buildEpisodeList();
     };
 
     document.getElementById('resetAll').onclick = function () {
         var resetedList = calculateEpisodeList(get('totalSeasons'), get('seasonLengths'));
         set('unwatchedEpisodes', resetedList);
-        buildEpisodeList(document.getElementById('seasonList').value);
+        buildEpisodeList();
     }
 
     document.getElementById('resetHistory').onclick = function() {
-        setWatchedEpisodesFromHistory();
+        setWatchedEpisodesFromHistory(buildEpisodeList);
     }
 
     function init() {
@@ -25,7 +25,7 @@ import {calculateEpisodeList} from '../js/WikiParser';
         buildSeasonList();
     }
 
-    function buildSeasonList(season) {
+    function buildSeasonList() {
         var div = document.getElementById('seasonList');
 
         for (var i = 0; i < get('totalSeasons'); i++) {
@@ -34,7 +34,7 @@ import {calculateEpisodeList} from '../js/WikiParser';
             optionValue.value = (i + 1).toString();
             div.appendChild(optionValue);
         }
-        buildEpisodeList(1);
+        buildEpisodeList();
     }
 
     function buildCheckAllButton() {
@@ -44,7 +44,7 @@ import {calculateEpisodeList} from '../js/WikiParser';
         checkAllInput.id = 'checkAllBox'
         checkAll.appendChild(checkAllInput);
         checkAllInput.onclick = function () {
-            var seasonToCheck = document.getElementById('seasonList').value;
+            var seasonToCheck = getActiveSeason();
             var checkedSeason = get('unwatchedEpisodes');
             if (checkAllInput.checked === true) {
                 checkedSeason[seasonToCheck - 1] = [];
@@ -54,7 +54,7 @@ import {calculateEpisodeList} from '../js/WikiParser';
                 buildFullSeason(seasonToCheck);
             }
             document.getElementById('episodeList').innerHTML = '';
-            buildEpisodeList(seasonToCheck);
+            buildEpisodeList();
 
         }
 
@@ -72,7 +72,8 @@ import {calculateEpisodeList} from '../js/WikiParser';
         }
     }
 
-    function buildEpisodeList(season) {
+    function buildEpisodeList() {
+        var season = getActiveSeason();
         checkAllButtonStatus(season);
         document.getElementById('episodeList').innerHTML = '';
         var div = document.getElementById('episodeList');
@@ -107,7 +108,7 @@ import {calculateEpisodeList} from '../js/WikiParser';
     }
 
     function save() {
-        var selectedSeason = document.getElementById('seasonList').value;
+        var selectedSeason = getActiveSeason();
         var newEpisodes = [];
 
         for (var i = 0; i < get('seasonLengths')[selectedSeason - 1]; i++)
@@ -129,6 +130,13 @@ import {calculateEpisodeList} from '../js/WikiParser';
         var unwatchedEpisodes = get('unwatchedEpisodes');
         unwatchedEpisodes[season - 1] = fullSeason;
         set('unwatchedEpisodes', unwatchedEpisodes);
+    }
+
+    function getActiveSeason() {
+        if (document.getElementById('seasonList').value == undefined)
+            return 1;
+
+        return document.getElementById('seasonList').value;
     }
 
 
