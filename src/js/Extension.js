@@ -1,7 +1,7 @@
 'use strict';
 
 import {RandomEpisode} from './RandomEpisode';
-import {hasToInitSeriesInfo, hasToUpdateSeriesInfo, initSeriesInfo, updateSeriesInfoAnd, markAsWatched} from './Storage';
+import {hasToInitSeriesInfo, hasToUpdateSeriesInfo, initSeriesInfo, updateSeriesInfoAnd, markAsWatched, syncHistory} from './Storage';
 
 export class Extension {
 
@@ -29,7 +29,7 @@ export class Extension {
     }
 
     start() {
-        new RandomEpisode().generateAnd((random) => this.show(random));
+        syncHistory(new RandomEpisode().generateAnd((random) => this.show(random)));
     }
 
     show(random) {

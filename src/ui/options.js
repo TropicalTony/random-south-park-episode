@@ -1,6 +1,6 @@
 'use strict';
 
-import {setWatchedEpisodesFromHistory, set, get} from '../js/Storage';
+import {setWatchedEpisodesFromHistory,syncHistory, set, get} from '../js/Storage';
 import {calculateEpisodeList} from '../js/WikiParser';
 
 
@@ -23,8 +23,7 @@ import {calculateEpisodeList} from '../js/WikiParser';
     }
 
     function init() {
-        buildCheckAllButton();
-        buildSeasonList();
+        syncHistory(buildCheckAllButton);
     }
 
     function buildSeasonList() {
@@ -64,6 +63,7 @@ import {calculateEpisodeList} from '../js/WikiParser';
         labelCheckAll.id = 'checkAllLable';
         labelCheckAll.appendChild(document.createTextNode('Check/Uncheck all'));
         checkAll.appendChild(labelCheckAll);
+        buildSeasonList();
     }
 
     function checkAllButtonStatus(season) {

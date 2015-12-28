@@ -17,8 +17,8 @@ export function initSeriesInfo(callback) {
     callWikiAnd((xmlDoc) => {
         initHistory();
         saveSeriesInfo(parseInfoFromWiki(xmlDoc));
-        setHistoryLimit();
         setUpdateDate();
+        setSyncTime();
     });
 
         if (callback)
@@ -93,20 +93,22 @@ function updateSeriesInfo(info) {
     saveSeriesInfo(info);
 }
 
-function setHistoryLimit() {
-    set('historyLimit', 90);
-}
-
-export function setWatchedEpisodesFromHistory(ms, callback) {
-    new History(ms).search(function (seen) {
+export function setWatchedEpisodesFromHistory(startTime, callback) {
+    new History(startTime).search(function (seen) {
         for (var i = 0; i < seen.length; i ++)
             markAsWatched(seen[i].season, seen[i].episode);
-
+        console.log('finished updateing history');
         if (callback)
             callback();
     });
+}
 
-
+function setSyncTime() {
+    set('lastSyncTime', new Date().setDate(new Date().getDate()) );
+}
+export function syncHistory(callback) {
+    setWatchedEpisodesFromHistory(get('lastSyncTime'), callback);
+    setSyncTime();
 }
 
 function setUpdateDate() {
