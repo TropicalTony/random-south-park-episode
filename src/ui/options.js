@@ -17,6 +17,8 @@ import {calculateEpisodeList} from '../js/WikiParser';
     }
 
     document.getElementById('resetHistory').onclick = function() {
+        var resetedList = calculateEpisodeList(get('totalSeasons'), get('seasonLengths'));
+        set('unwatchedEpisodes', resetedList);
         setWatchedEpisodesFromHistory(buildEpisodeList);
     }
 
