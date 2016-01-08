@@ -1,6 +1,6 @@
 {
   "name": "random-sp-episode",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Open up a random South Park episode in a new tab",
   "main": "src/js/Main.js",
   "author": [
