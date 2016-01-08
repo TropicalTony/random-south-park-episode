@@ -1,5 +1,6 @@
 {
   "name": "Random South Park Episode",
+  "short_name":"Random SP episode", 
   "description": "Open up a random South Park episode in a new tab",
   "version": "1.0.0",
   "options_page": "src/ui/options.html",
