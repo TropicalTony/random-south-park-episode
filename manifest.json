@@ -2,7 +2,6 @@
   "name": "Random South Park Episode",
   "description": "Open up a random South Park episode in a new tab",
   "version": "1.0.0",
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "options_page": "src/ui/options.html",
   "manifest_version": 2,
   "author": [
@@ -18,8 +17,6 @@
   "permissions": [
     "history",
     "tabs",
-    "https://*/*",
-    "http://*/*",
     "storage",
     "https://en.wikipedia.org/wiki/List_of_South_Park_episodes"
   ],
