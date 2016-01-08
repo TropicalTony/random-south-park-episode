@@ -97,7 +97,7 @@ export function setWatchedEpisodesFromHistory(startTime, callback) {
     new History(startTime).search(function (seen) {
         for (var i = 0; i < seen.length; i ++)
             markAsWatched(seen[i].season, seen[i].episode);
-        console.log('finished updateing history');
+
         if (callback)
             callback();
     });
