@@ -3,12 +3,11 @@
 export function parseInfoFromWiki(xmlDoc) {
     var parsed = {};
 
-    var html = xmlDoc.getElementsByClassName('wikitable plainrowheaders');
+    var html = xmlDoc.getElementsByClassName('wikitable plainrowheaders wikiepisodetable');
+    var totalSeasons = html.length - 1; //@TODO read in season 19 when it's out.
     html = html[0].getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-
-    var totalSeasons = html.length - 2;
-
     html = xmlDoc.getElementsByClassName('wikitable plainrowheaders');
+
 
     parsed.episodeNames = parseEpisodeNames(html, totalSeasons);
     parsed.seasonLengths = parseSeasonLengths(html, totalSeasons);
