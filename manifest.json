@@ -2,10 +2,10 @@
   "name": "Random South Park Episode",
   "short_name":"Random SP episode",
   "description": "Open up a random South Park episode in a new tab",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "options_page": "src/ui/options.html",
   "manifest_version": 2,
-  "author": [
+  "authors": [
     "Tõnis Tenno",
     "Uku Pattak"
   ],
