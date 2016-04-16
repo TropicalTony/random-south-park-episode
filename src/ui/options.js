@@ -146,7 +146,7 @@ function initGA() {
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
     ga('create', 'UA-71620285-3', 'auto');
-    ga('send', 'pageview');
+    ga('send', 'pageview', '/options.html');
 }
 
 init();
