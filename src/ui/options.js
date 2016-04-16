@@ -22,6 +22,7 @@ document.getElementById('resetHistory').onclick = function () {
 
 function init() {
     syncHistory(buildCheckAllButton);
+    initGA();
 }
 
 function buildSeasonList() {
@@ -136,6 +137,16 @@ function getActiveSeason() {
     if (document.getElementById('seasonList').value == undefined)
         return 1;
     return document.getElementById('seasonList').value;
+}
+
+function initGA() {
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-71620285-3', 'auto');
+    ga('send', 'pageview');
 }
 
 init();

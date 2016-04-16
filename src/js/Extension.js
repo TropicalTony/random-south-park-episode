@@ -20,7 +20,7 @@ export class Extension {
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-        ga('create', 'UA-71620285-2', 'auto');
+        ga('create', 'UA-71620285-4', 'auto');
         ga('send', 'pageview');
     }
 
