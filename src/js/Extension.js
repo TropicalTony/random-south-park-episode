@@ -21,6 +21,8 @@ export class Extension {
         })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
         ga('create', 'UA-71620285-4', 'auto');
+        ga('set', 'checkProtocolTask', function(){});
+        ga('require', 'displayfeatures');
     }
 
     addListener() {

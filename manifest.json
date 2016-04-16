@@ -21,7 +21,7 @@
     "storage",
     "https://en.wikipedia.org/wiki/List_of_South_Park_episodes"
   ],
-  "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'",
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://www.google-analytics.com; object-src 'self'",
   "icons": {
     "48": "src/img/icon-48.png",
     "128": "src/img/icon-128.png"
