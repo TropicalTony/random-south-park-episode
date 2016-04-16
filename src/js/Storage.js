@@ -14,6 +14,7 @@ export function hasToUpdateSeriesInfo() {
 }
 
 export function initSeriesInfo(callback) {
+
     callWikiAnd((xmlDoc) => {
         initHistory();
         saveSeriesInfo(parseInfoFromWiki(xmlDoc));
@@ -62,8 +63,9 @@ function callWikiAnd(callback) {
     xhr.responseType = 'document';
 
     xhr.onreadystatechange = () => {
-        if (xhr.readyState == 4 && xhr.responseXML)
+        if (xhr.readyState == 4 && xhr.responseXML && xhr.responseXML != undefined)
             callback(xhr.responseXML);
+            
     };
     xhr.send();
 }
