@@ -1,9 +1,9 @@
 {
   "name": "Random South Park Episode",
   "short_name":"Random SP episode",
-  "description": "Open up a random South Park episode in a new tab",
-  "version": "1.0.4",
-  "options_page": "src/ui/options.html",
+  "description": "Open up a random South Park episode",
+  "version": "1.0.5",
+  "options_page": "dist/options.html",
   "manifest_version": 2,
   "authors": [
     "Tõnis Tenno",
@@ -23,7 +23,7 @@
   ],
   "content_security_policy": "script-src 'self' 'unsafe-eval' https://www.google-analytics.com; object-src 'self'",
   "icons": {
-    "48": "src/img/icon-48.png",
-    "128": "src/img/icon-128.png"
+    "48": "img/icon-48.png",
+    "128": "img/icon-128.png"
   }
 }

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>Options - Random South Park Episode</title>
     <link rel="stylesheet" type="text/css" href="options.css">
 </head>
 
@@ -10,26 +11,25 @@
         <h2>Options</h2>
     </header>
 
-    <div class="bodyLayout">
+    <main class="bodyLayout">
         <div class="bodyContainer">
 
             <div class="seasonContainer">
                 <h2 class="mainHeading">Ignored episodes</h2>
 
-                <select id="seasonList">
-                </select>
+                <select id="seasonList"></select>
             </div>
             <div id="checkAll"></div>
             <div id="episodeList"></div>
             <button type="button" id="resetAll">Reset all seasons</button>
             <button type="button" id="resetHistory">Reset from history</button>
         </div>
-    </div>
+    </main>
 
     <footer>
         <a href="https://github.com/syyfilis/randomSPepisode" target="_blank">Open-Source Project</a>
     </footer>
 
-    <script type="text/javascript" src="../../dist/options-ui.js"></script>
+    <script type="text/javascript" src="options.js"></script>
 </body>
 </html>
