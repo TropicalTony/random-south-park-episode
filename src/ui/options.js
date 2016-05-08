@@ -9,13 +9,13 @@ document.getElementById('seasonList').onchange = function () {
 };
 
 document.getElementById('resetAll').onclick = function () {
-    var resetedList = calculateEpisodeList(get('totalSeasons'), get('seasonLengths'));
+    var resetedList = calculateEpisodeList(get('seasonLengths'));
     set('unwatchedEpisodes', resetedList);
     buildEpisodeList();
 }
 
 document.getElementById('resetHistory').onclick = function () {
-    var resetedList = calculateEpisodeList(get('totalSeasons'), get('seasonLengths'));
+    var resetedList = calculateEpisodeList(get('seasonLengths'));
     set('unwatchedEpisodes', resetedList);
     setWatchedEpisodesFromHistory(new Date().setDate(new Date().getDate()) - 24 * 60 * 60 * 1000 * 90, buildEpisodeList);
 }

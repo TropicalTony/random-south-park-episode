@@ -1,7 +1,9 @@
 'use strict';
 
+import {parseInfoFromWiki} from './WikiParser';
 import {RandomEpisode} from './RandomEpisode';
 import {hasToInitSeriesInfo, hasToUpdateSeriesInfo, initSeriesInfo, updateSeriesInfoAnd, markAsWatched, syncHistory} from './Storage';
+var Firebase = require("firebase");
 
 export class Extension {
 
@@ -46,6 +48,7 @@ export class Extension {
     }
 
     show(random) {
+        parseInfoFromWiki();
         var url = 'http://southpark.cc.com/full-episodes/s' + random.season + 'e' + random.episode;
 
         markAsWatched(random.season, random.episode);

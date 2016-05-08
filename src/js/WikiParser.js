@@ -1,59 +1,59 @@
 'use strict';
+var Firebase = require("firebase");
+import {saveSeriesInfo} from './Storage';
 
-export function parseInfoFromWiki(xmlDoc) {
-    var parsed = {};
+export function parseInfoFromWiki() {
+    getSeasonsObject(buildLocalStorage);
 
-    var html = xmlDoc.getElementsByClassName('wikitable plainrowheaders wikiepisodetable');
-    var totalSeasons = html.length - 1; //@TODO read in season 19 when it's out.
-    html = html[0].getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-    html = xmlDoc.getElementsByClassName('wikitable plainrowheaders');
-
-
-    parsed.episodeNames = parseEpisodeNames(html, totalSeasons);
-    parsed.seasonLengths = parseSeasonLengths(html, totalSeasons);
-    parsed.unwatchedEpisodes = calculateEpisodeList(totalSeasons, parsed.seasonLengths);
-    parsed.hasSeriesInfo = true;
-    parsed.totalSeasons = totalSeasons;
-
-    return parsed;
 }
 
-function parseEpisodeNames(html, totalSeasons) {
+function buildLocalStorage(seasonsObject) {
+    var parsed = {};
+    parsed.episodeNames = parseEpisodeNames(seasonsObject);
+    parsed.seasonLengths = parseSeasonLengths(seasonsObject);
+    parsed.unwatchedEpisodes = calculateEpisodeList(parseSeasonLengths(seasonsObject));
+    parsed.hasSeriesInfo = true;
+    parsed.totalSeasons = parsed.seasonLengths.length;
+    saveSeriesInfo(parsed);
+}
+
+function parseEpisodeNames(seasonsObject) {
     var names = [];
 
-    for (var i = 0; i < totalSeasons; i++) {
-        var episodeNames = [];
-        var episodeTable = getEpisodeTableFrom(html, i);
-
-        for (var j = 0; j < episodeTable.length - 1; j++)
-            episodeNames.push(episodeTable[j + 1].getElementsByTagName('td')[1].textContent);
-
-        names.push(episodeNames);
+    for(var season in seasonsObject) {
+        var currentSeason = seasonsObject[season];
+        var episodeList = [];
+        for (var episode in currentSeason) {
+            episodeList.push(currentSeason[episode]);
+        }
+        names.push(episodeList);
     }
     return names;
 }
 
-function parseSeasonLengths(html, totalSeasons) {
+function parseSeasonLengths(seasonsObject) {
     var seasonLengths = [];
-
-    for (var i = 0; i < totalSeasons; i++) {
-        seasonLengths.push(getEpisodeTableFrom(html, i).length - 1);
+    for (var season in seasonsObject) {
+        seasonLengths.push(seasonsObject[season].length - 1)
     }
     return seasonLengths;
 }
 
-function getEpisodeTableFrom(html, index) {
-    return html[index + 2].getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-}
-
-export function calculateEpisodeList(totalSeasons, seasonLengths) {
+export function calculateEpisodeList(seasonLengths) {
     var episodes = [];
-
-    for (var t = 0; t < totalSeasons; t++) {
+    for (var t = 0; t < seasonLengths.length; t++) {
         episodes.push([]);
 
         for (var s = 0; s < seasonLengths[t]; s ++)
             episodes[t].push(s + 1);
     }
     return episodes;
+}
+
+function getSeasonsObject(callback) {
+    var myFirebaseRef = new Firebase("https://shining-inferno-2925.firebaseio.com");
+    myFirebaseRef.child("/").on("value", function(snapshot) {
+        callback(snapshot.val());
+    });
+
 }

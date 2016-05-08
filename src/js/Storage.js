@@ -13,32 +13,27 @@ export function hasToUpdateSeriesInfo() {
     return get('updateDate') && get('updateDate') <= Date.now();
 }
 
-export function initSeriesInfo(callback) {
+export function initSeriesInfo() {
 
-    callWikiAnd((xmlDoc) => {
+    parseInfoFromWiki(() => {
         initHistory();
-        saveSeriesInfo(parseInfoFromWiki(xmlDoc));
         setUpdateDate();
         setSyncTime();
     });
-
-        if (callback)
-            callback();
-    };
-
+}
+    
 
 export function updateSeriesInfoAnd(callback) {
-    callWikiAnd((xmlDoc) => {
-        updateSeriesInfo(parseInfoFromWiki(xmlDoc));
-        setUpdateDate();
-        callback();
-    });
+    //parseInfoFromWiki(() => {
+        //updateSeriesInfo(parseInfoFromWiki(xmlDoc));
+       // setUpdateDate();
+        //callback();
+   // });
 }
 
 export function markAsWatched(season, episode) {
     var unwatchedEpisodes = get('unwatchedEpisodes');
     episode = parseInt(episode);
-
     if (unwatchedEpisodes[season - 1].indexOf(episode) === -1)
         return;
 
@@ -56,21 +51,10 @@ function initHistory() {
     }
 
 }
-function callWikiAnd(callback) {
-    var xhr = new XMLHttpRequest();
 
-    xhr.open('GET', 'https://en.wikipedia.org/wiki/List_of_South_Park_episodes', true);
-    xhr.responseType = 'document';
 
-    xhr.onreadystatechange = () => {
-        if (xhr.readyState == 4 && xhr.responseXML && xhr.responseXML != undefined)
-            callback(xhr.responseXML);
-            
-    };
-    xhr.send();
-}
 
-function saveSeriesInfo(info) {
+export function saveSeriesInfo(info) {
     set('totalSeasons', info.totalSeasons);
     set('seasonLengths', info.seasonLengths);
     set('episodeNames', info.episodeNames);
@@ -78,7 +62,7 @@ function saveSeriesInfo(info) {
     set('hasSeriesInfo', info.hasSeriesInfo);
 }
 
-function updateSeriesInfo(info) {
+function updateSeriesInfo(info) { 
     var unwatchedEpisodes = get('unwatchedEpisodes');
 
     for (; info.totalSeasons > get('totalSeasons'); info.totalSeasons --)
@@ -98,7 +82,9 @@ function updateSeriesInfo(info) {
 export function setWatchedEpisodesFromHistory(startTime, callback) {
     new History(startTime).search(function (seen) {
         for (var i = 0; i < seen.length; i ++)
-            markAsWatched(seen[i].season, seen[i].episode);
+            if (seen[i].season != undefined && seen[i].episode != undefined) {
+                markAsWatched(seen[i].season, seen[i].episode);
+            }
 
         if (callback)
             callback();
