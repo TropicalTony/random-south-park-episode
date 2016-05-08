@@ -1,6 +1,5 @@
 'use strict';
-
-import {parseInfoFromWiki} from './WikiParser';
+import {initLocalStorage, updateLocalStorage} from './WikiParser';
 import {History} from './History';
 
 const NAMESPACE = 'randomSpEpisodeExt';
@@ -15,20 +14,18 @@ export function hasToUpdateSeriesInfo() {
 
 export function initSeriesInfo() {
 
-    parseInfoFromWiki(() => {
+    initLocalStorage(() => {
         initHistory();
         setUpdateDate();
         setSyncTime();
     });
 }
     
-
 export function updateSeriesInfoAnd(callback) {
-    //parseInfoFromWiki(() => {
-        //updateSeriesInfo(parseInfoFromWiki(xmlDoc));
-       // setUpdateDate();
-        //callback();
-   // });
+    updateLocalStorage(() => {
+        setUpdateDate();
+        callback();
+    });
 }
 
 export function markAsWatched(season, episode) {
@@ -51,8 +48,6 @@ function initHistory() {
     }
 
 }
-
-
 
 export function saveSeriesInfo(info) {
     set('totalSeasons', info.totalSeasons);
@@ -94,6 +89,7 @@ export function setWatchedEpisodesFromHistory(startTime, callback) {
 function setSyncTime() {
     set('lastSyncTime', new Date().setDate(new Date().getDate()) );
 }
+
 export function syncHistory(callback) {
     setWatchedEpisodesFromHistory(get('lastSyncTime'), callback);
     setSyncTime();

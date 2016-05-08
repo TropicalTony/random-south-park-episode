@@ -1,13 +1,26 @@
 'use strict';
-//@TODO Refactor class and function names
+//@TODO Change file name
 var Firebase = require("firebase");
 import {saveSeriesInfo} from './Storage';
 
-export function parseInfoFromWiki() {
+export function initLocalStorage() {
     getSeasonsObject(buildLocalStorage);
 
 }
 
+export function updateLocalStorage() {
+    getSeasonsObject(updateSeasonInfo);
+}
+
+function updateSeasonInfo(seasonsObject) {
+    var parsed = {};
+    parsed.episodeNames = parseEpisodeNames(seasonsObject);
+    parsed.seasonLengths = parseSeasonLengths(seasonsObject);
+    parsed.totalSeasons = parsed.seasonLengths.length;
+    set('totalSeasons', parsed.totalSeasons);
+    set('seasonLengths', parsed.seasonLengths);
+    set('episodeNames', parsed.episodeNames);
+}
 function buildLocalStorage(seasonsObject) {
     var parsed = {};
     parsed.episodeNames = parseEpisodeNames(seasonsObject);
@@ -53,6 +66,7 @@ export function calculateEpisodeList(seasonLengths) {
 
 function getSeasonsObject(callback) {
     var myFirebaseRef = new Firebase("https://shining-inferno-2925.firebaseio.com");
+
     myFirebaseRef.child("/").on("value", function(snapshot) {
         callback(snapshot.val());
     });
