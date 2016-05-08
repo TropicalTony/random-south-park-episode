@@ -4,7 +4,8 @@ import {parseInfoFromWiki} from './WikiParser';
 import {RandomEpisode} from './RandomEpisode';
 import {hasToInitSeriesInfo, hasToUpdateSeriesInfo, initSeriesInfo, updateSeriesInfoAnd, markAsWatched, syncHistory} from './Storage';
 var Firebase = require("firebase");
-
+//@TODO when new episode out, force to watch new episode.
+//@TODO add new season with dates to firebase.
 export class Extension {
 
     constructor() {
