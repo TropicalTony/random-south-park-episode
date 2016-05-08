@@ -1,4 +1,5 @@
 'use strict';
+//@TODO Refactor class and function names
 var Firebase = require("firebase");
 import {saveSeriesInfo} from './Storage';
 
