@@ -1,8 +1,7 @@
 'use strict';
 
 import {RandomEpisode} from './RandomEpisode';
-import {hasToInitSeriesInfo, hasToUpdateSeriesInfo, initSeriesInfo, updateSeriesInfoAnd, markAsWatched, syncHistory} from './Storage';
-var Firebase = require("firebase");
+import {hasToInitSeriesInfo, hasToUpdateSeriesInfo, useOfficalSite, initSeriesInfo, updateSeriesInfoAnd, markAsWatched, syncHistory} from './Storage';
 //@TODO when new episode out, force to watch new episode.
 //@TODO add new season with dates to firebase.
 export class Extension {
@@ -48,7 +47,8 @@ export class Extension {
     }
 
     show(random) {
-        var url = 'http://southpark.cc.com/full-episodes/s' + random.season + 'e' + random.episode;
+
+        var url = getValidLink(random.season, random.episode);
 
         markAsWatched(random.season, random.episode);
         this.openEpisode(url);
@@ -65,5 +65,15 @@ export class Extension {
             else
                 chrome.tabs.create({ url: url });
         });
+    }
+
+}
+
+function getValidLink (season, episode) {
+    if (useOfficalSite()) {
+         return 'http://southpark.cc.com/full-episodes/s' + season + 'e' + episode;
+    }
+    else {
+        return 'http://kisscartoon.me/Cartoon/South-Park-Season-' + season + '/Episode-0' + episode;
     }
 }

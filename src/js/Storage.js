@@ -12,6 +12,10 @@ export function hasToUpdateSeriesInfo() {
     return get('updateDate') && get('updateDate') <= Date.now();
 }
 
+export function useOfficalSite() {
+    return get('useOfficalSite');
+}
+
 export function initSeriesInfo() {
 
     initLocalStorage(() => {
@@ -55,23 +59,7 @@ export function saveSeriesInfo(info) {
     set('episodeNames', info.episodeNames);
     set('unwatchedEpisodes', info.unwatchedEpisodes);
     set('hasSeriesInfo', info.hasSeriesInfo);
-}
-
-function updateSeriesInfo(info) { 
-    var unwatchedEpisodes = get('unwatchedEpisodes');
-
-    for (; info.totalSeasons > get('totalSeasons'); info.totalSeasons --)
-        unwatchedEpisodes.push(info.unwatchedEpisodes[info.totalSeasons - 1]);
-
-    var lastSavedSeasonLength = get('seasonLengths')[get('totalSeasons') - 1];
-    var thatSeasonCurrentLength = info.seasonLengths[get('totalSeasons') - 1];
-
-    for (; lastSavedSeasonLength + 1 <= thatSeasonCurrentLength; lastSavedSeasonLength ++)
-        unwatchedEpisodes[get('totalSeasons') - 1].push(lastSavedSeasonLength + 1);
-
-    info.unwatchedEpisodes = unwatchedEpisodes;
-
-    saveSeriesInfo(info);
+    set('useOfficalSite', true);
 }
 
 export function setWatchedEpisodesFromHistory(startTime, callback) {

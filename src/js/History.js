@@ -10,6 +10,7 @@ export class History {
         var currentTime = new Date().setDate(new Date().getDate());
         var start  = this.limit;
         chrome.history.search({text: 'http://southpark.cc.com/full-episodes/', maxResults:1000, startTime: start, endTime: currentTime}, (results) => this.collectFrom(results, callback));
+        chrome.history.search({text: 'http://southpark.cc.com/full-episodes/', maxResults:1000, startTime: start, endTime: currentTime}, (results) => this.collectFrom(results, callback));
     }
 
     collectFrom(results, callback) {
