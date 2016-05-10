@@ -21,6 +21,7 @@ document.getElementById('resetHistory').onclick = function () {
 }
 
 function init() {
+    buildOfficialSiteToggler();
     syncHistory(buildCheckAllButton);
     initGA();
 }
@@ -37,12 +38,36 @@ function buildSeasonList() {
     buildEpisodeList();
 }
 
+function buildOfficialSiteToggler() {
+    var official = document.getElementById('officialSite');
+    var officialInput = document.createElement('input');
+    officialInput.type = 'checkbox';
+    officialInput.id = 'officialSiteToggler'
+    officialInput.checked = get('useOfficalSite');
+    
+    officialInput.onclick = function() {
+        if (get('useOfficalSite')) {
+            set('useOfficalSite', false);
+        }
+        else {
+            set('useOfficalSite', true);
+        }
+    }
+    var labelOfficialToggler = document.createElement('label');
+    labelOfficialToggler.id = 'officialSiteTogglerLable';
+    labelOfficialToggler.appendChild(document.createTextNode('Use official South Park Site?'));
+    official.appendChild(officialInput);
+    official.appendChild(labelOfficialToggler);
+
+} 
+
 function buildCheckAllButton() {
     var checkAll = document.getElementById('checkAll');
     var checkAllInput = document.createElement('input');
     checkAllInput.type = 'checkbox';
     checkAllInput.id = 'checkAllBox'
     checkAll.appendChild(checkAllInput);
+
     checkAllInput.onclick = function () {
         var seasonToCheck = getActiveSeason();
         var checkedSeason = get('unwatchedEpisodes');

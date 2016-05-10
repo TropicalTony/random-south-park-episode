@@ -86,12 +86,12 @@ footer a {
 footer a:hover {
     color: #F7CB44;
 }
-#checkAll{
+#checkAll, #officialSiteToggler{
     margin-top:20px;
     margin-bottom: 20px;
     margin-left:30px;
 }
-#checkAllLable{
+#checkAllLable, #officialSiteTogglerLable {
     font-weight: bold;
 }
 button {
