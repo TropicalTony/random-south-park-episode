@@ -1,7 +1,8 @@
 'use strict';
-import {initLocalStorage, updateLocalStorage} from './WikiParser';
+import {buildLocalStorage, updateSeasonInfo} from './WikiParser';
 import {History} from './History';
 
+var Firebase = require("firebase");
 const NAMESPACE = 'randomSpEpisodeExt';
 
 export function hasToInitSeriesInfo() {
@@ -9,6 +10,8 @@ export function hasToInitSeriesInfo() {
 }
 
 export function hasToUpdateSeriesInfo() {
+    if(get('useOfficalSite') === null)
+        return true;
     return get('updateDate') && get('updateDate') <= Date.now();
 }
 
@@ -17,19 +20,16 @@ export function useOfficalSite() {
 }
 
 export function initSeriesInfo() {
-
-    initLocalStorage(() => {
-        initHistory();
-        setUpdateDate();
-        setSyncTime();
-    });
+    getSeasonsObject(buildLocalStorage);
+    setUpdateDate();
+    setSyncTime();
 }
     
 export function updateSeriesInfoAnd(callback) {
-    updateLocalStorage(() => {
+        getSeasonsObject(updateSeasonInfo);
         setUpdateDate();
         callback();
-    });
+
 }
 
 export function markAsWatched(season, episode) {
@@ -47,9 +47,8 @@ export function getUnwatchedEpisodes() {
 }
 
 function initHistory() {
-    if (get('hasSeriesInfo') != true) {
-        setWatchedEpisodesFromHistory(new Date().setDate(new Date().getDate()) - 24*60*60*1000*90);
-    }
+    setWatchedEpisodesFromHistory(new Date().setDate(new Date().getDate()) - 24*60*60*1000*90);
+    
 
 }
 
@@ -60,6 +59,7 @@ export function saveSeriesInfo(info) {
     set('unwatchedEpisodes', info.unwatchedEpisodes);
     set('hasSeriesInfo', info.hasSeriesInfo);
     set('useOfficalSite', true);
+    initHistory();
 }
 
 export function setWatchedEpisodesFromHistory(startTime, callback) {
@@ -93,4 +93,13 @@ export function set(key, data) {
 
 export function get(key) {
     return JSON.parse(localStorage.getItem(NAMESPACE + '.' + key));
+}
+
+function getSeasonsObject(callback) {
+    var myFirebaseRef = new Firebase("https://shining-inferno-2925.firebaseio.com");
+
+    myFirebaseRef.child("/").on("value", function(snapshot) {
+        callback(snapshot.val());
+    });
+
 }

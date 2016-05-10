@@ -1,18 +1,9 @@
 'use strict';
 //@TODO Change file name
-var Firebase = require("firebase");
-import {saveSeriesInfo} from './Storage';
+import {saveSeriesInfo, get, set, initHistory} from './Storage';
 
-export function initLocalStorage() {
-    getSeasonsObject(buildLocalStorage);
 
-}
-
-export function updateLocalStorage() {
-    getSeasonsObject(updateSeasonInfo);
-}
-
-function updateSeasonInfo(seasonsObject) {
+export function updateSeasonInfo(seasonsObject) {
     var parsed = {};
     parsed.episodeNames = parseEpisodeNames(seasonsObject);
     parsed.seasonLengths = parseSeasonLengths(seasonsObject);
@@ -20,8 +11,11 @@ function updateSeasonInfo(seasonsObject) {
     set('totalSeasons', parsed.totalSeasons);
     set('seasonLengths', parsed.seasonLengths);
     set('episodeNames', parsed.episodeNames);
+    if(get('useOfficalSite') === null)
+        set('useOfficalSite', true);
 }
-function buildLocalStorage(seasonsObject) {
+
+export function buildLocalStorage(seasonsObject) {
     var parsed = {};
     parsed.episodeNames = parseEpisodeNames(seasonsObject);
     parsed.seasonLengths = parseSeasonLengths(seasonsObject);
@@ -64,11 +58,3 @@ export function calculateEpisodeList(seasonLengths) {
     return episodes;
 }
 
-function getSeasonsObject(callback) {
-    var myFirebaseRef = new Firebase("https://shining-inferno-2925.firebaseio.com");
-
-    myFirebaseRef.child("/").on("value", function(snapshot) {
-        callback(snapshot.val());
-    });
-
-}

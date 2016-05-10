@@ -4,7 +4,6 @@ import {RandomEpisode} from './RandomEpisode';
 import {hasToInitSeriesInfo, hasToUpdateSeriesInfo, useOfficalSite, initSeriesInfo, updateSeriesInfoAnd, markAsWatched, syncHistory} from './Storage';
 //@TODO when new episode out, force to watch new episode.
 //@TODO add new season with dates to firebase.
-//TODO Force all users to update their local database.
 export class Extension {
 
     constructor() {
@@ -38,6 +37,7 @@ export class Extension {
         if (hasToInitSeriesInfo())
             setTimeout(() => this.continueOnClick(), 250);
         else if (hasToUpdateSeriesInfo())
+
             updateSeriesInfoAnd(() => this.start());
         else
             this.start();
