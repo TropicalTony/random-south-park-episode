@@ -1,8 +1,9 @@
 'use strict';
+
 import {buildLocalStorage, updateSeasonInfo} from './WikiParser';
 import {History} from './History';
+import Firebase from 'firebase';
 
-var Firebase = require("firebase");
 const NAMESPACE = 'randomSpEpisodeExt';
 
 export function hasToInitSeriesInfo() {
@@ -24,7 +25,7 @@ export function initSeriesInfo() {
     setUpdateDate();
     setSyncTime();
 }
-    
+
 export function updateSeriesInfoAnd(callback) {
         getSeasonsObject(updateSeasonInfo);
         setUpdateDate();
@@ -35,6 +36,7 @@ export function updateSeriesInfoAnd(callback) {
 export function markAsWatched(season, episode) {
     var unwatchedEpisodes = get('unwatchedEpisodes');
     episode = parseInt(episode);
+
     if (unwatchedEpisodes[season - 1].indexOf(episode) === -1)
         return;
 
@@ -48,8 +50,6 @@ export function getUnwatchedEpisodes() {
 
 function initHistory() {
     setWatchedEpisodesFromHistory(new Date().setDate(new Date().getDate()) - 24*60*60*1000*90);
-    
-
 }
 
 export function saveSeriesInfo(info) {
@@ -96,10 +96,9 @@ export function get(key) {
 }
 
 function getSeasonsObject(callback) {
-    var myFirebaseRef = new Firebase("https://shining-inferno-2925.firebaseio.com");
+    var myFirebaseRef = new Firebase('https://shining-inferno-2925.firebaseio.com');
 
-    myFirebaseRef.child("/").on("value", function(snapshot) {
+    myFirebaseRef.child('/').on('value', function(snapshot) {
         callback(snapshot.val());
     });
-
 }

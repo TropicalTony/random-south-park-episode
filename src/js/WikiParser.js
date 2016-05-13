@@ -1,17 +1,19 @@
 'use strict';
-//@TODO Change file name
-import {saveSeriesInfo, get, set, initHistory} from './Storage';
 
+import {saveSeriesInfo, get, set, initHistory} from './Storage';
 
 export function updateSeasonInfo(seasonsObject) {
     var parsed = {};
+
     parsed.episodeNames = parseEpisodeNames(seasonsObject);
     parsed.seasonLengths = parseSeasonLengths(seasonsObject);
     parsed.totalSeasons = parsed.seasonLengths.length;
+
     set('totalSeasons', parsed.totalSeasons);
     set('seasonLengths', parsed.seasonLengths);
     set('episodeNames', parsed.episodeNames);
-    if(get('useOfficalSite') === null)
+
+    if (get('useOfficalSite') === null)
         set('useOfficalSite', true);
 }
 
@@ -41,6 +43,7 @@ function parseEpisodeNames(seasonsObject) {
 
 function parseSeasonLengths(seasonsObject) {
     var seasonLengths = [];
+
     for (var season in seasonsObject) {
         seasonLengths.push(seasonsObject[season].length - 1)
     }
@@ -49,6 +52,7 @@ function parseSeasonLengths(seasonsObject) {
 
 export function calculateEpisodeList(seasonLengths) {
     var episodes = [];
+
     for (var t = 0; t < seasonLengths.length; t++) {
         episodes.push([]);
 
@@ -57,4 +61,3 @@ export function calculateEpisodeList(seasonLengths) {
     }
     return episodes;
 }
-

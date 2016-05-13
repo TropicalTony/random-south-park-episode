@@ -2,8 +2,7 @@
 
 import {RandomEpisode} from './RandomEpisode';
 import {hasToInitSeriesInfo, hasToUpdateSeriesInfo, useOfficalSite, initSeriesInfo, updateSeriesInfoAnd, markAsWatched, syncHistory} from './Storage';
-//@TODO when new episode out, force to watch new episode.
-//@TODO add new season with dates to firebase.
+
 export class Extension {
 
     constructor() {
@@ -71,10 +70,8 @@ export class Extension {
 }
 
 function getValidLink (season, episode) {
-    if (useOfficalSite()) {
-         return 'http://southpark.cc.com/full-episodes/s' + season + 'e' + episode;
-    }
-    else {
-        return 'http://kisscartoon.me/Cartoon/South-Park-Season-' + season + '/Episode-0' + episode;
-    }
+    if (useOfficalSite())
+        return 'http://southpark.cc.com/full-episodes/s' + season + 'e' + episode;
+
+    return 'http://kisscartoon.me/Cartoon/South-Park-Season-' + season + '/Episode-0' + episode;
 }

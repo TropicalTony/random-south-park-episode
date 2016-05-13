@@ -15,9 +15,10 @@ export class History {
     collectFromKissCartoon(results, callback) {
         var seen = [];
         var found;
-        //#TODO make slice gone, sometimes season 16 episodes have double 00, sometimes not. 
+
         for (var i = 0; i < results.length; i ++) {
             found = results[i].url;
+            
             if (found)
                 seen.push({ season: parseInt(found.slice(48,50)), episode: parseInt(found.slice(60,62)) });
         }
