@@ -1,0 +1,22 @@
+{
+  "manifest_version": 2,
+  "name": "Random South Park Episode",
+  "version": "2.0.0",
+  "short_name":"Random SP Episode",
+  "description": "Watch random South Park episode",
+  "author": [
+    "Tõnis Tenno",
+    "Uku Pattak"
+  ],
+  "browser_action": {
+    "default_title": "Watch random South Park episode"
+  },
+  "icons": {
+    "48": "dist/icon-48.png",
+    "128": "dist/icon-128.png"
+  },
+  "background": {
+    "scripts": ["dist/main.js"]
+  },
+  "offline_enabled": false
+}
