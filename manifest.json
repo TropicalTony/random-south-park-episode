@@ -18,5 +18,8 @@
   "background": {
     "scripts": ["dist/main.js"]
   },
+  "permissions": [
+    "tabs"
+  ],
   "offline_enabled": false
 }

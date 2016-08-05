@@ -1,0 +1,10 @@
+{
+    "compact": false,
+    "presets": ["es2015-loose"],
+    "plugins": [
+        "transform-class-properties",
+        "transform-function-bind",
+        "transform-object-rest-spread",
+        "rewire"
+    ]
+}

@@ -1,5 +1,3 @@
-import browser from 'browser';
+import startTheParty from 'master';
 
-browser.onIconClick(() => {
-    console.log('clicked');
-});
+startTheParty();
