@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "start": "webpack --watch",
-    "test": "karma start"
+    "test": "karma start",
+    "ci-test": "karma start --single-run"
   },
   "dependencies": {
     "firebase": "^3.2.1",
