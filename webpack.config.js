@@ -1,5 +1,4 @@
 const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     cache: true,
@@ -28,11 +27,5 @@ module.exports = {
             path.join(__dirname, 'node_modules')
         ],
         extensions: ['', '.js']
-    },
-    plugins: [
-        new CopyWebpackPlugin([{
-            from: path.join(__dirname, 'images'),
-            to: ''
-        }])
-    ]
+    }
 };
