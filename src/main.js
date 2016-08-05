@@ -1,5 +1,5 @@
 import browser from 'browser';
 
-browser.browserAction.onClicked.addListener(() => {
+browser.onIconClick(() => {
     console.log('clicked');
 });

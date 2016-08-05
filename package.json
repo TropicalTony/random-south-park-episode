@@ -2,7 +2,8 @@
   "name": "random-south-park-episode",
   "private": true,
   "scripts": {
-    "start": "webpack --watch"
+    "start": "webpack --watch",
+    "test": "karma start"
   },
   "dependencies": {
     "firebase": "^3.2.1",
