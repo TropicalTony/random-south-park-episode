@@ -12,9 +12,8 @@ $ npm install
 
 #### Develop
 
-
 ```
-$ npm start
+$ npm run start
 ```
 
 and read how-to-test-extension docs
@@ -23,8 +22,14 @@ and read how-to-test-extension docs
 - [Chrome](https://developer.chrome.com/extensions/getstarted#unpacked)
 - [Opera](https://dev.opera.com/extensions/testing/)
 
+### Keep the code clean
+
+```
+$ npm run lint
+```
+
 #### Run tests
 
 ```
-$ npm test
+$ npm run test
 ```

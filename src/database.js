@@ -6,6 +6,4 @@ firebase.initializeApp({
 
 const db = firebase.database();
 
-db.ref('/').on('value', function(snapshot) {
-    console.log(snapshot.val());
-});
+db.ref('/').on('value', function() {});

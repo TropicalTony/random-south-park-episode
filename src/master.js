@@ -8,7 +8,7 @@ function openEpisode() {
     const url = 'http://southpark.cc.com/full-episodes/s08e03';
 
     browser.getActiveTab((tab) => {
-        if (isNewTab(tab.url) || isSouthParkCC(tab.url))
+        if (isNewTab(tab.url) || isSouthParkCC(tab.url))
             browser.updateTab(tab.id, url);
         else
             browser.openTab(url);
