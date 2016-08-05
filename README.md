@@ -22,7 +22,7 @@ and read how-to-test-extension docs
 - [Chrome](https://developer.chrome.com/extensions/getstarted#unpacked)
 - [Opera](https://dev.opera.com/extensions/testing/)
 
-### Keep the code clean
+#### Keep the code clean
 
 ```
 $ npm run lint
