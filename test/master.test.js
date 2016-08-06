@@ -1,25 +1,22 @@
-import startTheParty from 'master';
+import master from 'master';
 
 describe('master', () => {
     let updateExtension, clickOnIcon, tabUrl, isSouthparkUrl
-    let openTabSpy, updateTabSpy, mixpanelSpy, databaseSpy, providerInitSpy;
+    let openTabSpy, updateTabSpy, mixpanelSpy, databaseSpy;
 
     beforeEach(() => {
         openTabSpy = jasmine.createSpy('browser.openTab');
         updateTabSpy = jasmine.createSpy('browser.updateTab');
         mixpanelSpy = {
-            init: jasmine.createSpy('mixpanel.init'),
             trackInstallOrUpdate: jasmine.createSpy('mixpanel.trackInstallOrUpdate'),
             trackShowEpisode: jasmine.createSpy('mixpanel.trackShowEpisode')
         };
         databaseSpy = {
-            init: jasmine.createSpy('database.init'),
             reload: jasmine.createSpy('database.reload')
         };
-        providerInitSpy = jasmine.createSpy();
         isSouthparkUrl = false;
 
-        startTheParty.__set__({
+        master.__set__({
             browser: {
                 onInstallOrUpdate: (callback) => {
                     updateExtension = callback;
@@ -46,25 +43,12 @@ describe('master', () => {
                 }
             },
             provider: {
-                init: providerInitSpy,
                 isSouthparkUrl: () => {
                     return isSouthparkUrl;
                 }
             }
         });
-        startTheParty();
-    });
-
-    it('inits Mixpanel', () => {
-        expect(mixpanelSpy.init).toHaveBeenCalled();
-    });
-
-    it('inits database', () => {
-        expect(databaseSpy.init).toHaveBeenCalled();
-    });
-
-    it('inits provider', () => {
-        expect(providerInitSpy).toHaveBeenCalled();
+        master.init();
     });
 
     describe('update extension', () => {

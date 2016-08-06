@@ -16,7 +16,7 @@
     "128": "images/icon-128.png"
   },
   "background": {
-    "scripts": ["dist/main.js"]
+    "scripts": ["dist/background.js"]
   },
   "permissions": [
     "tabs"

@@ -5,11 +5,11 @@ module.exports = {
     devtool: 'inline-source-map',
 
     entry: {
-        app: path.join(__dirname, 'src', 'main.js')
+        app: path.join(__dirname, 'src', 'bootstrap.js')
     },
     output: {
         path: path.join(__dirname, 'dist'),
-        filename: 'main.js'
+        filename: 'background.js'
     },
 
     module: {

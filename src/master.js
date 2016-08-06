@@ -4,13 +4,11 @@ import database from 'database';
 import episodePicker from 'episodePicker';
 import provider from 'provider';
 
-export default function startTheParty() {
-    mixpanel.init();
-    database.init();
-    provider.init();
-
-    browser.onInstallOrUpdate(mixpanel.trackInstallOrUpdate);
-    browser.onIconClick(handleIconClick);
+export default {
+    init: () => {
+        browser.onInstallOrUpdate(mixpanel.trackInstallOrUpdate);
+        browser.onIconClick(handleIconClick);
+    }
 }
 
 function handleIconClick() {
