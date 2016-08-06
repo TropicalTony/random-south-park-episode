@@ -13,12 +13,17 @@ describe('episodePicker', () => {
                         },
                         11: {
                             episodes: {
-                                1: {},
-                                2: {},
-                                3: {}
+                                11: {},
+                                12: {},
+                                13: {}
                             }
                         }
                     }
+                }
+            },
+            provider: {
+                getUrl: (season, episode) => {
+                    return `http://southpark.cc.com/full-episodes/s${season}e${episode}`
                 }
             }
         });
@@ -33,9 +38,8 @@ describe('episodePicker', () => {
 
             expect(result).toEqual({
                 season: '11',
-                episode: '2',
-                provider: 'southpark.cc.com',
-                url: 'http://southpark.cc.com/full-episodes/s11e02'
+                episode: '12',
+                url: 'http://southpark.cc.com/full-episodes/s11e12'
             });
         });
     });

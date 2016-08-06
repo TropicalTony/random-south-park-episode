@@ -1,4 +1,5 @@
 import database from 'database';
+import provider from 'provider';
 
 export default {
     pick: () => {
@@ -7,8 +8,7 @@ export default {
         const episode = pickEpisode(seasons, season);
 
         return {
-            url: buildSouthparkCCUrl(season, episode),
-            provider: 'southpark.cc.com',
+            url: provider.getUrl(season, episode),
             season: season,
             episode: episode
         };
@@ -26,14 +26,4 @@ function pickEpisode(seasons, season) {
 function randomKey(obj) {
     var keys = Object.keys(obj);
     return keys[keys.length * Math.random() << 0];
-}
-
-function buildSouthparkCCUrl(season, episode) {
-    return `http://southpark.cc.com/full-episodes/s${pad(season)}e${pad(episode)}`;
-}
-
-function pad(num) {
-    if (num < 10)
-        return '0' + num;
-    return num;
 }

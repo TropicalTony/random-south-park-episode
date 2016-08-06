@@ -1,8 +1,8 @@
 import startTheParty from 'master';
 
 describe('master', () => {
-    let updateExtension, clickOnIcon, tabUrl, openTabSpy, updateTabSpy;
-    let mixpanelSpy, databaseSpy;
+    let updateExtension, clickOnIcon, tabUrl, isSouthparkUrl
+    let openTabSpy, updateTabSpy, mixpanelSpy, databaseSpy, providerInitSpy;
 
     beforeEach(() => {
         openTabSpy = jasmine.createSpy('browser.openTab');
@@ -16,6 +16,9 @@ describe('master', () => {
             init: jasmine.createSpy('database.init'),
             reload: jasmine.createSpy('database.reload')
         };
+        providerInitSpy = jasmine.createSpy();
+        isSouthparkUrl = false;
+
         startTheParty.__set__({
             browser: {
                 onInstallOrUpdate: (callback) => {
@@ -41,17 +44,27 @@ describe('master', () => {
                         provider: 'southpark.cc.com'
                     };
                 }
+            },
+            provider: {
+                init: providerInitSpy,
+                isSouthparkUrl: () => {
+                    return isSouthparkUrl;
+                }
             }
         });
         startTheParty();
     });
 
     it('inits Mixpanel', () => {
-        expect(mixpanelSpy.init).toHaveBeenCalledWith();
+        expect(mixpanelSpy.init).toHaveBeenCalled();
     });
 
     it('inits database', () => {
-        expect(databaseSpy.init).toHaveBeenCalledWith();
+        expect(databaseSpy.init).toHaveBeenCalled();
+    });
+
+    it('inits provider', () => {
+        expect(providerInitSpy).toHaveBeenCalled();
     });
 
     describe('update extension', () => {
@@ -77,6 +90,7 @@ describe('master', () => {
 
             it('on same tab when south park episode page is active', () => {
                 tabUrl = 'http://southpark.cc.com/full-episodes/s01e02';
+                isSouthparkUrl = true;
 
                 clickOnIcon();
                 expect(updateTabSpy).toHaveBeenCalledWith(123, 'http://southpark.cc.com/full-episodes/s08e03');
