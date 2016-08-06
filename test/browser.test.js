@@ -1,6 +1,40 @@
 import browser from 'browser';
 
 describe('browser', () => {
+    describe('onInstallOrUpdate()', () => {
+        describe('on Firefox', () => {
+            beforeEach(() => {
+                window.chrome = {
+                    runtime: {}
+                };
+            });
+
+            it('does nothing', () => {
+                expect(browser.onInstallOrUpdate).not.toThrow();
+            });
+        });
+
+        describe('on Chrome and Opera', () => {
+            beforeEach(() => {
+                window.chrome = {
+                    runtime: {
+                        onInstalled: {
+                            addListener: jasmine.createSpy('chrome onInstalled addListener')
+                        }
+                    }
+                };
+            });
+
+            it('passes callback to chrome', () => {
+                const callback = () => {};
+
+                browser.onInstallOrUpdate(callback);
+
+                expect(window.chrome.runtime.onInstalled.addListener).toHaveBeenCalledWith(callback);
+            });
+        });
+    });
+
     describe('onIconClick()', () => {
         beforeEach(() => {
             window.chrome = {

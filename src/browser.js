@@ -1,7 +1,15 @@
 export default {
 
+    onInstallOrUpdate: (callback) => {
+        // Not supported in Firefox yet
+        if (!chrome.runtime.onInstalled)
+            return;
+
+        chrome.runtime.onInstalled.addListener(callback);
+    },
+
     onIconClick: (callback) => {
-        return chrome.browserAction.onClicked.addListener(callback);
+        chrome.browserAction.onClicked.addListener(callback);
     },
 
     getActiveTab: (callback) => {

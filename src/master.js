@@ -1,8 +1,10 @@
 import browser from 'browser';
-import mixpanel from 'mixpanel-browser';
+import mixpanel from 'mixpanel';
 
 export default function startTheParty() {
-    mixpanel.init('d33e9ef8ecb715fef9439208bcbb63b7');
+    mixpanel.init();
+
+    browser.onInstallOrUpdate(mixpanel.trackInstallOrUpdate);
     browser.onIconClick(showEpisode);
 }
 
@@ -15,7 +17,7 @@ function showEpisode() {
         else
             browser.openTab(url);
     });
-    mixpanel.track('Show episode', {
+    mixpanel.trackShowEpisode({
         provider: 'southpark.cc.com',
         season: 8,
         episode: 3

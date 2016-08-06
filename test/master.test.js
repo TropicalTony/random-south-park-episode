@@ -1,17 +1,23 @@
 import startTheParty from 'master';
 
 describe('master', () => {
-    let clickOnIcon, tabUrl, openTabSpy, updateTabSpy;
-    let mixpanelInitSpy, mixpanelTrackSpy;
+    let updateExtension, clickOnIcon, tabUrl, openTabSpy, updateTabSpy;
+    let mixpanelSpy;
 
     beforeEach(() => {
         openTabSpy = jasmine.createSpy('browser.openTab');
         updateTabSpy = jasmine.createSpy('browser.updateTab');
-        mixpanelInitSpy = jasmine.createSpy('mixpanel.init');
-        mixpanelTrackSpy = jasmine.createSpy('mixpanel.track');
+        mixpanelSpy = {
+            init: jasmine.createSpy('mixpanel.init'),
+            trackInstallOrUpdate: jasmine.createSpy('mixpanel.trackInstallOrUpdate'),
+            trackShowEpisode: jasmine.createSpy('mixpanel.trackShowEpisode')
+        };
 
         startTheParty.__set__({
             browser: {
+                onInstallOrUpdate: (callback) => {
+                    updateExtension = callback;
+                },
                 onIconClick: (callback) => {
                     clickOnIcon = callback;
                 },
@@ -21,20 +27,23 @@ describe('master', () => {
                 openTab: openTabSpy,
                 updateTab: updateTabSpy
             },
-            mixpanel: {
-                init: mixpanelInitSpy,
-                track: mixpanelTrackSpy
-            }
+            mixpanel: mixpanelSpy
         });
         startTheParty();
     });
 
     it('inits Mixpanel with token', () => {
-        expect(mixpanelInitSpy).toHaveBeenCalledWith('d33e9ef8ecb715fef9439208bcbb63b7');
+        expect(mixpanelSpy.init).toHaveBeenCalledWith();
+    });
+
+    describe('update extension', () => {
+        it('is tracked', () => {
+            updateExtension({reason: 'update'});
+            expect(mixpanelSpy.trackInstallOrUpdate).toHaveBeenCalledWith({reason: 'update'});
+        });
     });
 
     describe('open episode', () => {
-
         it('on same tab when new tab page is active', () => {
             tabUrl = 'chrome://newtab/';
 
@@ -58,7 +67,7 @@ describe('master', () => {
 
         it('tracks event', () => {
             clickOnIcon();
-            expect(mixpanelTrackSpy).toHaveBeenCalledWith('Show episode', {
+            expect(mixpanelSpy.trackShowEpisode).toHaveBeenCalledWith({
                 provider: 'southpark.cc.com',
                 season: 8,
                 episode: 3
