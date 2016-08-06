@@ -1,6 +1,11 @@
 import firebase from 'firebase';
 
-let data;
+// Fallback data when Firebase is too slow or not connecting
+let data = {
+    seasons: {
+        10: {episodes: { 1: {}, 5: {}, 10: {} }}
+    }
+};
 
 export default {
 
@@ -10,7 +15,11 @@ export default {
             apiKey: '8JkC3cdKxhrZjfyfmbAMabKu7qL9o950ojlxedPy'
         });
         firebase.database().ref('/').on('value', (snapshot) => {
-            data = snapshot;
+            data = snapshot.val();
         });
+    },
+
+    getSeasons: () => {
+        return data.seasons;
     }
 };

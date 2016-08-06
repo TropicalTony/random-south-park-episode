@@ -32,6 +32,16 @@ describe('master', () => {
             database: {
                 init: databaseInitSpy
             },
+            episodePicker: {
+                pick: () => {
+                    return {
+                        url: 'http://southpark.cc.com/full-episodes/s08e03',
+                        season: 8,
+                        episode: 3,
+                        provider: 'southpark.cc.com'
+                    };
+                }
+            }
         });
         startTheParty();
     });
@@ -51,7 +61,7 @@ describe('master', () => {
         });
     });
 
-    describe('open episode', () => {
+    describe('show episode', () => {
         it('on same tab when new tab page is active', () => {
             tabUrl = 'chrome://newtab/';
 
@@ -78,7 +88,8 @@ describe('master', () => {
             expect(mixpanelSpy.trackShowEpisode).toHaveBeenCalledWith({
                 provider: 'southpark.cc.com',
                 season: 8,
-                episode: 3
+                episode: 3,
+                url: 'http://southpark.cc.com/full-episodes/s08e03'
             });
         });
     });

@@ -1,6 +1,7 @@
 import browser from 'browser';
 import mixpanel from 'mixpanel';
 import database from 'database';
+import episodePicker from 'episodePicker';
 
 export default function startTheParty() {
     mixpanel.init();
@@ -11,19 +12,15 @@ export default function startTheParty() {
 }
 
 function showEpisode() {
-    const url = 'http://southpark.cc.com/full-episodes/s08e03';
+    const episode = episodePicker.pick();
 
     browser.getActiveTab((tab) => {
         if (isNewTab(tab.url) || isSouthParkCC(tab.url))
-            browser.updateTab(tab.id, url);
+            browser.updateTab(tab.id, episode.url);
         else
-            browser.openTab(url);
+            browser.openTab(episode.url);
     });
-    mixpanel.trackShowEpisode({
-        provider: 'southpark.cc.com',
-        season: 8,
-        episode: 3
-    });
+    mixpanel.trackShowEpisode(episode);
 }
 
 function isNewTab(url) {
