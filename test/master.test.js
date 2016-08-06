@@ -2,7 +2,7 @@ import startTheParty from 'master';
 
 describe('master', () => {
     let updateExtension, clickOnIcon, tabUrl, openTabSpy, updateTabSpy;
-    let mixpanelSpy, databaseInitSpy;
+    let mixpanelSpy, databaseSpy;
 
     beforeEach(() => {
         openTabSpy = jasmine.createSpy('browser.openTab');
@@ -12,8 +12,10 @@ describe('master', () => {
             trackInstallOrUpdate: jasmine.createSpy('mixpanel.trackInstallOrUpdate'),
             trackShowEpisode: jasmine.createSpy('mixpanel.trackShowEpisode')
         };
-        databaseInitSpy = jasmine.createSpy('database.init');
-
+        databaseSpy = {
+            init: jasmine.createSpy('database.init'),
+            reload: jasmine.createSpy('database.reload')
+        };
         startTheParty.__set__({
             browser: {
                 onInstallOrUpdate: (callback) => {
@@ -29,9 +31,7 @@ describe('master', () => {
                 updateTab: updateTabSpy
             },
             mixpanel: mixpanelSpy,
-            database: {
-                init: databaseInitSpy
-            },
+            database: databaseSpy,
             episodePicker: {
                 pick: () => {
                     return {
@@ -51,7 +51,7 @@ describe('master', () => {
     });
 
     it('inits database', () => {
-        expect(databaseInitSpy).toHaveBeenCalledWith();
+        expect(databaseSpy.init).toHaveBeenCalledWith();
     });
 
     describe('update extension', () => {
@@ -61,35 +61,42 @@ describe('master', () => {
         });
     });
 
-    describe('show episode', () => {
-        it('on same tab when new tab page is active', () => {
-            tabUrl = 'chrome://newtab/';
-
+    describe('on icon click', () => {
+        it('reloads database', () => {
             clickOnIcon();
-            expect(updateTabSpy).toHaveBeenCalledWith(123, 'http://southpark.cc.com/full-episodes/s08e03');
+            expect(databaseSpy.reload).toHaveBeenCalled();
         });
 
-        it('on same tab when south park episode page is active', () => {
-            tabUrl = 'http://southpark.cc.com/full-episodes/s01e02';
+        describe('show episode', () => {
+            it('on same tab when new tab page is active', () => {
+                tabUrl = 'chrome://newtab/';
 
-            clickOnIcon();
-            expect(updateTabSpy).toHaveBeenCalledWith(123, 'http://southpark.cc.com/full-episodes/s08e03');
-        });
+                clickOnIcon();
+                expect(updateTabSpy).toHaveBeenCalledWith(123, 'http://southpark.cc.com/full-episodes/s08e03');
+            });
 
-        it('on new tab otherwise', () => {
-            tabUrl = 'chrome://extensions';
+            it('on same tab when south park episode page is active', () => {
+                tabUrl = 'http://southpark.cc.com/full-episodes/s01e02';
 
-            clickOnIcon();
-            expect(openTabSpy).toHaveBeenCalledWith('http://southpark.cc.com/full-episodes/s08e03');
-        });
+                clickOnIcon();
+                expect(updateTabSpy).toHaveBeenCalledWith(123, 'http://southpark.cc.com/full-episodes/s08e03');
+            });
 
-        it('tracks event', () => {
-            clickOnIcon();
-            expect(mixpanelSpy.trackShowEpisode).toHaveBeenCalledWith({
-                provider: 'southpark.cc.com',
-                season: 8,
-                episode: 3,
-                url: 'http://southpark.cc.com/full-episodes/s08e03'
+            it('on new tab otherwise', () => {
+                tabUrl = 'chrome://extensions';
+
+                clickOnIcon();
+                expect(openTabSpy).toHaveBeenCalledWith('http://southpark.cc.com/full-episodes/s08e03');
+            });
+
+            it('tracks event', () => {
+                clickOnIcon();
+                expect(mixpanelSpy.trackShowEpisode).toHaveBeenCalledWith({
+                    provider: 'southpark.cc.com',
+                    season: 8,
+                    episode: 3,
+                    url: 'http://southpark.cc.com/full-episodes/s08e03'
+                });
             });
         });
     });

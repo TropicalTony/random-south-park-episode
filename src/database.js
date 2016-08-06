@@ -14,12 +14,20 @@ export default {
             databaseURL: 'https://shining-inferno-2925.firebaseio.com',
             apiKey: '8JkC3cdKxhrZjfyfmbAMabKu7qL9o950ojlxedPy'
         });
-        firebase.database().ref('/').on('value', (snapshot) => {
-            data = snapshot.val();
-        });
+        loadData();
     },
 
     getSeasons: () => {
         return data.seasons;
+    },
+
+    reload: () => {
+        loadData();
     }
 };
+
+function loadData() {
+    firebase.database().ref('/').on('value', (snapshot) => {
+        data = snapshot.val();
+    });
+}

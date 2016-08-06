@@ -1,6 +1,6 @@
 import episodePicker from 'episodePicker';
 
-fdescribe('episodePicker', () => {
+describe('episodePicker', () => {
     beforeEach(() => {
         episodePicker.__set__({
             database: {

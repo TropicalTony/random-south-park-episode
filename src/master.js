@@ -8,7 +8,12 @@ export default function startTheParty() {
     database.init();
 
     browser.onInstallOrUpdate(mixpanel.trackInstallOrUpdate);
-    browser.onIconClick(showEpisode);
+    browser.onIconClick(handleIconClick);
+}
+
+function handleIconClick() {
+    database.reload();
+    showEpisode();
 }
 
 function showEpisode() {
