@@ -3,8 +3,8 @@ const webpackConfig = require("./webpack.config.js");
 // Karma watches for entry points so we clear webpack entry point
 webpackConfig.entry = {};
 
-// Remove plugins (unit tests don't need copying of files)
-webpackConfig.plugins = [];
+// Used for mocking
+webpackConfig.module.loaders[0].query = {plugins: ['babel-plugin-rewire']};
 
 module.exports = function(config) {
     config.set({

@@ -2,10 +2,13 @@ import startTheParty from 'master';
 
 describe('master', () => {
     let clickOnIcon, tabUrl, openTabSpy, updateTabSpy;
+    let mixpanelInitSpy, mixpanelTrackSpy;
 
     beforeEach(() => {
         openTabSpy = jasmine.createSpy('browser.openTab');
         updateTabSpy = jasmine.createSpy('browser.updateTab');
+        mixpanelInitSpy = jasmine.createSpy('mixpanel.init');
+        mixpanelTrackSpy = jasmine.createSpy('mixpanel.track');
 
         startTheParty.__set__({
             browser: {
@@ -17,9 +20,17 @@ describe('master', () => {
                 },
                 openTab: openTabSpy,
                 updateTab: updateTabSpy
+            },
+            mixpanel: {
+                init: mixpanelInitSpy,
+                track: mixpanelTrackSpy
             }
         });
         startTheParty();
+    });
+
+    it('inits Mixpanel with token', () => {
+        expect(mixpanelInitSpy).toHaveBeenCalledWith('d33e9ef8ecb715fef9439208bcbb63b7');
     });
 
     describe('open episode', () => {
@@ -43,6 +54,15 @@ describe('master', () => {
 
             clickOnIcon();
             expect(openTabSpy).toHaveBeenCalledWith('http://southpark.cc.com/full-episodes/s08e03');
+        });
+
+        it('tracks event', () => {
+            clickOnIcon();
+            expect(mixpanelTrackSpy).toHaveBeenCalledWith('Show episode', {
+                provider: 'southpark.cc.com',
+                season: 8,
+                episode: 3
+            });
         });
     });
 });

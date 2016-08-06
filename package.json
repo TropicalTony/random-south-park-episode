@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "firebase": "^3.2.1",
-    "lodash": "^4.14.0"
+    "lodash": "^4.14.0",
+    "mixpanel-browser": "^2.8.2"
   },
   "devDependencies": {
     "babel-core": "^6.11.4",
