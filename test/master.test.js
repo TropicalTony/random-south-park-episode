@@ -2,7 +2,7 @@ import startTheParty from 'master';
 
 describe('master', () => {
     let updateExtension, clickOnIcon, tabUrl, openTabSpy, updateTabSpy;
-    let mixpanelSpy;
+    let mixpanelSpy, databaseInitSpy;
 
     beforeEach(() => {
         openTabSpy = jasmine.createSpy('browser.openTab');
@@ -12,6 +12,7 @@ describe('master', () => {
             trackInstallOrUpdate: jasmine.createSpy('mixpanel.trackInstallOrUpdate'),
             trackShowEpisode: jasmine.createSpy('mixpanel.trackShowEpisode')
         };
+        databaseInitSpy = jasmine.createSpy('database.init');
 
         startTheParty.__set__({
             browser: {
@@ -27,13 +28,20 @@ describe('master', () => {
                 openTab: openTabSpy,
                 updateTab: updateTabSpy
             },
-            mixpanel: mixpanelSpy
+            mixpanel: mixpanelSpy,
+            database: {
+                init: databaseInitSpy
+            },
         });
         startTheParty();
     });
 
-    it('inits Mixpanel with token', () => {
+    it('inits Mixpanel', () => {
         expect(mixpanelSpy.init).toHaveBeenCalledWith();
+    });
+
+    it('inits database', () => {
+        expect(databaseInitSpy).toHaveBeenCalledWith();
     });
 
     describe('update extension', () => {

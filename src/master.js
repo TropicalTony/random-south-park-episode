@@ -1,8 +1,10 @@
 import browser from 'browser';
 import mixpanel from 'mixpanel';
+import database from 'database';
 
 export default function startTheParty() {
     mixpanel.init();
+    database.init();
 
     browser.onInstallOrUpdate(mixpanel.trackInstallOrUpdate);
     browser.onIconClick(showEpisode);

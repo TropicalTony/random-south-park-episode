@@ -1,9 +1,16 @@
 import firebase from 'firebase';
 
-firebase.initializeApp({
-    databaseURL: 'https://shining-inferno-2925.firebaseio.com'
-});
+let data;
 
-const db = firebase.database();
+export default {
 
-db.ref('/').on('value', function() {});
+    init: () => {
+        firebase.initializeApp({
+            databaseURL: 'https://shining-inferno-2925.firebaseio.com',
+            apiKey: '8JkC3cdKxhrZjfyfmbAMabKu7qL9o950ojlxedPy'
+        });
+        firebase.database().ref('/').on('value', (snapshot) => {
+            data = snapshot;
+        });
+    }
+};
