@@ -36,7 +36,7 @@ function loadData() {
 
         data.seasons = {};
 
-        // TODO: Firebase returns array of seasons rather than object,
+        // Firebase returns array of seasons rather than object,
         // this means first element in array is undefined, super weird
         _.map(rawdata.seasons, (season, key) => {
             if (season)
