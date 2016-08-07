@@ -6,15 +6,15 @@ The extension will keep track of all your watched South Park episodes. All you n
 
 ![That's pretty cool](http://i.giphy.com/26tP7cDNJUZQy7w3u.gif)
 
-Extension is available for:
+"Random South Park Episode" extension is available for:
 
 - [Chrome](https://chrome.google.com/webstore/detail/random-south-park-episode/gnejpgpadafimefcjbhnglbnfbboakjf)
 
-### Report an issue
+## Report an issue
 
 You can report an issue in [here](https://github.com/syyfilis/random-south-park-episode/issues/new). Please include as much information as possible about your issue/request.
 
-### Contribute
+## Contribute
 
 #### Install dependencies
 
@@ -50,7 +50,7 @@ $ npm run test
 
 Make sure the build is green and then make a [pull request](https://github.com/syyfilis/random-south-park-episode/pulls).
 
-### Publish
+## Publish
 
 Bump up version number in `manifest.json` and run
 
@@ -66,6 +66,6 @@ Read how-to-publish-extension docs:
 - [Firefox](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Publishing_your_WebExtension)
 - [Opera](https://dev.opera.com/extensions/publishing-guidelines/#submit)
 
-### License
+## License
 
 [MIT](https://github.com/syyfilis/random-south-park-episode/blob/master/LICENSE)
