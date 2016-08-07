@@ -24,5 +24,18 @@ export default {
 
     openTab: (url) => {
         chrome.tabs.create({ url: url });
+    },
+
+    searchFromHistory: (text, callback) => {
+        // 90 days in past
+        const start  = new Date().setDate(new Date().getDate()) - 24 * 60 * 60 * 1000 * 90;
+        const end = new Date().setDate(new Date().getDate());
+
+        chrome.history.search({
+            text: text,
+            maxResults: 1000,
+            startTime: start,
+            endTime: end
+        }, callback);
     }
 };

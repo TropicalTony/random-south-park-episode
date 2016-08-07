@@ -1,29 +1,20 @@
-import database from 'database';
+import episodeFilter from 'episodeFilter';
 import provider from 'provider';
 
 export default {
-    pick: () => {
-        const seasons = database.getSeasons();
-        const season = pickSeason(seasons);
-        const episode = pickEpisode(seasons, season);
+    pick: (callback) => {
+        episodeFilter.getUnseenEpisodes((unseenEpisodes) => {
+            const chosenOne = pickRandomly(unseenEpisodes);
 
-        return {
-            url: provider.getUrl(season, episode),
-            season: season,
-            episode: episode
-        };
+            callback({
+                url: provider.getUrl(chosenOne.season, chosenOne.episode),
+                season: chosenOne.season,
+                episode: chosenOne.episode
+            });
+        });
     }
 };
 
-function pickSeason(seasons) {
-    return randomKey(seasons);
-}
-
-function pickEpisode(seasons, season) {
-    return randomKey(seasons[season].episodes);
-}
-
-function randomKey(obj) {
-    var keys = Object.keys(obj);
-    return keys[keys.length * Math.random() << 0];
+function pickRandomly(episodes) {
+    return episodes[Math.floor(Math.random() * episodes.length)];
 }

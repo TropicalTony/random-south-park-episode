@@ -15,6 +15,23 @@ describe('provider', () => {
                         }
                     };
                 }
+            },
+            browser: {
+                searchFromHistory: (query, callback) => {
+                    if (query === 'http://southpark.cc.com/full-episodes/s') {
+                        callback([{
+                            url: 'http://southpark.cc.com/full-episodes/s01e01'
+                        }, {
+                            url: 'http://southpark.cc.com/full-episodes/s01e02'
+                        }]);
+                    } else if (query === 'http://kisscartoon.me/Cartoon/South-Park-Season') {
+                        callback([{
+                            url: 'http://kisscartoon.me/Cartoon/South-Park-Season-01/Episode-003'
+                        }, {
+                            url: 'http://kisscartoon.me/Cartoon/South-Park-Season-01/Episode-004'
+                        }]);
+                    }
+                }
             }
         });
         provider.init();
@@ -22,6 +39,19 @@ describe('provider', () => {
 
     it('requests user country code from ip info', () => {
         expect(ipInfoGetUrl).toBe('http://ipinfo.io');
+    });
+
+    describe('getSeenEpisodes()', () => {
+        it('gets all show providers views from history', () => {
+            provider.getSeenEpisodes().then((seenEpisodes) => {
+                expect(seenEpisodes).toEqual([
+                    {season: 1, episode: 1},
+                    {season: 1, episode: 2},
+                    {season: 1, episode: 3},
+                    {season: 1, episode: 4}
+                ]);
+            });
+        });
     });
 
     describe('isSouthparkUrl()', () => {

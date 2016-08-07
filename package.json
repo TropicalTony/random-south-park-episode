@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.13.1",
+    "bluebird": "^3.4.1",
     "firebase": "^3.2.1",
     "lodash": "^4.14.0",
     "mixpanel-browser": "^2.8.2"

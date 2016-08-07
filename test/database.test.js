@@ -28,7 +28,7 @@ describe('database', () => {
     });
 
     it('has fallback data', () => {
-        expect(database.getSeasons()).toBeDefined();
+        expect(database.getEpisodes()).toBeDefined();
     });
 
     it('initializes firebase', () => {
@@ -43,14 +43,22 @@ describe('database', () => {
         expect(giveData).toBeDefined();
     });
 
-    describe('getSeasons()', () => {
-        it('returns seasons object', () => {
+    describe('getEpisodes()', () => {
+        it('returns processed episodes object in array', () => {
             giveData({
                 val: () => {
-                    return {seasons: {1: {}, 2: {}}};
+                    return {seasons: [undefined, {
+                        episodes: {12: {}}
+                    }, {
+                        episodes: {3: {}}
+                    }
+                ]};
                 }
             });
-            expect(database.getSeasons()).toEqual({1: {}, 2: {}});
+            expect(database.getEpisodes()).toEqual([
+                {season: 1, episode: 12},
+                {season: 2, episode: 3},
+            ]);
         });
     });
 });

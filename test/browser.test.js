@@ -119,4 +119,28 @@ describe('browser', () => {
             expect(window.chrome.tabs.create).toHaveBeenCalledWith({url: 'https://southpark.com'});
         });
     });
+
+    describe('searchFromHistory()', () => {
+        beforeEach(() => {
+            window.chrome = {
+                history: {
+                    search: jasmine.createSpy('chrome history search')
+                }
+            };
+            jasmine.clock().mockDate(new Date(1993, 9, 26));
+        });
+
+        it('passes params', () => {
+            const callback = () => {};
+
+            browser.searchFromHistory('https://southpark.com', callback);
+
+            expect(window.chrome.history.search).toHaveBeenCalledWith({
+                text: 'https://southpark.com',
+                maxResults: 1000,
+                startTime: 743806800000,
+                endTime: 751582800000
+            }, callback);
+        });
+    });
 });

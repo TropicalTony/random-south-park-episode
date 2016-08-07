@@ -17,15 +17,15 @@ function handleIconClick() {
 }
 
 function showEpisode() {
-    const episode = episodePicker.pick();
-
-    browser.getActiveTab((tab) => {
-        if (isNewTab(tab.url) || provider.isSouthparkUrl(tab.url))
-            browser.updateTab(tab.id, episode.url);
-        else
-            browser.openTab(episode.url);
+    episodePicker.pick((episode) => {
+        browser.getActiveTab((tab) => {
+            if (isNewTab(tab.url) || provider.isSouthparkUrl(tab.url))
+                browser.updateTab(tab.id, episode.url);
+            else
+                browser.openTab(episode.url);
+        });
+        mixpanel.trackShowEpisode(episode);
     });
-    mixpanel.trackShowEpisode(episode);
 }
 
 function isNewTab(url) {

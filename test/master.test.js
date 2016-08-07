@@ -33,13 +33,13 @@ describe('master', () => {
             mixpanel: mixpanelSpy,
             database: databaseSpy,
             episodePicker: {
-                pick: () => {
-                    return {
+                pick: (callback) => {
+                    callback({
                         url: 'http://southpark.cc.com/full-episodes/s08e03',
                         season: 8,
                         episode: 3,
                         provider: 'southpark.cc.com'
-                    };
+                    });
                 }
             },
             provider: {
