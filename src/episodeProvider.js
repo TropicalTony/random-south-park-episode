@@ -1,10 +1,10 @@
 import _ from 'lodash';
 import axios from 'axios';
-import Promise from 'bluebird';
-import browser from 'browser';
 
 // Fallback code when ipinfo is not responding
 let userCountryCode = 'EE';
+
+// TODO get this from database
 const limitedCountries = ['US'];
 
 export default {
@@ -17,13 +17,14 @@ export default {
         return /southpark.cc.com\/full-episodes/.test(url) || /kisscartoon.me\/Cartoon\/South-Park-Season/.test(url);
     },
 
-    getSeenEpisodes: () => {
-        return Promise.all([
-            registerSeenEpisodesOnSouthParkCC(),
-            registerSeenEpisodesOnKissCartoon()
-        ]).then((results) => {
-            return _.flatten(results);
-        });
+    getProviders: () => {
+        return [{
+            rootUrl: 'http://southpark.cc.com/full-episodes/s',
+            parse: parseSouthParkCCSeasonAndEpisode
+        }, {
+            rootUrl: 'http://kisscartoon.me/Cartoon/South-Park-Season',
+            parse: parseKissCartoonSeasonAndEpisode
+        }];
     },
 
     getUrl: (season, episode) => {
@@ -37,25 +38,6 @@ export default {
 function registerUserCountry() {
     axios.get('http://ipinfo.io').then((response) => {
         userCountryCode = response.data.country;
-    });
-}
-
-function registerSeenEpisodesOnSouthParkCC() {
-    return registerSeenEpisodes('http://southpark.cc.com/full-episodes/s', parseSouthParkCCSeasonAndEpisode);
-}
-
-function registerSeenEpisodesOnKissCartoon() {
-    return registerSeenEpisodes('http://kisscartoon.me/Cartoon/South-Park-Season', parseKissCartoonSeasonAndEpisode);
-}
-
-function registerSeenEpisodes(query, parse) {
-    return new Promise((resolve) => {
-        browser.searchFromHistory(query, (results) => {
-            let seenEpisodes = [];
-            results.map((result) => seenEpisodes.push(parse(result.url)));
-
-            resolve(seenEpisodes);
-        });
     });
 }
 

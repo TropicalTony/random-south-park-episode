@@ -26,13 +26,12 @@ export default {
         chrome.tabs.create({ url: url });
     },
 
-    searchFromHistory: (text, callback) => {
+    searchFromHistory: (text, timeRangeInDays, callback) => {
         // Not supported in Firefox 48
         if (!chrome.history.search)
             return callback([]);
 
-        // 90 days in past
-        const start  = new Date().setDate(new Date().getDate()) - 24 * 60 * 60 * 1000 * 90;
+        const start  = new Date().setDate(new Date().getDate()) - 24 * 60 * 60 * 1000 * timeRangeInDays;
         const end = new Date().setDate(new Date().getDate());
 
         chrome.history.search({

@@ -129,7 +129,7 @@ describe('browser', () => {
             window.chrome = {history: {}};
             const callback = jasmine.createSpy('search callback');
 
-            browser.searchFromHistory('https://southpark.com', callback);
+            browser.searchFromHistory('https://southpark.com', 90, callback);
 
             expect(callback).toHaveBeenCalledWith([]);
         });
@@ -142,7 +142,7 @@ describe('browser', () => {
             };
             const callback = () => {};
 
-            browser.searchFromHistory('https://southpark.com', callback);
+            browser.searchFromHistory('https://southpark.com', 90, callback);
 
             expect(window.chrome.history.search).toHaveBeenCalledWith({
                 text: 'https://southpark.com',

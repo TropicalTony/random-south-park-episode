@@ -1,5 +1,5 @@
 import episodeFilter from 'episodeFilter';
-import provider from 'provider';
+import episodeProvider from 'episodeProvider';
 
 export default {
     pick: (callback) => {
@@ -7,7 +7,7 @@ export default {
             const chosenOne = pickRandomly(unseenEpisodes);
 
             callback({
-                url: provider.getUrl(chosenOne.season, chosenOne.episode),
+                url: episodeProvider.getUrl(chosenOne.season, chosenOne.episode),
                 season: chosenOne.season,
                 episode: chosenOne.episode
             });
