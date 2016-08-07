@@ -1,6 +1,6 @@
 # Random South Park Episode
 
-Watch random [South Park](https://en.wikipedia.org/wiki/South_Park) episodes with a help of small web extension.
+> Watch random [South Park](https://en.wikipedia.org/wiki/South_Park) episodes with a help from awesome web extension.
 
 The extension will keep track of all your watched South Park episodes. All you need to do is click the little Kenny icon and you will get a *RANDOM* South Park episode which you have not seen.
 
