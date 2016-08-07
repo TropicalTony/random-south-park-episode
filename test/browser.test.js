@@ -122,15 +122,24 @@ describe('browser', () => {
 
     describe('searchFromHistory()', () => {
         beforeEach(() => {
+            jasmine.clock().mockDate(new Date(1993, 9, 26));
+        });
+
+        it('returns empty array when search is not supported', () => {
+            window.chrome = {history: {}};
+            const callback = jasmine.createSpy('search callback');
+
+            browser.searchFromHistory('https://southpark.com', callback);
+
+            expect(callback).toHaveBeenCalledWith([]);
+        });
+
+        it('passes params', () => {
             window.chrome = {
                 history: {
                     search: jasmine.createSpy('chrome history search')
                 }
             };
-            jasmine.clock().mockDate(new Date(1993, 9, 26));
-        });
-
-        it('passes params', () => {
             const callback = () => {};
 
             browser.searchFromHistory('https://southpark.com', callback);

@@ -27,6 +27,10 @@ export default {
     },
 
     searchFromHistory: (text, callback) => {
+        // Not supported in Firefox 48
+        if (!chrome.history.search)
+            return callback([]);
+
         // 90 days in past
         const start  = new Date().setDate(new Date().getDate()) - 24 * 60 * 60 * 1000 * 90;
         const end = new Date().setDate(new Date().getDate());
