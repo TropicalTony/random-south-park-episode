@@ -32,7 +32,7 @@ describe('master', () => {
             },
             mixpanel: mixpanelSpy,
             database: databaseSpy,
-            episodePicker: {
+            picker: {
                 pick: (callback) => {
                     callback({
                         url: 'http://southpark.cc.com/full-episodes/s08e03',

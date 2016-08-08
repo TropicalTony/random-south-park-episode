@@ -1,11 +1,9 @@
 import _ from 'lodash';
 import axios from 'axios';
+import database from 'database';
 
 // Fallback code when ipinfo is not responding
 let userCountryCode = 'EE';
-
-// TODO get this from database
-const limitedCountries = ['US'];
 
 export default {
 
@@ -17,18 +15,18 @@ export default {
         return /southpark.cc.com\/full-episodes/.test(url) || /kisscartoon.me\/Cartoon\/South-Park-Season/.test(url);
     },
 
-    getProviders: () => {
+    getAllPossibleProviders: () => {
         return [{
             rootUrl: 'http://southpark.cc.com/full-episodes/s',
-            parse: parseSouthParkCCSeasonAndEpisode
+            parseUrl: parseSouthParkCCSeasonAndEpisode
         }, {
             rootUrl: 'http://kisscartoon.me/Cartoon/South-Park-Season',
-            parse: parseKissCartoonSeasonAndEpisode
+            parseUrl: parseKissCartoonSeasonAndEpisode
         }];
     },
 
     getUrl: (season, episode) => {
-        if (_.includes(limitedCountries, userCountryCode))
+        if (_.includes(database.getUnfortunateCountries(), userCountryCode))
             return getKissCartoonUrl(season, episode);
         else
             return getSouthparkCCUrl(season, episode);

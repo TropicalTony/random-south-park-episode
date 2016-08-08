@@ -1,11 +1,13 @@
+import bugsnag from 'bugsnag';
 import mixpanel from 'mixpanel';
 import database from 'database';
-import episodeProvider from 'episodeProvider';
+import provider from 'provider';
+import historian from 'historian';
 import master from 'master';
-import bugsnag from 'bugsnag';
 
 bugsnag.init();
 mixpanel.init();
 database.init();
-episodeProvider.init();
+provider.init();
+historian.init();
 master.init();

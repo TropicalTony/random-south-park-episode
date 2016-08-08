@@ -1,10 +1,10 @@
-import episodeProvider from 'episodeProvider';
+import provider from 'provider';
 
-describe('episodeProvider', () => {
+describe('provider', () => {
     let ipInfoGetUrl, ipInfoCallback;
 
     beforeEach(() => {
-        episodeProvider.__set__({
+        provider.__set__({
             axios: {
                 get: (url) => {
                     ipInfoGetUrl = url;
@@ -15,56 +15,61 @@ describe('episodeProvider', () => {
                         }
                     };
                 }
+            },
+            database: {
+                getUnfortunateCountries: () => {
+                    return ['US']
+                }
             }
         });
-        episodeProvider.init();
+        provider.init();
     });
 
     it('requests user country code from ip info', () => {
         expect(ipInfoGetUrl).toBe('http://ipinfo.io');
     });
 
-    describe('getProviders()', () => {
+    describe('getAllPossibleProviders()', () => {
         let providers;
 
         beforeEach(() => {
-            providers = episodeProvider.getProviders();
+            providers = provider.getAllPossibleProviders();
         });
 
         it('gives South Park CC provider data', () => {
             expect(providers[0].rootUrl).toBe('http://southpark.cc.com/full-episodes/s');
-            expect(providers[0].parse('http://southpark.cc.com/full-episodes/s02e04')).toEqual({season: 2, episode: 4});
+            expect(providers[0].parseUrl('http://southpark.cc.com/full-episodes/s02e04')).toEqual({season: 2, episode: 4});
         });
 
         it('gives Kiss Cartoon provider data', () => {
             expect(providers[1].rootUrl).toBe('http://kisscartoon.me/Cartoon/South-Park-Season');
-            expect(providers[1].parse('http://kisscartoon.me/Cartoon/South-Park-Season-02/Episode-012')).toEqual({season: 2, episode: 12});
+            expect(providers[1].parseUrl('http://kisscartoon.me/Cartoon/South-Park-Season-02/Episode-012')).toEqual({season: 2, episode: 12});
         });
     });
 
     describe('isSouthparkUrl()', () => {
         it('is true when url is related to southpark cc', () => {
-            expect(episodeProvider.isSouthparkUrl('http://southpark.cc.com/full-episodes/s02e11')).toBe(true);
+            expect(provider.isSouthparkUrl('http://southpark.cc.com/full-episodes/s02e11')).toBe(true);
         });
 
         it('is true when url is related to kisscartoon south park page', () => {
-            expect(episodeProvider.isSouthparkUrl('http://kisscartoon.me/Cartoon/South-Park-Season-02/Episode-011')).toBe(true);
+            expect(provider.isSouthparkUrl('http://kisscartoon.me/Cartoon/South-Park-Season-02/Episode-011')).toBe(true);
         });
 
         it('is false when url is not related to southpark', () => {
-            expect(episodeProvider.isSouthparkUrl('http://youtube.com')).toBe(false);
+            expect(provider.isSouthparkUrl('http://youtube.com')).toBe(false);
         });
     });
 
     describe('getUrl()', () => {
         it('returns kiss cartoon url to US user', () => {
             setUserCountryCode('US');
-            expect(episodeProvider.getUrl(1, 12)).toBe('http://kisscartoon.me/Cartoon/South-Park-Season-01/Episode-012');
+            expect(provider.getUrl(1, 12)).toBe('http://kisscartoon.me/Cartoon/South-Park-Season-01/Episode-012');
         });
 
         it('returns southpark cc url to EE user', () => {
             setUserCountryCode('EE');
-            expect(episodeProvider.getUrl(1, 12)).toBe('http://southpark.cc.com/full-episodes/s01e12');
+            expect(provider.getUrl(1, 12)).toBe('http://southpark.cc.com/full-episodes/s01e12');
         });
     });
 

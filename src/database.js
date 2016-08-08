@@ -21,12 +21,16 @@ export default {
         loadData();
     },
 
+    reload: () => {
+        loadData();
+    },
+
     getEpisodes: () => {
         return flatten(data.seasons);
     },
 
-    reload: () => {
-        loadData();
+    getUnfortunateCountries: () => {
+        return data.lessFortunateCountries;
     }
 };
 
@@ -34,6 +38,7 @@ function loadData() {
     firebase.database().ref('/').on('value', (snapshot) => {
         const rawdata = snapshot.val();
 
+        data.lessFortunateCountries = rawdata.lessFortunateCountries;
         data.seasons = {};
 
         // Firebase returns array of seasons rather than object,

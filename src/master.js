@@ -1,8 +1,8 @@
 import browser from 'browser';
 import mixpanel from 'mixpanel';
 import database from 'database';
-import episodePicker from 'episodePicker';
-import episodeProvider from 'episodeProvider';
+import picker from 'picker';
+import provider from 'provider';
 
 export default {
     init: () => {
@@ -17,9 +17,9 @@ function handleIconClick() {
 }
 
 function showEpisode() {
-    episodePicker.pick((episode) => {
+    picker.pick((episode) => {
         browser.getActiveTab((tab) => {
-            if (isNewTab(tab.url) || episodeProvider.isSouthparkUrl(tab.url))
+            if (isNewTab(tab.url) || provider.isSouthparkUrl(tab.url))
                 browser.updateTab(tab.id, episode.url);
             else
                 browser.openTab(episode.url);

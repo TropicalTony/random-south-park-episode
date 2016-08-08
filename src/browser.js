@@ -40,5 +40,13 @@ export default {
             startTime: start,
             endTime: end
         }, callback);
+    },
+
+    setToStorage: ({key, value}) => {
+        localStorage.setItem(key, JSON.stringify(value));
+    },
+
+    getFromStorage: (key) => {
+        return JSON.parse(localStorage.getItem(key));
     }
 };
