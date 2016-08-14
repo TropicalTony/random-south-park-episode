@@ -25,12 +25,20 @@ export default {
         return flatten(data.seasons);
     },
 
-    getUnfortunateCountries: () => {
+    getLessFortunateCountries: () => {
         return data.lessFortunateCountries;
+    },
+
+    getNotifications: () => {
+        return data.notifications || {};
     }
 };
 
 function loadData() {
+    // Wait for app disconnect before connecting again
+    if (!_.isEmpty(firebase.apps))
+        return setTimeout(loadData, 50);
+
     makeConnection();
 
     firebase.database().ref('/').on('value', _.flow(setData, deleteConnection));
@@ -45,16 +53,16 @@ function makeConnection() {
 
 function setData(snapshot) {
     const rawdata = snapshot.val();
-
-    data.lessFortunateCountries = rawdata.lessFortunateCountries;
-    data.seasons = {};
+    const seasons = {};
 
     // Firebase returns array of seasons rather than object,
     // this means first element in array is undefined, super weird
     _.map(rawdata.seasons, (season, key) => {
         if (season)
-            data.seasons[key] = season;
+            seasons[key] = season;
     });
+    data = rawdata;
+    data.seasons = seasons;
 }
 
 function deleteConnection() {

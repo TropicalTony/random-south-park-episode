@@ -72,4 +72,36 @@ describe('database', () => {
             ]);
         });
     });
+
+    describe('getLessFortunateCountries()', () => {
+        it('returns less fortunate countries in array', () => {
+            giveData({
+                val: () => {
+                    return {lessFortunateCountries: ['US']};
+                }
+            });
+            expect(database.getLessFortunateCountries()).toEqual(['US']);
+        });
+    });
+
+    describe('getNotifications()', () => {
+        it('returns notifications list', () => {
+            giveData({
+                val: () => {
+                    return {
+                        notifications: {
+                            watch: {
+                                title: 'Check new episode'
+                            }
+                        }
+                    };
+                }
+            });
+            expect(database.getNotifications()).toEqual({
+                watch: {
+                    title: 'Check new episode'
+                }
+            });
+        });
+    });
 });

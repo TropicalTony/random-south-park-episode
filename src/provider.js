@@ -26,7 +26,7 @@ export default {
     },
 
     getUrl: (season, episode) => {
-        if (_.includes(database.getUnfortunateCountries(), userCountryCode))
+        if (_.includes(database.getLessFortunateCountries(), userCountryCode))
             return getKissCartoonUrl(season, episode);
         else
             return getSouthparkCCUrl(season, episode);

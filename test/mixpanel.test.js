@@ -1,6 +1,6 @@
 import mixpanel from 'mixpanel';
 
-fdescribe('mixpanel', () => {
+describe('mixpanel', () => {
     let initSpy, trackSpy;
 
     beforeEach(() => {
