@@ -1,20 +1,22 @@
 import main from 'main';
 
 describe('main', () => {
-    let updateExtension, clickOnIcon, tabUrl, isSouthparkUrl
-    let openTabSpy, updateTabSpy, mixpanelSpy, databaseSpy;
+    let updateExtension, clickOnIcon;
+    let mixpanelSpy, databaseSpy, notifierSpy, presenterSpy;
 
     beforeEach(() => {
-        openTabSpy = jasmine.createSpy('browser.openTab');
-        updateTabSpy = jasmine.createSpy('browser.updateTab');
         mixpanelSpy = {
-            trackInstallOrUpdate: jasmine.createSpy('mixpanel.trackInstallOrUpdate'),
-            trackShowEpisode: jasmine.createSpy('mixpanel.trackShowEpisode')
+            trackInstallOrUpdate: jasmine.createSpy('mixpanel.trackInstallOrUpdate')
         };
         databaseSpy = {
             reload: jasmine.createSpy('database.reload')
         };
-        isSouthparkUrl = false;
+        notifierSpy = {
+            notifyOnNeed: jasmine.createSpy('notifier')
+        };
+        presenterSpy = {
+            show: jasmine.createSpy('show episode')
+        };
 
         main.__set__({
             browser: {
@@ -23,28 +25,19 @@ describe('main', () => {
                 },
                 onIconClick: (callback) => {
                     clickOnIcon = callback;
-                },
-                getActiveTab: (callback) => {
-                    callback({id: 123, url: tabUrl});
-                },
-                openTab: openTabSpy,
-                updateTab: updateTabSpy
+                }
             },
             mixpanel: mixpanelSpy,
             database: databaseSpy,
+            notifier: notifierSpy,
+            presenter: presenterSpy,
             picker: {
                 pick: (callback) => {
                     callback({
                         url: 'http://southpark.cc.com/full-episodes/s08e03',
                         season: 8,
-                        episode: 3,
-                        provider: 'southpark.cc.com'
+                        episode: 3
                     });
-                }
-            },
-            provider: {
-                isSouthparkUrl: () => {
-                    return isSouthparkUrl;
                 }
             }
         });
@@ -59,42 +52,23 @@ describe('main', () => {
     });
 
     describe('on icon click', () => {
-        it('reloads database', () => {
+        beforeEach(() => {
             clickOnIcon();
+        });
+
+        it('reloads database', () => {
             expect(databaseSpy.reload).toHaveBeenCalled();
         });
 
-        describe('show episode', () => {
-            it('on same tab when new tab page is active', () => {
-                tabUrl = 'chrome://newtab/';
+        it('show notification', () => {
+            expect(notifierSpy.notifyOnNeed).toHaveBeenCalled();
+        });
 
-                clickOnIcon();
-                expect(updateTabSpy).toHaveBeenCalledWith(123, 'http://southpark.cc.com/full-episodes/s08e03');
-            });
-
-            it('on same tab when south park episode page is active', () => {
-                tabUrl = 'http://southpark.cc.com/full-episodes/s01e02';
-                isSouthparkUrl = true;
-
-                clickOnIcon();
-                expect(updateTabSpy).toHaveBeenCalledWith(123, 'http://southpark.cc.com/full-episodes/s08e03');
-            });
-
-            it('on new tab otherwise', () => {
-                tabUrl = 'chrome://extensions';
-
-                clickOnIcon();
-                expect(openTabSpy).toHaveBeenCalledWith('http://southpark.cc.com/full-episodes/s08e03');
-            });
-
-            it('tracks event', () => {
-                clickOnIcon();
-                expect(mixpanelSpy.trackShowEpisode).toHaveBeenCalledWith({
-                    provider: 'southpark.cc.com',
-                    season: 8,
-                    episode: 3,
-                    url: 'http://southpark.cc.com/full-episodes/s08e03'
-                });
+        it('show episode', () => {
+            expect(presenterSpy.show).toHaveBeenCalledWith({
+                url: 'http://southpark.cc.com/full-episodes/s08e03',
+                season: 8,
+                episode: 3
             });
         });
     });

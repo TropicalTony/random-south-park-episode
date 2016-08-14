@@ -1,10 +1,14 @@
 import _ from 'lodash';
 import database from 'database';
-import historian from 'historian';
+import Historian from 'historian';
 import provider from 'provider';
+
+let historian;
 
 export default {
     pick: (callback) => {
+        historian = new Historian();
+
         getUnseenEpisodes((unseenEpisodes) => {
             const chosenOne = pickRandomly(unseenEpisodes);
 
@@ -22,7 +26,7 @@ function getUnseenEpisodes(callback, seenInDaysRangeCut = 0) {
         const unseenEpisodes = filterOutSeenEpisodes(seenEpisodes, database.getEpisodes());
 
         if (_.isEmpty(unseenEpisodes))
-            getUnseenEpisodes(callback, seenInDaysRangeCut + 30);
+            getUnseenEpisodes(callback, 1);
         else
             callback(unseenEpisodes);
     });

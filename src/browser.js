@@ -2,8 +2,8 @@ const NOTIFICATION_ID = 'random-south-park-episode';
 
 export default {
 
+    // Not supported in Firefox yet
     onInstallOrUpdate: (callback) => {
-        // Not supported in Firefox yet
         if (!chrome.runtime.onInstalled)
             return;
 
@@ -15,9 +15,7 @@ export default {
     },
 
     getActiveTab: (callback) => {
-        chrome.tabs.query({currentWindow: true, active: true}, function (tabs) {
-            callback(tabs[0]);
-        });
+        chrome.tabs.query({currentWindow: true, active: true}, (tabs) => callback(tabs[0]));
     },
 
     updateTab: (tabId, url) => {
@@ -28,20 +26,12 @@ export default {
         chrome.tabs.create({ url: url });
     },
 
-    searchFromHistory: (text, timeRangeInDays, callback) => {
-        // Not supported in Firefox 48
+    // Not supported in Firefox 48
+    searchFromHistory: (text, lastVisitTime, callback) => {
         if (!chrome.history.search)
             return callback([]);
 
-        const start  = new Date().setDate(new Date().getDate()) - 24 * 60 * 60 * 1000 * timeRangeInDays;
-        const end = new Date().setDate(new Date().getDate());
-
-        chrome.history.search({
-            text: text,
-            maxResults: 1000,
-            startTime: start,
-            endTime: end
-        }, callback);
+        chrome.history.search({text, maxResults: 1000, startTime: lastVisitTime}, callback);
     },
 
     setToStorage: ({key, value}) => {
@@ -52,8 +42,8 @@ export default {
         return JSON.parse(localStorage.getItem(key));
     },
 
+    // Not supported in Firefox
     createNotification: ({title, message, ok, cancel}, handleOk, handleCancel) => {
-        // Not supported in Firefox
         if (!chrome.notifications.onButtonClicked)
             return;
 

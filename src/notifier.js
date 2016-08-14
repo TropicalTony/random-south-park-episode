@@ -17,6 +17,9 @@ export default {
 };
 
 function hasBeenNotified(notification) {
+    if (!browser.getFromStorage(NOTIFIED_STORAGE_KEY))
+        return false;
+
     return _.isEqualWith(notification, browser.getFromStorage(NOTIFIED_STORAGE_KEY), (objValue, othValue) => {
         return objValue.title === othValue.title && objValue.message === othValue.message;
     });

@@ -1,45 +1,49 @@
-import historian from 'historian';
+import Historian from 'historian';
 
 describe('historian', () => {
-    let hasSeenInDays;
+    let lastVisitTime, historian;
 
     beforeEach(() => {
         jasmine.clock().mockDate(new Date(1993, 9, 26));
 
-        historian.__set__({
+        Historian.__set__({
             browser: {
                 setToStorage: ({key, value}) => {
-                    if (key === 'hasSeenInDays')
-                        hasSeenInDays = value;
+                    if (key === 'lastVisitTime')
+                        lastVisitTime = value;
                 },
                 getFromStorage: (key) => {
-                    if (key === 'hasSeenInDays')
-                        return hasSeenInDays;
+                    if (key === 'lastVisitTime')
+                        return lastVisitTime;
                 },
-                searchFromHistory: (query, seenInDays, callback) => {
+                searchFromHistory: (query, lastVisitTime, callback) => {
                     if (query === 'http://southpark.cc.com/full-episodes/s') {
                         callback([{
+                            lastVisitTime: 743809800000,
                             url: 'http://southpark.cc.com/full-episodes/s01e01'
                         }, {
+                            lastVisitTime: 743809900000,
                             url: 'http://southpark.cc.com/full-episodes/s01e02'
                         }]);
                     } else if (query === 'http://kisscartoon.me/Cartoon/South-Park-Season') {
                         callback([{
+                            lastVisitTime: 703806800000,
                             url: 'http://kisscartoon.me/Cartoon/South-Park-Season-03/Episode-004'
                         }, {
+                            lastVisitTime: 783806800000,
                             url: 'http://kisscartoon.me/Cartoon/South-Park-Season-04/Episode-005'
                         }]);
                     }
                 }
             }
         });
-        historian.init();
+        historian = new Historian();
     });
 
     it('sets current date and range to browser storage', () => {
-        expect(hasSeenInDays).toEqual({
-            date: 751582800000,
-            range: 90
+        expect(lastVisitTime).toEqual({
+            marked: 751582800000,
+            time: 743806800000
         });
     });
 
@@ -49,7 +53,6 @@ describe('historian', () => {
                 expect(seenEpisodes).toEqual([
                     {season: 1, episode: 1},
                     {season: 1, episode: 2},
-                    {season: 3, episode: 4},
                     {season: 4, episode: 5}
                 ]);
                 done();

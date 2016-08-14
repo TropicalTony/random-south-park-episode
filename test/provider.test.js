@@ -17,9 +17,7 @@ describe('provider', () => {
                 }
             },
             database: {
-                getUnfortunateCountries: () => {
-                    return ['US']
-                }
+                getLessFortunateCountries: () => ['US']
             }
         });
         provider.init();

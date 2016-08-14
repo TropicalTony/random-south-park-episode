@@ -4,52 +4,68 @@ import moment from 'moment';
 import browser from 'browser';
 import provider from 'provider';
 
-const HAS_SEEN_IN_DAYS_STORAGE_KEY = 'hasSeenInDays';
+const LAST_VISIT_TIME_STORAGE_KEY = 'lastVisitTime';
 
-export default {
+export default class Historian {
 
-    init: () => {
-        if (!browser.getFromStorage(HAS_SEEN_IN_DAYS_STORAGE_KEY))
-            saveSeenInDaysRange(90);
-    },
+    constructor() {
+        this.searchResults = {};
 
-    getSeenEpisodes: (seenInDaysRangeCut) => {
-        let seenInDays = getSeenInDaysRange(seenInDaysRangeCut);
+        if (!browser.getFromStorage(LAST_VISIT_TIME_STORAGE_KEY))
+            this.saveLastVisitTime(moment().subtract(90, 'days'));
+    }
+
+    /**
+     * Gives back seen episodes from all providers
+     */
+    getSeenEpisodes(cutInDays) {
+        let lastVisitTime = this.getLastVisitTime(cutInDays);
 
         return Promise.all(provider.getAllPossibleProviders().map((provider) => {
-            return searchSeenEpisodes(provider.rootUrl, provider.parseUrl, seenInDays);
+            return this.searchSeenEpisodes(provider.rootUrl, provider.parseUrl, lastVisitTime);
         })).then((results) => {
             return _.flatten(results);
         });
     }
-};
 
-function getSeenInDaysRange(rangeCut) {
-    const hasSeenInDays = browser.getFromStorage(HAS_SEEN_IN_DAYS_STORAGE_KEY);
-    const newHasSeenInDaysRange = hasSeenInDays.range + moment().diff(hasSeenInDays.date, 'days') - rangeCut;
+    getLastVisitTime(cutInDays) {
+        const lastVisitTime = browser.getFromStorage(LAST_VISIT_TIME_STORAGE_KEY);
+        const newLastVisitTime = moment(lastVisitTime.time).add(moment().diff(lastVisitTime.marked, 'days'), 'days').subtract(cutInDays, 'days');
 
-    saveSeenInDaysRange(newHasSeenInDaysRange);
+        this.saveLastVisitTime(newLastVisitTime);
 
-    return newHasSeenInDaysRange;
-}
+        return newLastVisitTime;
+    }
 
-function searchSeenEpisodes(query, parse, seenInDays) {
-    return new Promise((resolve) => {
-        browser.searchFromHistory(query, seenInDays, (results) => {
-            let seenEpisodes = [];
-            results.map((result) => seenEpisodes.push(parse(result.url)));
-
-            resolve(seenEpisodes);
+    searchSeenEpisodes(query, parse, lastVisitTime) {
+        return new Promise((resolve) => {
+            if (this.searchResults[query])
+                resolve(this.getSeenEpisodesFromSearchResults(query, parse, lastVisitTime));
+            else
+                browser.searchFromHistory(query, lastVisitTime.valueOf(), (results) => {
+                    this.searchResults[query] = results;
+                    resolve(this.getSeenEpisodesFromSearchResults(query, parse, lastVisitTime));
+                });
         });
-    });
-}
+    }
 
-function saveSeenInDaysRange(range) {
-    browser.setToStorage({
-        key: HAS_SEEN_IN_DAYS_STORAGE_KEY,
-        value: {
-            date: Date.now(),
-            range: range
-        }
-    });
+    getSeenEpisodesFromSearchResults(query, parse, lastVisitTime) {
+        let seenEpisodes = [];
+
+        this.searchResults[query].map((result) => {
+            if (moment(result.lastVisitTime).isAfter(lastVisitTime))
+                seenEpisodes.push(parse(result.url))
+        });
+        return seenEpisodes;
+    }
+
+    saveLastVisitTime(time) {
+        browser.setToStorage({
+            key: LAST_VISIT_TIME_STORAGE_KEY,
+            value: {
+                marked: moment().valueOf(),
+                time: time.valueOf()
+            }
+        });
+    }
 }
