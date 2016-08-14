@@ -1,3 +1,5 @@
+const NOTIFICATION_ID = 'random-south-park-episode';
+
 export default {
 
     onInstallOrUpdate: (callback) => {
@@ -48,5 +50,32 @@ export default {
 
     getFromStorage: (key) => {
         return JSON.parse(localStorage.getItem(key));
+    },
+
+    createNotification: ({title, message, ok, cancel}, handleOk, handleCancel) => {
+        // Not supported in Firefox
+        if (!chrome.notifications.onButtonClicked)
+            return;
+
+        chrome.notifications.create(NOTIFICATION_ID, {
+            type: 'basic',
+            iconUrl: '../images/icon-48.png',
+            title: title,
+            message: message,
+            buttons: [
+                {title: ok},
+                {title: cancel}
+            ]
+        });
+        chrome.notifications.onButtonClicked.addListener((notificationId, buttonIndex) => {
+            if (buttonIndex === 0)
+                handleOk();
+            else
+                handleCancel();
+        });
+    },
+
+    clearNotification: () => {
+        chrome.notifications.clear(NOTIFICATION_ID);
     }
 };

@@ -1,14 +1,18 @@
 import database from 'database';
 
 describe('database', () => {
-    let initializeAppSpy, databaseRef, giveData;
+    let initializeAppSpy, deleteAppSpy, databaseRef, giveData;
 
     beforeEach(() => {
         initializeAppSpy = jasmine.createSpy('initializeApp');
+        deleteAppSpy = jasmine.createSpy('deleteApp');
 
         database.__set__({
             firebase: {
                 initializeApp: initializeAppSpy,
+                app: () => {
+                    return {delete: deleteAppSpy};
+                },
                 database: () => {
                     return {
                         ref: (ref) => {
@@ -33,14 +37,21 @@ describe('database', () => {
 
     it('initializes firebase', () => {
         expect(initializeAppSpy).toHaveBeenCalledWith({
-            databaseURL: 'https://shining-inferno-2925.firebaseio.com',
-            apiKey: '8JkC3cdKxhrZjfyfmbAMabKu7qL9o950ojlxedPy'
+            databaseURL: 'https://random-south-park-episode.firebaseio.com',
+            apiKey: 'AIzaSyBaKw13z1Rp98tbysXMsV8dI68mx38LOcU'
         });
     });
 
     it('tries to get data on init', () => {
         expect(databaseRef).toBe('/');
         expect(giveData).toBeDefined();
+    });
+
+    it('deletes the connection after data has arrived', () => {
+        giveData({val: () => {
+            return {};
+        }});
+        expect(deleteAppSpy).toHaveBeenCalled();
     });
 
     describe('getEpisodes()', () => {
@@ -59,6 +70,38 @@ describe('database', () => {
                 {season: 1, episode: 12},
                 {season: 2, episode: 3},
             ]);
+        });
+    });
+
+    describe('getLessFortunateCountries()', () => {
+        it('returns less fortunate countries in array', () => {
+            giveData({
+                val: () => {
+                    return {lessFortunateCountries: ['US']};
+                }
+            });
+            expect(database.getLessFortunateCountries()).toEqual(['US']);
+        });
+    });
+
+    describe('getNotifications()', () => {
+        it('returns notifications list', () => {
+            giveData({
+                val: () => {
+                    return {
+                        notifications: {
+                            watch: {
+                                title: 'Check new episode'
+                            }
+                        }
+                    };
+                }
+            });
+            expect(database.getNotifications()).toEqual({
+                watch: {
+                    title: 'Check new episode'
+                }
+            });
         });
     });
 });

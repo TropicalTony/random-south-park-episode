@@ -20,7 +20,8 @@
   },
   "permissions": [
     "tabs",
-    "history"
+    "history",
+    "notifications"
   ],
   "content_security_policy": "script-src 'self' https://cdn.firebase.com https://*.firebaseio.com; object-src 'self'",
   "offline_enabled": false

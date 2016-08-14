@@ -1,6 +1,6 @@
-import master from 'master';
+import main from 'main';
 
-describe('master', () => {
+describe('main', () => {
     let updateExtension, clickOnIcon, tabUrl, isSouthparkUrl
     let openTabSpy, updateTabSpy, mixpanelSpy, databaseSpy;
 
@@ -16,7 +16,7 @@ describe('master', () => {
         };
         isSouthparkUrl = false;
 
-        master.__set__({
+        main.__set__({
             browser: {
                 onInstallOrUpdate: (callback) => {
                     updateExtension = callback;
@@ -48,7 +48,7 @@ describe('master', () => {
                 }
             }
         });
-        master.init();
+        main.init();
     });
 
     describe('update extension', () => {

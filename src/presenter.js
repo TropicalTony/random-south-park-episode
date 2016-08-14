@@ -1,23 +1,9 @@
 import browser from 'browser';
 import mixpanel from 'mixpanel';
-import database from 'database';
-import picker from 'picker';
 import provider from 'provider';
 
 export default {
-    init: () => {
-        browser.onInstallOrUpdate(mixpanel.trackInstallOrUpdate);
-        browser.onIconClick(handleIconClick);
-    }
-}
-
-function handleIconClick() {
-    database.reload();
-    showEpisode();
-}
-
-function showEpisode() {
-    picker.pick((episode) => {
+    show: (episode) => {
         browser.getActiveTab((tab) => {
             if (isNewTab(tab.url) || provider.isSouthparkUrl(tab.url))
                 browser.updateTab(tab.id, episode.url);
@@ -25,8 +11,8 @@ function showEpisode() {
                 browser.openTab(episode.url);
         });
         mixpanel.trackShowEpisode(episode);
-    });
-}
+    }
+};
 
 function isNewTab(url) {
     return url === 'chrome://newtab/';
