@@ -17,7 +17,7 @@ export default {
 
     getAllPossibleProviders: () => {
         return [{
-            rootUrl: 'http://southpark.cc.com/full-episodes/s',
+            rootUrl: 'http://southpark.cc.com/full-episodes/',
             parseUrl: parseSouthParkCCSeasonAndEpisode
         }, {
             rootUrl: 'http://kisscartoon.me/Cartoon/South-Park-Season',
@@ -41,6 +41,9 @@ function registerUserCountry() {
 
 function parseSouthParkCCSeasonAndEpisode(url) {
     const found = url.match(/s\d+e\d+/);
+
+    if (!found)
+        return {};
 
     return {
         season: parseInt(found[0].match(/\d+/g)[0]),
