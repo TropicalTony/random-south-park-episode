@@ -1,6 +1,6 @@
 import mixpanel from 'mixpanel';
 
-describe('mixpanel', () => {
+fdescribe('mixpanel', () => {
     let initSpy, trackSpy;
 
     beforeEach(() => {
@@ -38,6 +38,27 @@ describe('mixpanel', () => {
         it('tracks when episode is shown with properties', () => {
             mixpanel.trackShowEpisode({season: 2, epsiode: 1});
             expect(trackSpy).toHaveBeenCalledWith('Show episode', {season: 2, epsiode: 1});
+        });
+    });
+
+    describe('trackShowNotification()', () => {
+        it('tracks when notification is shown with properties', () => {
+            mixpanel.trackShowNotification({season: 2, epsiode: 1});
+            expect(trackSpy).toHaveBeenCalledWith('Show notification', {season: 2, epsiode: 1});
+        });
+    });
+
+    describe('trackOkNotification()', () => {
+        it('tracks user positive response to notification', () => {
+            mixpanel.trackOkNotification({season: 2, epsiode: 1});
+            expect(trackSpy).toHaveBeenCalledWith('Ok notification', {season: 2, epsiode: 1});
+        });
+    });
+
+    describe('trackCancelNotification()', () => {
+        it('tracks user negative response to notification', () => {
+            mixpanel.trackCancelNotification({season: 2, epsiode: 1});
+            expect(trackSpy).toHaveBeenCalledWith('Cancel notification', {season: 2, epsiode: 1});
         });
     });
 });

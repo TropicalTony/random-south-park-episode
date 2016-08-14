@@ -15,5 +15,17 @@ export default {
 
     trackShowEpisode: (properties) => {
         mixpanel.track('Show episode', properties);
+    },
+
+    trackShowNotification: (properties) => {
+        mixpanel.track('Show notification', properties);
+    },
+
+    trackOkNotification: (properties) => {
+        mixpanel.track('Ok notification', properties);
+    },
+
+    trackCancelNotification: (properties) => {
+        mixpanel.track('Cancel notification', properties);
     }
 };
