@@ -14,10 +14,6 @@ let data = {
 export default {
 
     init: () => {
-        firebase.initializeApp({
-            databaseURL: 'https://shining-inferno-2925.firebaseio.com',
-            apiKey: '8JkC3cdKxhrZjfyfmbAMabKu7qL9o950ojlxedPy'
-        });
         loadData();
     },
 
@@ -35,19 +31,34 @@ export default {
 };
 
 function loadData() {
-    firebase.database().ref('/').on('value', (snapshot) => {
-        const rawdata = snapshot.val();
+    makeConnection();
 
-        data.lessFortunateCountries = rawdata.lessFortunateCountries;
-        data.seasons = {};
+    firebase.database().ref('/').on('value', _.flow(setData, deleteConnection));
+}
 
-        // Firebase returns array of seasons rather than object,
-        // this means first element in array is undefined, super weird
-        _.map(rawdata.seasons, (season, key) => {
-            if (season)
-                data.seasons[key] = season;
-        });
+function makeConnection() {
+    firebase.initializeApp({
+        databaseURL: 'https://random-south-park-episode.firebaseio.com',
+        apiKey: 'AIzaSyBaKw13z1Rp98tbysXMsV8dI68mx38LOcU'
     });
+}
+
+function setData(snapshot) {
+    const rawdata = snapshot.val();
+
+    data.lessFortunateCountries = rawdata.lessFortunateCountries;
+    data.seasons = {};
+
+    // Firebase returns array of seasons rather than object,
+    // this means first element in array is undefined, super weird
+    _.map(rawdata.seasons, (season, key) => {
+        if (season)
+            data.seasons[key] = season;
+    });
+}
+
+function deleteConnection() {
+    firebase.app().delete();
 }
 
 function flatten(seasons) {
