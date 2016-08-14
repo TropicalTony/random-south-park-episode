@@ -35,7 +35,7 @@ describe('provider', () => {
         });
 
         it('gives South Park CC provider data', () => {
-            expect(providers[0].rootUrl).toBe('http://southpark.cc.com/full-episodes/s');
+            expect(providers[0].rootUrl).toBe('http://southpark.cc.com/full-episodes/');
             expect(providers[0].parseUrl('http://southpark.cc.com/full-episodes/s02e04')).toEqual({season: 2, episode: 4});
         });
 

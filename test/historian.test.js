@@ -17,7 +17,7 @@ describe('historian', () => {
                         return lastVisitTime;
                 },
                 searchFromHistory: (query, lastVisitTime, callback) => {
-                    if (query === 'http://southpark.cc.com/full-episodes/s') {
+                    if (query === 'http://southpark.cc.com/full-episodes/') {
                         callback([{
                             lastVisitTime: 743809800000,
                             url: 'http://southpark.cc.com/full-episodes/s01e01'
