@@ -1,0 +1,16 @@
+{
+    "extends": "eslint:recommended",
+    "ecmaFeatures": {
+        "experimentalObjectRestSpread": true
+    },
+    "env": {
+        "browser": true,
+        "node": true,
+        "jasmine": true,
+        "es6": true
+    },
+    "globals": {
+        "chrome": false
+    },
+    "parser": "babel-eslint"
+}
