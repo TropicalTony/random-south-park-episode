@@ -30,7 +30,7 @@ export default class Historian {
 
     getLastVisitTime(cutInDays) {
         const lastVisitTime = browser.getFromStorage(LAST_VISIT_TIME_STORAGE_KEY);
-        const newLastVisitTime = moment(lastVisitTime.time).add(moment().diff(lastVisitTime.marked, 'days'), 'days').subtract(cutInDays, 'days');
+        const newLastVisitTime = moment(lastVisitTime).add(cutInDays, 'days');
 
         this.saveLastVisitTime(newLastVisitTime);
 
@@ -62,10 +62,7 @@ export default class Historian {
     saveLastVisitTime(time) {
         browser.setToStorage({
             key: LAST_VISIT_TIME_STORAGE_KEY,
-            value: {
-                marked: moment().valueOf(),
-                time: time.valueOf()
-            }
+            value: time.valueOf()
         });
     }
 }

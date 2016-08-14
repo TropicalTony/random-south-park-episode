@@ -41,10 +41,7 @@ describe('historian', () => {
     });
 
     it('sets current date and range to browser storage', () => {
-        expect(lastVisitTime).toEqual({
-            marked: 751582800000,
-            time: 743806800000
-        });
+        expect(lastVisitTime).toEqual(743806800000);
     });
 
     describe('getSeenEpisodes()', () => {
