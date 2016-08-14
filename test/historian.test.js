@@ -40,7 +40,7 @@ describe('historian', () => {
         historian = new Historian();
     });
 
-    it('sets current date and range to browser storage', () => {
+    it('sets last visit time to storage', () => {
         expect(lastVisitTime).toEqual(743806800000);
     });
 
