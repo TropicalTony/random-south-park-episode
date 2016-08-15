@@ -11,6 +11,11 @@ export default {
      *
      * Opens episode in new tab or current and tracks event in
      * mixpanel.
+     *
+     * @param {Object} episode
+     *  @param {String} episode.url
+     *  @param {Number} episode.season
+     *  @param {Number} episode.episode
      */
     show: (episode) => {
         browser.getActiveTab((tab) => {
