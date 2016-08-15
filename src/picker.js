@@ -5,7 +5,21 @@ import provider from 'provider';
 
 let historian;
 
+/**
+ * Episode picker
+ */
 export default {
+
+    /**
+     * Picks randomly from unseen episodes list
+     *
+     * @param {Function} callback
+     * @callback pickCallback
+     *  @param {Object} picked episode
+     *   @param {String} url
+     *   @param {Number} season
+     *   @param {Number} episode
+     */
     pick: (callback) => {
         historian = new Historian();
 
@@ -21,6 +35,8 @@ export default {
     }
 };
 
+// Get seen episodes from history, all episodes from db and build together list
+// of unseen episodes
 function getUnseenEpisodes(callback, seenInDaysRangeCut = 0) {
     historian.getSeenEpisodes(seenInDaysRangeCut).then((seenEpisodes) => {
         const unseenEpisodes = filterOutSeenEpisodes(seenEpisodes, database.getEpisodes());
@@ -53,6 +69,7 @@ function isValidEpisode(obj) {
     return obj.episode !== 0;
 }
 
+// Pick random element from array
 function pickRandomly(episodes) {
     return episodes[Math.floor(Math.random() * episodes.length)];
 }
