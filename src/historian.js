@@ -6,8 +6,14 @@ import provider from 'provider';
 
 const LAST_VISIT_TIME_STORAGE_KEY = 'lastVisitTime';
 
+/**
+ * History handling class
+ */
 export default class Historian {
 
+    /**
+     * Sets searchResults cache and last visit time when needed
+     */
     constructor() {
         this.searchResults = {};
 
@@ -17,6 +23,9 @@ export default class Historian {
 
     /**
      * Gives back seen episodes from all providers
+     *
+     * @param {Number} cutInDays Cut history search range in days
+     * @return {Promise}
      */
     getSeenEpisodes(cutInDays) {
         let lastVisitTime = this.getLastVisitTime(cutInDays);
