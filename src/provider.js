@@ -5,16 +5,37 @@ import database from 'database';
 // Fallback code when ipinfo is not responding
 let userCountryCode = 'EE';
 
+/**
+ * Episode provider related functions
+ *
+ * Providers are KissCartoon and South Park CC.
+ */
 export default {
 
+    /**
+     * Register user location based on IP address
+     */
     init: () => {
         registerUserCountry();
     },
 
+    /**
+     * Test if given url is related to our providers
+     *
+     * @param {String} url
+     * @return {Boolean}
+     */
     isSouthparkUrl: (url) => {
         return /southpark.cc.com\/full-episodes/.test(url) || /kisscartoon.me\/Cartoon\/South-Park-Season/.test(url);
     },
 
+    /**
+     * Get list of our provders and their helper functions
+     *
+     * @return {Object[]} providers
+     *  @return {String} providers[].rootUrl
+     *  @return {Function} providers[].parseUrl Helps to parse out season and episode numbers
+     */
     getAllPossibleProviders: () => {
         return [{
             rootUrl: 'http://southpark.cc.com/full-episodes/',
@@ -25,6 +46,13 @@ export default {
         }];
     },
 
+    /**
+     * Get provider url for given season and episode
+     *
+     * @param {Number} season
+     * @param {Number} episode
+     * @return {String} url
+     */
     getUrl: (season, episode) => {
         if (_.includes(database.getLessFortunateCountries(), userCountryCode))
             return getKissCartoonUrl(season, episode);
