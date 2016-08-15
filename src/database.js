@@ -11,31 +11,61 @@ let data = {
     }
 };
 
+/**
+ * Service for communicating with Firebase
+ */
 export default {
 
+    /**
+     * Load initial data from Firebase
+     */
     init: () => {
         loadData();
     },
 
+    /**
+     * Reload data from Firebase
+     */
     reload: () => {
         loadData();
     },
 
+    /**
+     * Gets all season-epsiodes
+     *
+     * Before giving them we need to flatten object tree
+     * into array of objects
+     *
+     * @return {Object[]} episodes
+     *  @return {Number} episodes[].season
+     *  @return {Number} episodes[].episode
+     */
     getEpisodes: () => {
         return flatten(data.seasons);
     },
 
+    /**
+     * Get countries that can't watch South Park CC
+     *
+     * @return {String[]} countries
+     */
     getLessFortunateCountries: () => {
         return data.lessFortunateCountries;
     },
 
+    /**
+     * Get different notifications that need to be shown
+     *
+     * @return {Object} notifications
+     *  @return {Object} notifications.watch
+     */
     getNotifications: () => {
         return data.notifications || {};
     }
 };
 
 function loadData() {
-    // Wait for app disconnect before connecting again
+    // Wait for previous connection to be removed before connecting again
     if (!_.isEmpty(firebase.apps))
         return setTimeout(loadData, 50);
 
@@ -56,7 +86,7 @@ function setData(snapshot) {
     const seasons = {};
 
     // Firebase returns array of seasons rather than object,
-    // this means first element in array is undefined, super weird
+    // this means first element in array is undefined
     _.map(rawdata.seasons, (season, key) => {
         if (season)
             seasons[key] = season;
