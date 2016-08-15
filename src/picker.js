@@ -52,7 +52,7 @@ function filterOutSeenEpisodes(seenEpisodes, allEpisodes) {
     let unseenEpisodes = [];
 
     allEpisodes.map((episode) => {
-        if (!containsEpisode(seenEpisodes, episode) && isValidEpisode(episode))
+        if (!containsEpisode(seenEpisodes, episode))
             unseenEpisodes.push(episode);
     });
     return unseenEpisodes;
@@ -63,10 +63,6 @@ function containsEpisode(list, obj) {
         if (list[i].season == obj.season && list[i].episode == obj.episode)
             return true;
     return false;
-}
-
-function isValidEpisode(obj) {
-    return obj.episode !== 0;
 }
 
 // Pick random element from array
