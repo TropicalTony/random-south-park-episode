@@ -28,7 +28,7 @@ $ npm install
 $ npm run start
 ```
 
-and read how-to-test-extension docs:
+Write code that you're proud of, document it (using [JSDoc](http://usejsdoc.org/) rules) and read how-to-manually-test-extension docs:
 
 - [Chrome](https://developer.chrome.com/extensions/getstarted#unpacked)
 - [Firefox](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Temporary_Installation_in_Firefox)
@@ -40,7 +40,7 @@ and read how-to-test-extension docs:
 $ npm run lint
 ```
 
-#### Run tests
+#### Write tests
 
 ```
 $ npm run test
