@@ -107,25 +107,34 @@ export default {
     },
 
     /**
-     * Create notification and handle button clicks
+     * Decide if we can and have rights to show notifications in a browser
      *
-     * See:
-     * - https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/notifications/create
-     * - https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/notifications/onButtonClicked
-     * (not supported in Firefox)
+     * (Notifications are not fully supported in Firefox)
+     *
+     * @callback callback Triggered when we can show notifications
+     */
+    canShowNotification: (callback) => {
+        if (!chrome.notifications.getPermissionLevel)
+            return;
+
+        chrome.notifications.getPermissionLevel((level) => {
+            if (level === "granted")
+                callback();
+        });
+    },
+
+    /**
+     * Create notification
+     *
+     * See https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/notifications/create
      *
      * @param {Object}
      *  @param {String} title Notification title
      *  @param {String} message Notification body message
      *  @param {String} ok Okey button message
      *  @param {String} cancel Cancel button message
-     * @param {Function} handleOk Callback when ok button is clicked
-     * @param {Function} handleCancel Callback when cancel button is clicked
      */
-    createNotification: ({title, message, ok, cancel}, handleOk, handleCancel) => {
-        if (!chrome.notifications.onButtonClicked)
-            return;
-
+    createNotification: ({title, message, ok, cancel}) => {
         chrome.notifications.create(NOTIFICATION_ID, {
             type: 'basic',
             iconUrl: '../images/icon-48.png',
@@ -136,6 +145,18 @@ export default {
                 {title: cancel}
             ]
         });
+
+    },
+
+    /**
+     * Handle notification button clicks
+     *
+     * See https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/notifications/onButtonClicked
+     *
+     * @param {Function} handleOk Callback when ok button is clicked
+     * @param {Function} handleCancel Callback when cancel button is clicked
+     */
+    onNotificationButtonsClick: (handleOk, handleCancel) => {
         chrome.notifications.onButtonClicked.addListener((notificationId, buttonIndex) => {
             if (buttonIndex === 0)
                 handleOk();

@@ -16,10 +16,12 @@ export default {
      * Get notifications from db and decide what notification to show
      */
     notifyOnNeed: () => {
-        const notifications = database.getNotifications();
+        browser.canShowNotification(() => {
+            const notifications = database.getNotifications();
 
-        if (notifications.watch && !hasBeenNotified(notifications.watch))
-            showWatchNotification(notifications.watch);
+            if (notifications.watch && !hasBeenNotified(notifications.watch))
+                showWatchNotification(notifications.watch);
+        });
     }
 };
 
@@ -34,8 +36,10 @@ function hasBeenNotified(notification) {
 
 function showWatchNotification(notification) {
     mixpanel.trackShowNotification(notification);
+    markNotified(notification);
 
-    browser.createNotification(notification, () => {
+    browser.createNotification(notification);
+    browser.onNotificationButtonsClick(() => {
         presenter.show(getEpisodeObj(notification));
         browser.clearNotification();
         mixpanel.trackOkNotification(notification);
@@ -43,7 +47,6 @@ function showWatchNotification(notification) {
         browser.clearNotification();
         mixpanel.trackCancelNotification(notification);
     });
-    markNotified(notification);
 }
 
 function getEpisodeObj({season, episode}) {

@@ -42,7 +42,7 @@ function getUnseenEpisodes(callback, seenInDaysRangeCut = 0) {
         const unseenEpisodes = filterOutSeenEpisodes(seenEpisodes, database.getEpisodes());
 
         if (_.isEmpty(unseenEpisodes))
-            getUnseenEpisodes(callback, 1);
+            getUnseenEpisodes(callback, 30);
         else
             callback(unseenEpisodes);
     });
