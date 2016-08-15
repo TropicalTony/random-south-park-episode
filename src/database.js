@@ -82,17 +82,7 @@ function makeConnection() {
 }
 
 function setData(snapshot) {
-    const rawdata = snapshot.val();
-    const seasons = {};
-
-    // Firebase returns array of seasons rather than object,
-    // this means first element in array is undefined
-    _.map(rawdata.seasons, (season, key) => {
-        if (season)
-            seasons[key] = season;
-    });
-    data = rawdata;
-    data.seasons = seasons;
+    data = snapshot.val();
 }
 
 function deleteConnection() {
@@ -103,9 +93,11 @@ function flatten(seasons) {
     let result = [];
 
     _.map(seasons, (season, seasonNr) => {
-        _.map(season.episodes, (episode, episodeNr) => {
-            result.push({season: parseInt(seasonNr), episode: parseInt(episodeNr)});
-        });
+        if (season)
+            _.map(season.episodes, (episode, episodeNr) => {
+                if (episode)
+                    result.push({season: parseInt(seasonNr), episode: parseInt(episodeNr)});
+            });
     });
     return result;
 }
