@@ -7,7 +7,14 @@ import provider from 'provider';
 
 const NOTIFIED_STORAGE_KEY = 'notified';
 
+/**
+ * Notifications manager
+ */
 export default {
+
+    /**
+     * Get notifications from db and decide what notification to show
+     */
     notifyOnNeed: () => {
         const notifications = database.getNotifications();
 
