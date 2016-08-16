@@ -33,15 +33,12 @@ export default {
     /**
      * Gets all season-epsiodes
      *
-     * Before giving them we need to flatten object tree
-     * into array of objects
-     *
      * @return {Object[]} episodes
      *  @return {Number} episodes[].season
      *  @return {Number} episodes[].episode
      */
     getEpisodes: () => {
-        return flatten(data.seasons);
+        return data.seasons;
     },
 
     /**
@@ -83,6 +80,7 @@ function makeConnection() {
 
 function setData(snapshot) {
     data = snapshot.val();
+    data.seasons = flatten(data.seasons);
 }
 
 function deleteConnection() {
