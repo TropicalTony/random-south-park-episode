@@ -27,6 +27,13 @@ export default {
     },
 
     /**
+     * Track event when user clicks on icon 
+     */
+    trackIconClick: () => {
+        mixpanel.track('Icon click');
+    },
+
+    /**
      * Track event when we show episode
      *
      * @param {Object} properties

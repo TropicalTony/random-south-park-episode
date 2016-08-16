@@ -2,14 +2,17 @@ import _ from 'lodash';
 import firebase from 'firebase';
 
 // Fallback data when Firebase is too slow or not connecting
-let data = {
-    seasons: {
-        1: {episodes: { 1: {}, 2: {}, 3: {} }},
-        5: {episodes: { 4: {}, 5: {}, 6: {} }},
-        10: {episodes: { 7: {}, 8: {}, 9: {} }},
-        15: {episodes: { 10: {}, 11: {}, 12: {} }}
-    }
-};
+let data = {episodes: [
+    {season: 1, episode: 1},
+    {season: 1, episode: 2},
+    {season: 1, episode: 3},
+    {season: 5, episode: 4},
+    {season: 5, episode: 5},
+    {season: 5, episode: 6},
+    {season: 10, episode: 7},
+    {season: 10, episode: 8},
+    {season: 10, episode: 9}
+]};
 
 /**
  * Service for communicating with Firebase
@@ -38,7 +41,7 @@ export default {
      *  @return {Number} episodes[].episode
      */
     getEpisodes: () => {
-        return data.seasons;
+        return data.episodes;
     },
 
     /**
@@ -80,7 +83,7 @@ function makeConnection() {
 
 function setData(snapshot) {
     data = snapshot.val();
-    data.seasons = flatten(data.seasons);
+    data.episodes = flatten(data.seasons);
 }
 
 function deleteConnection() {

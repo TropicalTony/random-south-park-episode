@@ -6,7 +6,8 @@ describe('main', () => {
 
     beforeEach(() => {
         mixpanelSpy = {
-            trackInstallOrUpdate: jasmine.createSpy('mixpanel.trackInstallOrUpdate')
+            trackInstallOrUpdate: jasmine.createSpy('mixpanel.trackInstallOrUpdate'),
+            trackIconClick: jasmine.createSpy('mixpanel.trackIconClick')
         };
         databaseSpy = {
             reload: jasmine.createSpy('database.reload')
@@ -70,6 +71,10 @@ describe('main', () => {
                 season: 8,
                 episode: 3
             });
+        });
+
+        it('tracks event in analytics', () => {
+            expect(mixpanelSpy.trackIconClick).toHaveBeenCalled();
         });
     });
 });

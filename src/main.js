@@ -23,4 +23,5 @@ function handleIconClick() {
     database.reload();
     notifier.notifyOnNeed();
     picker.pick((episode) => presenter.show(episode));
+    mixpanel.trackIconClick();
 }

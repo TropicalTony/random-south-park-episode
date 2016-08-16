@@ -34,6 +34,13 @@ describe('mixpanel', () => {
         });
     });
 
+    describe('trackIconClick()', () => {
+        it('tracks when user clicks on icon', () => {
+            mixpanel.trackIconClick();
+            expect(trackSpy).toHaveBeenCalledWith('Icon click');
+        });
+    });
+
     describe('trackShowEpisode()', () => {
         it('tracks when episode is shown with properties', () => {
             mixpanel.trackShowEpisode({season: 2, epsiode: 1});
