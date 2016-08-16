@@ -47,6 +47,9 @@ function showWatchNotification(notification) {
         browser.clearNotification();
         mixpanel.trackCancelNotification(notification);
     });
+    browser.onNotificationClose(() => {
+        mixpanel.trackCancelNotification(notification);
+    });
 }
 
 function getEpisodeObj({season, episode}) {

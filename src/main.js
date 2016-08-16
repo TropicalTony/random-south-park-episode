@@ -21,7 +21,7 @@ export default {
 
 function handleIconClick() {
     database.reload();
+    mixpanel.trackIconClick();
     notifier.notifyOnNeed();
     picker.pick((episode) => presenter.show(episode));
-    mixpanel.trackIconClick();
 }

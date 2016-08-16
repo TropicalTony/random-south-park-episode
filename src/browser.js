@@ -166,6 +166,20 @@ export default {
     },
 
     /**
+     * Handles notification close
+     *
+     * See https://developer.chrome.com/apps/notifications#event-onClosed
+     *
+     * @callback
+     */
+    onNotificationClose: (callback) => {
+        chrome.notifications.onClosed.addListener((notificationId, byUser) => {
+            if (notificationId === NOTIFICATION_ID && byUser)
+                callback();
+        });
+    },
+
+    /**
      * Clear current notification
      *
      * See https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/notifications/clear
