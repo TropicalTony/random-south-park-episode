@@ -109,7 +109,8 @@ export default {
     /**
      * Decide if we can and have rights to show notifications in a browser
      *
-     * (Notifications are not fully supported in Firefox)
+     * See https://developer.chrome.com/apps/notifications#method-getPermissionLevel
+     * (notifications are not fully supported in Firefox)
      *
      * @callback callback Triggered when we can show notifications
      */
@@ -118,7 +119,7 @@ export default {
             return;
 
         chrome.notifications.getPermissionLevel((level) => {
-            if (level === "granted")
+            if (level === 'granted')
                 callback();
         });
     },

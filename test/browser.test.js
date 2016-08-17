@@ -151,4 +151,96 @@ describe('browser', () => {
             }, callback);
         });
     });
+
+    describe('local storage', () => {
+        it('can set and get data', () => {
+            browser.setToStorage({key: 'key', value: {random: 'South Park'}});
+            expect(browser.getFromStorage('key')).toEqual({random: 'South Park'});
+        });
+    });
+
+    describe('canShowNotification()', () => {
+        it('does nothing when getPermissionLevel is not supported', () => {
+            window.chrome = {notifications: {}};
+            const callback = jasmine.createSpy('canShowNotification callback');
+
+            browser.canShowNotification(callback);
+
+            expect(callback).not.toHaveBeenCalled();
+        });
+
+        it('does nothing when permission level is not granted', () => {
+            window.chrome = {
+                notifications: {
+                    getPermissionLevel: (callback) => callback('denied')
+                }
+            };
+            const callback = jasmine.createSpy('canShowNotification callback');
+
+            browser.canShowNotification(callback);
+
+            expect(callback).not.toHaveBeenCalled();
+        });
+
+        it('calls back when permission level is granted', () => {
+            window.chrome = {
+                notifications: {
+                    getPermissionLevel: (callback) => callback('granted')
+                }
+            };
+            const callback = jasmine.createSpy('canShowNotification callback');
+
+            browser.canShowNotification(callback);
+
+            expect(callback).toHaveBeenCalled();
+        });
+    });
+
+    describe('createNotification()', () => {
+        beforeEach(() => {
+            window.chrome = {
+                notifications: {
+                    create: jasmine.createSpy('create notification')
+                }
+            };
+        });
+
+        it('creates notification with given args', () => {
+            browser.createNotification({
+                title: 'Hello',
+                message: 'How are you?',
+                ok: 'Ok',
+                cancel: 'Piss off'
+            });
+            expect(window.chrome.notifications.create).toHaveBeenCalledWith('random-south-park-episode', {
+                type: 'basic',
+                iconUrl: '../images/icon-48.png',
+                title: 'Hello',
+                message: 'How are you?',
+                buttons: [
+                    {title: 'Ok'},
+                    {title: 'Piss off'}
+                ]
+            });
+        });
+    });
+
+    describe('onNotificationButtonsClick()', () => {});
+
+    describe('onNotificationClose()', () => {});
+
+    describe('clearNotification()', () => {
+        beforeEach(() => {
+            window.chrome = {
+                notifications: {
+                    clear: jasmine.createSpy('clear notification')
+                }
+            };
+        });
+
+        it('clears notification with static id', () => {
+            browser.clearNotification();
+            expect(window.chrome.notifications.clear).toHaveBeenCalledWith('random-south-park-episode');
+        });
+    });
 });
