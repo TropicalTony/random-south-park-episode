@@ -139,8 +139,8 @@ export default {
         chrome.notifications.create(NOTIFICATION_ID, {
             type: 'basic',
             iconUrl: '../images/icon-48.png',
-            title: title,
-            message: message,
+            title,
+            message,
             buttons: [
                 {title: ok},
                 {title: cancel}
@@ -159,6 +159,9 @@ export default {
      */
     onNotificationButtonsClick: (handleOk, handleCancel) => {
         chrome.notifications.onButtonClicked.addListener((notificationId, buttonIndex) => {
+            if (notificationId !== NOTIFICATION_ID)
+                return;
+
             if (buttonIndex === 0)
                 handleOk();
             else
@@ -171,7 +174,7 @@ export default {
      *
      * See https://developer.chrome.com/apps/notifications#event-onClosed
      *
-     * @callback
+     * @callback when notification is closed by user
      */
     onNotificationClose: (callback) => {
         chrome.notifications.onClosed.addListener((notificationId, byUser) => {

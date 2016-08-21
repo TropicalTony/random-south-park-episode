@@ -225,9 +225,74 @@ describe('browser', () => {
         });
     });
 
-    describe('onNotificationButtonsClick()', () => {});
+    describe('onNotificationButtonsClick()', () => {
+        let onButtonClickedCallback, handleOk, handleCancel;
 
-    describe('onNotificationClose()', () => {});
+        beforeEach(() => {
+            handleOk = jasmine.createSpy('handleOk');
+            handleCancel = jasmine.createSpy('handleCancel');
+
+            window.chrome = {
+                notifications: {
+                    onButtonClicked: {
+                        addListener: (callback) => {
+                            onButtonClickedCallback = callback;
+                        }
+                    }
+                }
+            };
+            browser.onNotificationButtonsClick(handleOk, handleCancel);
+        });
+
+        it('listenes first button as Ok button', () => {
+            onButtonClickedCallback('random-south-park-episode', 0);
+            expect(handleOk).toHaveBeenCalled();
+        });
+
+        it('listenes second button as Cancel button', () => {
+            onButtonClickedCallback('random-south-park-episode', 1);
+            expect(handleCancel).toHaveBeenCalled();
+        });
+
+        it('does nothing when notification id is wrong', () => {
+            onButtonClickedCallback('asd-notification', 1);
+            expect(handleCancel).not.toHaveBeenCalled();
+        });
+    });
+
+    describe('onNotificationClose()', () => {
+        let onClosedCallback, handleClose;
+
+        beforeEach(() => {
+            handleClose = jasmine.createSpy('handleClose');
+
+            window.chrome = {
+                notifications: {
+                    onClosed: {
+                        addListener: (callback) => {
+                            onClosedCallback = callback;
+                        }
+                    }
+                }
+            };
+            browser.onNotificationClose(handleClose);
+        });
+
+        it('calls back when notification is closed by user', () => {
+            onClosedCallback('random-south-park-episode', true);
+            expect(handleClose).toHaveBeenCalled();
+        });
+
+        it('does nothing when notification id is wrong', () => {
+            onClosedCallback('asd-notification', true);
+            expect(handleClose).not.toHaveBeenCalled();
+        });
+
+        it('does nothing when notification is not closed by user', () => {
+            onClosedCallback('random-south-park-episode', false);
+            expect(handleClose).not.toHaveBeenCalled();
+        });
+    });
 
     describe('clearNotification()', () => {
         beforeEach(() => {
