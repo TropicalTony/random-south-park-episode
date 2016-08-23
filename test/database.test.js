@@ -84,23 +84,19 @@ describe('database', () => {
         });
     });
 
-    describe('getNotifications()', () => {
+    describe('getEpisodeNotification()', () => {
         it('returns notifications list', () => {
             giveData({
                 val: () => {
                     return {
-                        notifications: {
-                            watch: {
-                                title: 'Check new episode'
-                            }
+                        episodeNotification: {
+                            title: 'Check new episode'
                         }
                     };
                 }
             });
-            expect(database.getNotifications()).toEqual({
-                watch: {
-                    title: 'Check new episode'
-                }
+            expect(database.getEpisodeNotification()).toEqual({
+                title: 'Check new episode'
             });
         });
     });

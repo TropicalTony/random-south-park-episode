@@ -54,13 +54,12 @@ export default {
     },
 
     /**
-     * Get different notifications that need to be shown
+     * Get episode notification that needs to be shown
      *
-     * @return {Object} notifications
-     *  @return {Object} notifications.watch
+     * @return {Object} episodeNotification
      */
-    getNotifications: () => {
-        return data.notifications || {};
+    getEpisodeNotification: () => {
+        return data.episodeNotification || {};
     }
 };
 
