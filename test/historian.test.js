@@ -4,7 +4,7 @@ describe('historian', () => {
     let lastVisitTime, historian;
 
     beforeEach(() => {
-        jasmine.clock().mockDate(new Date(1993, 9, 26, 3, 25, 0));
+        jasmine.clock().mockDate(new Date(736043100000));
 
         Historian.__set__({
             browser: {
@@ -27,7 +27,7 @@ describe('historian', () => {
                         }]);
                     } else if (query === 'http://kisscartoon.me/Cartoon/South-Park-Season') {
                         callback([{
-                            lastVisitTime: 703806800000,
+                            lastVisitTime: 708270700000,
                             url: 'http://kisscartoon.me/Cartoon/South-Park-Season-03/Episode-004'
                         }, {
                             lastVisitTime: 783806800000,
@@ -41,7 +41,7 @@ describe('historian', () => {
     });
 
     it('sets last visit time to storage', () => {
-        expect(lastVisitTime).toEqual(743819100000);
+        expect(lastVisitTime).toEqual(728270700000);
     });
 
     describe('getSeenEpisodes()', () => {
