@@ -41,7 +41,7 @@ describe('picker', () => {
     describe('pick()', () => {
         it('callbacks random season and episode', () => {
             window.Math.random = () => {
-                return 0.5;
+                return 0.75;
             };
             picker.pick((result) => {
                 expect(result).toEqual({
