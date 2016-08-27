@@ -51,6 +51,14 @@ $ npm run test
 
 Make sure the build is green and then make a [pull request](https://github.com/syyfilis/random-south-park-episode/pulls).
 
+## Develop promo page
+
+```
+$ npm run start-promo
+```
+
+NOTE: pushing a `index.html` changes to master branch will make changes instantly public.
+
 ## Publish
 
 Bump up version number in `manifest.json` and run
