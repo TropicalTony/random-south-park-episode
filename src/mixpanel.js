@@ -1,4 +1,5 @@
 import mixpanel from 'mixpanel-browser';
+import user from 'user';
 
 /**
  * Wrapper for mixpanel library
@@ -27,10 +28,10 @@ export default {
     },
 
     /**
-     * Track event when user clicks on icon 
+     * Track event when user clicks on icon
      */
     trackIconClick: () => {
-        mixpanel.track('Icon click');
+        mixpanel.track('Icon click', {totalUsage: user.getUsageCount()});
     },
 
     /**

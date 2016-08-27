@@ -59,7 +59,7 @@ export default {
      * @return {Object} episodeNotification
      */
     getEpisodeNotification: () => {
-        return data.episodeNotification || {};
+        return data.episodeNotification;
     }
 };
 

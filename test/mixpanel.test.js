@@ -11,6 +11,9 @@ describe('mixpanel', () => {
             mixpanel: {
                 init: initSpy,
                 track: trackSpy
+            },
+            user: {
+                getUsageCount: () => 2
             }
         });
     });
@@ -37,7 +40,7 @@ describe('mixpanel', () => {
     describe('trackIconClick()', () => {
         it('tracks when user clicks on icon', () => {
             mixpanel.trackIconClick();
-            expect(trackSpy).toHaveBeenCalledWith('Icon click');
+            expect(trackSpy).toHaveBeenCalledWith('Icon click', {totalUsage: 2});
         });
     });
 

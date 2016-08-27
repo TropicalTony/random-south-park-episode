@@ -4,6 +4,7 @@ import mixpanel from 'mixpanel';
 import notifier from 'notifier';
 import picker from 'picker';
 import presenter from 'presenter';
+import user from 'user';
 
 /**
  * Extension starting point
@@ -21,6 +22,7 @@ export default {
 
 function handleIconClick() {
     database.reload();
+    user.registerUsage();
     mixpanel.trackIconClick();
     notifier.notifyOnNeed();
     picker.pick((episode) => presenter.show(episode));

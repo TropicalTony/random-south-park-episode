@@ -2,21 +2,24 @@ import main from 'main';
 
 describe('main', () => {
     let updateExtension, clickOnIcon;
-    let mixpanelSpy, databaseSpy, notifierSpy, presenterSpy;
+    let mixpanel, database, notifier, presenter, user;
 
     beforeEach(() => {
-        mixpanelSpy = {
+        mixpanel = {
             trackInstallOrUpdate: jasmine.createSpy('mixpanel.trackInstallOrUpdate'),
             trackIconClick: jasmine.createSpy('mixpanel.trackIconClick')
         };
-        databaseSpy = {
+        database = {
             reload: jasmine.createSpy('database.reload')
         };
-        notifierSpy = {
+        notifier = {
             notifyOnNeed: jasmine.createSpy('notifier')
         };
-        presenterSpy = {
+        presenter = {
             show: jasmine.createSpy('show episode')
+        };
+        user = {
+            registerUsage: jasmine.createSpy('register usage')
         };
 
         main.__set__({
@@ -28,10 +31,6 @@ describe('main', () => {
                     clickOnIcon = callback;
                 }
             },
-            mixpanel: mixpanelSpy,
-            database: databaseSpy,
-            notifier: notifierSpy,
-            presenter: presenterSpy,
             picker: {
                 pick: (callback) => {
                     callback({
@@ -40,7 +39,12 @@ describe('main', () => {
                         episode: 3
                     });
                 }
-            }
+            },
+            mixpanel,
+            database,
+            notifier,
+            presenter,
+            user
         });
         main.init();
     });
@@ -48,7 +52,7 @@ describe('main', () => {
     describe('update extension', () => {
         it('is tracked', () => {
             updateExtension({reason: 'update'});
-            expect(mixpanelSpy.trackInstallOrUpdate).toHaveBeenCalledWith({reason: 'update'});
+            expect(mixpanel.trackInstallOrUpdate).toHaveBeenCalledWith({reason: 'update'});
         });
     });
 
@@ -58,15 +62,19 @@ describe('main', () => {
         });
 
         it('reloads database', () => {
-            expect(databaseSpy.reload).toHaveBeenCalled();
+            expect(database.reload).toHaveBeenCalled();
+        });
+
+        it('registers usage', () => {
+            expect(user.registerUsage).toHaveBeenCalled();
         });
 
         it('show notification', () => {
-            expect(notifierSpy.notifyOnNeed).toHaveBeenCalled();
+            expect(notifier.notifyOnNeed).toHaveBeenCalled();
         });
 
         it('show episode', () => {
-            expect(presenterSpy.show).toHaveBeenCalledWith({
+            expect(presenter.show).toHaveBeenCalledWith({
                 url: 'http://southpark.cc.com/full-episodes/s08e03',
                 season: 8,
                 episode: 3
@@ -74,7 +82,7 @@ describe('main', () => {
         });
 
         it('tracks event in analytics', () => {
-            expect(mixpanelSpy.trackIconClick).toHaveBeenCalled();
+            expect(mixpanel.trackIconClick).toHaveBeenCalled();
         });
     });
 });

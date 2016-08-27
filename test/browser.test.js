@@ -308,4 +308,26 @@ describe('browser', () => {
             expect(window.chrome.notifications.clear).toHaveBeenCalledWith('random-south-park-episode');
         });
     });
+
+    describe('isChrome()', () => {
+        let browserName;
+
+        beforeEach(() => {
+            browser.__set__({
+                bowser: () => {
+                    return {name: browserName}
+                }
+            });
+        });
+
+        it('is true when user is using Chrome', () => {
+            browserName = 'chrome';
+            expect(browser.isChrome()).toBe(true);
+        });
+
+        it('is false when user is using Firefox', () => {
+            browserName = 'firefox';
+            expect(browser.isChrome()).toBe(false);
+        });
+    });
 });
