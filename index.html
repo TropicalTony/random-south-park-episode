@@ -7,6 +7,12 @@
 
     <title>Random South Park Episode</title>
     <meta name="description" content="A browser extension for opening up a random unseen South Park episode on icon click">
+    <meta name="keywords" content="Random, South Park, Episode, Series, Unseen, Browser extension, Web extension, Kenny">
+
+    <meta property="og:title" content="Random South Park Episode">
+    <meta property="og:image" content="images/icon-128.png">
+    <meta property="og:description" content="A browser extension for opening up a random unseen South Park episode on icon click">
+    <meta property="og:url" content="https://syyfilis.github.io/random-south-park-episode">
 
     <link rel="icon" href="images/icon-48.png" type="image/png">
     <link href="https://fonts.googleapis.com/css?family=Cabin:400,600" rel="stylesheet">
@@ -21,16 +27,30 @@
             margin-top: 150px;
             text-align: center;
         }
-        .logo {
-            display: block;
-            margin: 0 auto;
-            margin-bottom: 20px;
+        main {
+            width: 100%;
+        }
+        footer {
+            padding: 0 0 50px;
+            text-align: center;
         }
         h1 {
             color: #000;
             margin-bottom: 15px;
             font-weight: 600;
             font-size: 1.5em;
+        }
+        h2, h3{
+            margin-top: 50px;
+            margin-bottom: 30px;
+            color: #000;
+            font-size: 1.4em;
+            font-weight: normal;
+        }
+        h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1em;
         }
         p {
             width: 360px;
@@ -39,16 +59,29 @@
             font-size: 1em;
             line-height: 1.4em;
         }
-        main {
-            width: 100%;
+        @media (max-width: 600px) {
+            p {
+                width: 95%;
+            }
+        }
+        .logo {
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 20px;
         }
         .screenshot {
             display: block;
             margin: 0 auto;
         }
-        footer {
-            padding: 0 0 50px;
-            text-align: center;
+        @media (max-width: 1000px) {
+            .screenshot {
+                width: 90%;
+            }
+        }
+        @media (max-width: 600px) {
+            .screenshot {
+                display: none;
+            }
         }
         .store-links {
             margin: 0 auto;
@@ -75,16 +108,15 @@
         .store-link:hover {
             box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18),0 4px 15px 0 rgba(0,0,0,0.15);
         }
-        h2, h3{
-            margin-bottom: 30px;
-            color: #000;
-            font-size: 1.4em;
-            font-weight: normal;
-        }
-        h3 {
-            margin-top: 100px;
-            margin-bottom: 20px;
-            font-size: 1em;
+        @media (max-width: 600px) {
+            .store-link {
+                display: block;
+                margin: 0 auto;
+                margin-bottom: 20px;
+            }
+            .store-link:last-child {
+                margin-right: inherit;
+            }
         }
         .promo-button {
             margin-right: 10px;
@@ -109,24 +141,24 @@
 
         <h1>Random South Park Episode</h1>
         <p>A <u>browser extension</u> for watching a random<br />South Park episode that you haven't seen.</p>
+
+        <h2>Start using the extension on</h2>
+        <div class="store-links">
+            <a id="firefoxStoreLink" class="store-link" href="#">
+                <span style="color:#E37128">Fire</span><span style="color:#17B2E5">fox</span></a>
+            <a id="chromeStoreLink" class="store-link" href="#">
+                <span style="color:#DC4A3D">C</span><span style="color:#DC4A3D">h</span><span style="color:#4689f4">r</span><span style="color:#4689f4">o</span><span style="color:#149F5C">m</span><span style="color:#FECD42">e</span>
+            </a>
+            <a id="operaStoreLink" class="store-link" style="color:#FB1A2C" href="#">Opera</a>
+        </div>
     </header>
 
     <main>
         <img class="screenshot" src="web/screenshot.png" />
         <footer>
-            <h2>Start using the extension on</h2>
-            <div class="store-links">
-                <a id="firefoxStoreLink" class="store-link" href="#">
-                    <span style="color:#E37128">Fire</span><span style="color:#17B2E5">fox</span></a>
-                <a id="chromeStoreLink" class="store-link" href="#">
-                    <span style="color:#DC4A3D">C</span><span style="color:#DC4A3D">h</span><span style="color:#4689f4">r</span><span style="color:#4689f4">o</span><span style="color:#149F5C">m</span><span style="color:#FECD42">e</span>
-                </a>
-                <a id="operaStoreLink" class="store-link" style="color:#FB1A2C" href="#">Opera</a>
-            </div>
-
             <h3>Spread the word</h3>
             <div class="promo-buttons">
-                <iframe id="twitterPromoLink" class="promo-button" src="https://platform.twitter.com/widgets/tweet_button.html?size=s&url=https%3A%2F%2Fsyyfilis.github.io%2Frandom-south-park-episode&hashtags=randomSouthParkEpisode" width="61" height="20" title="Twitter Tweet Button" style="border: 0; overflow: hidden;"></iframe>
+                <iframe id="twitterPromoLink" class="promo-button" src="https://platform.twitter.com/widgets/tweet_button.html?size=s&url=https%3A%2F%2Fsyyfilis.github.io%2Frandom-south-park-episode&hashtags=randomSouthParkEpisode" width="61" height="20" title="Twitter Tweet Button" style="border: none; overflow: hidden;" frameborder="0" scrolling="0"></iframe>
                 <iframe id="facebookPromoLink" class="promo-button" src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fsyyfilis.github.io%2Frandom-south-park-episode&layout=button&size=small&mobile_iframe=true&appId=141906145865426&width=59&height=20" width="59" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
                 <iframe id="githubPromoLink" class="promo-button" src="https://ghbtns.com/github-btn.html?user=syyfilis&repo=random-south-park-episode&type=star" frameborder="0" scrolling="0" width="59px" height="20px"></iframe>
             </div>
