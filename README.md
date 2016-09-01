@@ -1,5 +1,6 @@
 # Random South Park Episode
 [![Build Status](https://travis-ci.org/syyfilis/random-south-park-episode.svg?branch=master)](https://travis-ci.org/syyfilis/random-south-park-episode)
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/d/gnejpgpadafimefcjbhnglbnfbboakjf.svg?maxAge=2592000)]()
 
 > Watch random [South Park](https://en.wikipedia.org/wiki/South_Park) episodes with a help from awesome web extension.
 
