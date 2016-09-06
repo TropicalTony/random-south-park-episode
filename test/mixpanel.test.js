@@ -21,7 +21,7 @@ describe('mixpanel', () => {
     describe('init()', () => {
         it('inits mixpanel with token', () => {
             mixpanel.init();
-            expect(initSpy).toHaveBeenCalledWith('d33e9ef8ecb715fef9439208bcbb63b7');
+            expect(initSpy).toHaveBeenCalledWith('e5bd46663199797d872d02137edfdfef');
         });
     });
 

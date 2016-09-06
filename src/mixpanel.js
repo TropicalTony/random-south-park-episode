@@ -10,7 +10,7 @@ export default {
      * Setup mixpanel
      */
     init: () => {
-        mixpanel.init('d33e9ef8ecb715fef9439208bcbb63b7');
+        mixpanel.init('e5bd46663199797d872d02137edfdfef');
     },
 
     /**
