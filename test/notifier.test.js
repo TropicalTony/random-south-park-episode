@@ -2,7 +2,7 @@ import notifier from 'notifier';
 
 describe('notifier', () => {
     let browser, database, mixpanel, presenter, storage, user;
-    let notification, allowToShowNotification, usageCount, isChrome, createdNotification;
+    let notification, allowToShowNotification, usageCount, createdNotification;
     let triggerOk, triggerCancel, triggerClose;
 
     beforeEach(() => {
@@ -24,8 +24,7 @@ describe('notifier', () => {
             onNotificationClose: (callback) => {
                 triggerClose = callback;
             },
-            clearNotification: jasmine.createSpy('clearNotification'),
-            isChrome: () => isChrome
+            clearNotification: jasmine.createSpy('clearNotification')
         };
         storage = {};
         database = {
@@ -121,17 +120,7 @@ describe('notifier', () => {
                     notification = undefined;
                 });
 
-                it('does not show review notification when user is not using Chrome', () => {
-                    isChrome = false;
-
-                    notifier.notifyOnNeed();
-                    allowToShowNotification();
-
-                    expect(createdNotification).toBeUndefined();
-                });
-
                 it('does not show review notification when user is new', () => {
-                    isChrome = true;
                     usageCount = 10;
 
                     notifier.notifyOnNeed();
@@ -141,7 +130,6 @@ describe('notifier', () => {
                 });
 
                 it('shows review notification when user is on Chrome and has used extension over 50 times', () => {
-                    isChrome = true;
                     usageCount = 65;
 
                     notifier.notifyOnNeed();
@@ -151,7 +139,6 @@ describe('notifier', () => {
                 });
 
                 it('ignores review notification on second time', () => {
-                    isChrome = true;
                     usageCount = 65;
 
                     notifier.notifyOnNeed();

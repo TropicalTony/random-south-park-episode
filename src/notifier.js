@@ -28,7 +28,7 @@ function notify() {
 
     if (notification && !hasEpisodeBeenNotified(notification))
         showEpisodeNotification(notification);
-    else if (browser.isChrome() && user.getUsageCount() > HARD_CORE_USAGE_LEVEL && !hasReviewBeenNotified())
+    else if (user.getUsageCount() > HARD_CORE_USAGE_LEVEL && !hasReviewBeenNotified())
         showReviewNotification();
 }
 

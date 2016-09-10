@@ -192,14 +192,5 @@ export default {
      */
     clearNotification: () => {
         chrome.notifications.clear(NOTIFICATION_ID);
-    },
-
-    /**
-     * Detects if user uses extension in Chrome
-     *
-     * @return {Boolean}
-     */
-    isChrome: () => {
-        return bowser.name === 'chrome';
     }
 };
