@@ -6,6 +6,8 @@ webpackConfig.entry = {};
 // Used for mocking
 webpackConfig.module.loaders[0].query = {plugins: ['babel-plugin-rewire']};
 
+webpackConfig.devtool = 'inline-source-map';
+
 module.exports = function(config) {
     config.set({
         basePath: '',

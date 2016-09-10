@@ -160,10 +160,21 @@ describe('browser', () => {
     });
 
     describe('canShowNotification()', () => {
-        it('does nothing when getPermissionLevel is not supported', () => {
-            window.chrome = {notifications: {}};
+        let browserName;
+
+        beforeEach(() => {
+            browser.__set__({
+                bowser: () => {
+                    return {name: browserName}
+                }
+            });
+            browserName = 'chrome';
+        });
+
+        it('does nothing when browser is not Chrome', () => {
             const callback = jasmine.createSpy('canShowNotification callback');
 
+            browserName = 'firefox';
             browser.canShowNotification(callback);
 
             expect(callback).not.toHaveBeenCalled();

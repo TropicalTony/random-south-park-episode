@@ -1,4 +1,5 @@
 import browser from 'browser';
+import bugsnag from 'bugsnag';
 import database from 'database';
 import mixpanel from 'mixpanel';
 import notifier from 'notifier';
@@ -21,9 +22,14 @@ export default {
 }
 
 function handleIconClick() {
-    database.reload();
-    user.registerUsage();
-    mixpanel.trackIconClick();
-    notifier.notifyOnNeed();
-    picker.pick((episode) => presenter.show(episode));
+    try {
+        database.reload();
+        user.registerUsage();
+        mixpanel.trackIconClick();
+        notifier.notifyOnNeed();
+        picker.pick((episode) => presenter.show(episode));
+    } catch (e) {
+        bugsnag.notify(e);
+        throw(e);
+    }
 }

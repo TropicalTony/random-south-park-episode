@@ -112,12 +112,12 @@ export default {
      * Decide if we can and have rights to show notifications in a browser
      *
      * See https://developer.chrome.com/apps/notifications#method-getPermissionLevel
-     * (notifications are not fully supported in Firefox)
+     * (notifications are not fully supported in Firefox and Opera)
      *
      * @callback callback Triggered when we can show notifications
      */
     canShowNotification: (callback) => {
-        if (!chrome.notifications.getPermissionLevel)
+        if (bowser().name !== 'chrome')
             return;
 
         chrome.notifications.getPermissionLevel((level) => {

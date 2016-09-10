@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
     cache: true,
-    devtool: 'inline-source-map',
+    devtool: 'source-map',
 
     entry: {
         app: path.join(__dirname, 'src', 'bootstrap.js')
