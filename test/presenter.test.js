@@ -1,7 +1,7 @@
 import presenter from 'presenter';
 
 describe('presenter', () => {
-    let tabUrl, isSouthparkUrl
+    let tabUrl, isSouthparkUrl;
     let openTabSpy, updateTabSpy, mixpanelSpy;
 
     beforeEach(() => {

@@ -6,7 +6,6 @@ const NOTIFICATION_ID = 'random-south-park-episode';
  * Wrapper for browser API related actions
  */
 export default {
-
     /**
      * Listen to install and update events
      *
@@ -64,7 +63,7 @@ export default {
      * @param {String} url
      */
     openTab: (url) => {
-        chrome.tabs.create({ url: url });
+        chrome.tabs.create({url: url});
     },
 
     /**
@@ -148,7 +147,6 @@ export default {
                 {title: cancel}
             ]
         });
-
     },
 
     /**

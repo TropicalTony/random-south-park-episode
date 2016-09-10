@@ -5,7 +5,7 @@ describe('bugsnag', () => {
 
     beforeEach(() => {
         originalBugsnag = {
-            notifyException: jasmine.createSpy("notifyException")
+            notifyException: jasmine.createSpy('notifyException')
         };
 
         bugsnag.__set__({
@@ -22,15 +22,15 @@ describe('bugsnag', () => {
         const error = {
             stacktrace: 'chrome-extension://kmasklmdlakmd/dist/background.js'
         };
-        originalBugsnag.beforeNotify(error)
+        originalBugsnag.beforeNotify(error);
 
         expect(error.stacktrace).toBe('https://github.com/syyfilis/random-south-park-episode/dist/background.js');
     });
 
-    describe("notify()", () => {
-        it("notifies given exception", () => {
-            bugsnag.notify("Error");
-            expect(originalBugsnag.notifyException).toHaveBeenCalledWith("Error");
+    describe('notify()', () => {
+        it('notifies given exception', () => {
+            bugsnag.notify('Error');
+            expect(originalBugsnag.notifyException).toHaveBeenCalledWith('Error');
         });
     });
 });

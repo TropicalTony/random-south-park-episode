@@ -5,7 +5,7 @@ describe('picker', () => {
         picker.__set__({
             provider: {
                 getUrl: (season, episode) => {
-                    return `http://southpark.cc.com/full-episodes/s${season}e${episode}`
+                    return `http://southpark.cc.com/full-episodes/s${season}e${episode}`;
                 }
             },
             database: {
@@ -30,7 +30,7 @@ describe('picker', () => {
                                     {season: 4, episode: 5}
                                 ]);
                             else
-                                callback([{season: 1, episode: 2}])
+                                callback([{season: 1, episode: 2}]);
                         }
                     };
                 }

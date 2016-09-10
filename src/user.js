@@ -11,9 +11,9 @@ export default {
      * Register extension usage (click on icon)
      */
     registerUsage: () => {
-        let usage = browser.getFromStorage(USAGE_STORAGE_KEY);
+        const usage = browser.getFromStorage(USAGE_STORAGE_KEY);
 
-        browser.setToStorage({key: USAGE_STORAGE_KEY, value: usage ? usage + 1 : 1})
+        browser.setToStorage({key: USAGE_STORAGE_KEY, value: usage ? usage + 1 : 1});
     },
 
     /**
@@ -22,6 +22,6 @@ export default {
      * @return {Number} Usage count
      */
     getUsageCount: () => {
-        return browser.getFromStorage(USAGE_STORAGE_KEY)
+        return browser.getFromStorage(USAGE_STORAGE_KEY);
     }
 };

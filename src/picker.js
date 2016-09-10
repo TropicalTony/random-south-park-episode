@@ -49,9 +49,9 @@ function getUnseenEpisodes(callback, seenInDaysRangeCut = 0) {
 }
 
 function filterOutSeenEpisodes(seenEpisodes, allEpisodes) {
-    let unseenEpisodes = [];
+    const unseenEpisodes = [];
 
-    allEpisodes.map((episode) => {
+    allEpisodes.forEach((episode) => {
         if (!containsEpisode(seenEpisodes, episode))
             unseenEpisodes.push(episode);
     });
@@ -60,7 +60,7 @@ function filterOutSeenEpisodes(seenEpisodes, allEpisodes) {
 
 function containsEpisode(list, obj) {
     for (let i = 0; i < list.length; i ++)
-        if (list[i].season == obj.season && list[i].episode == obj.episode)
+        if (list[i].season === obj.season && list[i].episode === obj.episode)
             return true;
     return false;
 }

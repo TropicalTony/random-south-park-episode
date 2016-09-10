@@ -19,7 +19,7 @@ export default {
         browser.onInstallOrUpdate(mixpanel.trackInstallOrUpdate);
         browser.onIconClick(handleIconClick);
     }
-}
+};
 
 function handleIconClick() {
     try {
@@ -30,6 +30,6 @@ function handleIconClick() {
         picker.pick((episode) => presenter.show(episode));
     } catch (e) {
         bugsnag.notify(e);
-        throw(e);
+        throw e;
     }
 }

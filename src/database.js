@@ -90,13 +90,13 @@ function deleteConnection() {
 }
 
 function flatten(seasons) {
-    let result = [];
+    const result = [];
 
     _.map(seasons, (season, seasonNr) => {
         if (season)
             _.map(season.episodes, (episode, episodeNr) => {
                 if (episode)
-                    result.push({season: parseInt(seasonNr), episode: parseInt(episodeNr)});
+                    result.push({season: parseInt(seasonNr, 10), episode: parseInt(episodeNr, 10)});
             });
     });
     return result;

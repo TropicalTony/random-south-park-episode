@@ -12,7 +12,7 @@ export default {
      * @return {Boolean}
      */
     isSouthparkUrl: (url) => {
-        return /southpark.cc.com\/full-episodes/.test(url);
+        return (/southpark.cc.com\/full-episodes/).test(url);
     },
 
     /**
@@ -48,8 +48,8 @@ function parseSouthParkCCSeasonAndEpisode(url) {
         return {};
 
     return {
-        season: parseInt(found[0].match(/\d+/g)[0]),
-        episode: parseInt(found[0].match(/\d+/g)[1])
+        season: parseInt(found[0].match(/\d+/g)[0], 10),
+        episode: parseInt(found[0].match(/\d+/g)[1], 10)
     };
 }
 
@@ -58,7 +58,7 @@ function getSouthparkCCUrl(season, episode) {
 }
 
 function pad(num, size = 2) {
-    var s = num + '';
+    let s = String(num);
 
     while (s.length < size)
         s = '0' + s;

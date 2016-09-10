@@ -10,7 +10,6 @@ const LAST_VISIT_TIME_STORAGE_KEY = 'lastVisitTime';
  * History handling class
  */
 export default class Historian {
-
     /**
      * Sets searchResults cache and last visit time when needed
      */
@@ -28,7 +27,7 @@ export default class Historian {
      * @return {Promise}
      */
     getSeenEpisodes(cutInDays) {
-        let lastVisitTime = this.getLastVisitTime(cutInDays);
+        const lastVisitTime = this.getLastVisitTime(cutInDays);
 
         return Promise.all(provider.getAllPossibleProviders().map((provider) => {
             return this.searchSeenEpisodes(provider.rootUrl, provider.parseUrl, lastVisitTime);
@@ -59,11 +58,11 @@ export default class Historian {
     }
 
     getSeenEpisodesFromSearchResults(query, parse, lastVisitTime) {
-        let seenEpisodes = [];
+        const seenEpisodes = [];
 
-        this.searchResults[query].map((result) => {
+        this.searchResults[query].forEach((result) => {
             if (moment(result.lastVisitTime).isAfter(lastVisitTime))
-                seenEpisodes.push(parse(result.url))
+                seenEpisodes.push(parse(result.url));
         });
         return seenEpisodes;
     }
