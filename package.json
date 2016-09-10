@@ -7,7 +7,7 @@
     "firefox": "web-ext run",
     "test": "karma start",
     "lint": "eslint .",
-    "release": "webpack && zip -r dist/random-south-park-episode.zip images manifest.json dist -x '*.DS_Store'",
+    "release": "webpack && zip -r dist/random-south-park-episode.zip . images dist -i 'images/icon-*.png' 'dist/*.js' 'manifest.json'",
     "ci-test": "npm run lint && karma start --single-run"
   },
   "dependencies": {
