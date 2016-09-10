@@ -9,7 +9,9 @@ The extension will keep track of all your watched South Park episodes. All you n
 
 ![That's pretty cool](http://i.giphy.com/26tP7cDNJUZQy7w3u.gif)
 
-"Random South Park Episode" extension is available for:
+## Start using it
+
+"Random South Park Episode" extension is currently available for:
 
 - [Chrome](https://chrome.google.com/webstore/detail/random-south-park-episode/gnejpgpadafimefcjbhnglbnfbboakjf)
 
