@@ -1,5 +1,6 @@
 # Random South Park Episode
 [![Build Status](https://travis-ci.org/syyfilis/random-south-park-episode.svg?branch=master)](https://travis-ci.org/syyfilis/random-south-park-episode)
+[![Code Climate](https://codeclimate.com/github/syyfilis/random-south-park-episode/badges/gpa.svg)](https://codeclimate.com/github/syyfilis/random-south-park-episode)
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/d/gnejpgpadafimefcjbhnglbnfbboakjf.svg?maxAge=2592000)](https://chrome.google.com/webstore/detail/random-south-park-episode/gnejpgpadafimefcjbhnglbnfbboakjf)
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/rating/gnejpgpadafimefcjbhnglbnfbboakjf.svg?maxAge=2592000)](https://chrome.google.com/webstore/detail/random-south-park-episode/gnejpgpadafimefcjbhnglbnfbboakjf)
 
