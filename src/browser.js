@@ -117,7 +117,7 @@ export default {
      * @callback callback Triggered when we can show notifications
      */
     canShowNotification: (callback) => {
-        if (bowser().name !== 'chrome')
+        if (!chrome.notifications.getPermissionLevel || bowser.name === 'opera')
             return;
 
         chrome.notifications.getPermissionLevel((level) => {
@@ -200,6 +200,6 @@ export default {
      * @return {Boolean}
      */
     isChrome: () => {
-        return bowser().name === 'chrome';
+        return bowser.name === 'chrome';
     }
 };
