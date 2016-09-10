@@ -74,7 +74,7 @@ Make sure the build is green and then make a [pull request](https://github.com/s
 $ npm run start-promo
 ```
 
-NOTE: pushing a `index.html` changes to master branch will make changes instantly public.
+> NOTE: pushing a `index.html` changes to master branch will make changes instantly public.
 
 ## Publish
 
