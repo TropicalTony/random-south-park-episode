@@ -8,6 +8,7 @@ import user from 'user';
 
 const NOTIFIED_EPISODE_STORAGE_KEY = 'notifiedEpisode';
 const NOTIFIED_REVIEW_STORAGE_KEY = 'notifiedReview';
+const HARD_CORE_USAGE_LEVEL = 50;
 
 /**
  * Notifications manager
@@ -27,7 +28,7 @@ function notify() {
 
     if (notification && !hasEpisodeBeenNotified(notification))
         showEpisodeNotification(notification);
-    else if (browser.isChrome() && user.getUsageCount() > 50 && !hasReviewBeenNotified())
+    else if (browser.isChrome() && user.getUsageCount() > HARD_CORE_USAGE_LEVEL && !hasReviewBeenNotified())
         showReviewNotification();
 }
 
