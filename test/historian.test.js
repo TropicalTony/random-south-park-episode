@@ -24,14 +24,12 @@ describe('historian', () => {
                         }, {
                             lastVisitTime: 743829100000,
                             url: 'http://southpark.cc.com/full-episodes/s01e02'
-                        }]);
-                    } else if (query === 'http://kisscartoon.me/Cartoon/South-Park-Season') {
-                        callback([{
+                        }, {
                             lastVisitTime: 708270700000,
-                            url: 'http://kisscartoon.me/Cartoon/South-Park-Season-03/Episode-004'
+                            url: 'http://southpark.cc.com/full-episodes/s03e04'
                         }, {
                             lastVisitTime: 783806800000,
-                            url: 'http://kisscartoon.me/Cartoon/South-Park-Season-04/Episode-005'
+                            url: 'http://southpark.cc.com/full-episodes/s04e05'
                         }]);
                     }
                 }
