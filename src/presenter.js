@@ -6,7 +6,6 @@ import provider from 'provider';
  * Service that handles showing episode
  */
 export default {
-
     /**
      *
      * Opens episode in new tab or current and tracks event in
@@ -19,7 +18,7 @@ export default {
      */
     show: (episode) => {
         browser.getActiveTab((tab) => {
-            if (isNewTab(tab.url) || provider.isSouthparkUrl(tab.url))
+            if (isNewTab(tab.url) || provider.matchesUrl(tab.url))
                 browser.updateTab(tab.id, episode.url);
             else
                 browser.openTab(episode.url);

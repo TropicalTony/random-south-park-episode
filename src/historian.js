@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import Promise from 'bluebird';
 import moment from 'moment';
 import browser from 'browser';
@@ -14,8 +13,6 @@ export default class Historian {
      * Sets searchResults cache and last visit time when needed
      */
     constructor() {
-        this.searchResults = {};
-
         if (!browser.getFromStorage(LAST_VISIT_TIME_STORAGE_KEY))
             this.saveLastVisitTime(moment().subtract(90, 'days'));
     }
@@ -29,11 +26,7 @@ export default class Historian {
     getSeenEpisodes(cutInDays) {
         const lastVisitTime = this.getLastVisitTime(cutInDays);
 
-        return Promise.all(provider.getAllPossibleProviders().map((provider) => {
-            return this.searchSeenEpisodes(provider.rootUrl, provider.parseUrl, lastVisitTime);
-        })).then((results) => {
-            return _.flatten(results);
-        });
+        return this.searchSeenEpisodes(lastVisitTime);
     }
 
     getLastVisitTime(cutInDays) {
@@ -45,24 +38,24 @@ export default class Historian {
         return newLastVisitTime;
     }
 
-    searchSeenEpisodes(query, parse, lastVisitTime) {
+    searchSeenEpisodes(lastVisitTime) {
         return new Promise((resolve) => {
-            if (this.searchResults[query])
-                resolve(this.getSeenEpisodesFromSearchResults(query, parse, lastVisitTime));
+            if (this.searchResults)
+                resolve(this.getSeenEpisodesFromSearchResults(lastVisitTime));
             else
-                browser.searchFromHistory(query, lastVisitTime.valueOf(), (results) => {
-                    this.searchResults[query] = results;
-                    resolve(this.getSeenEpisodesFromSearchResults(query, parse, lastVisitTime));
+                browser.searchFromHistory(provider.rootUrl, lastVisitTime.valueOf(), (results) => {
+                    this.searchResults = results;
+                    resolve(this.getSeenEpisodesFromSearchResults(lastVisitTime));
                 });
         });
     }
 
-    getSeenEpisodesFromSearchResults(query, parse, lastVisitTime) {
+    getSeenEpisodesFromSearchResults(lastVisitTime) {
         const seenEpisodes = [];
 
-        this.searchResults[query].forEach((result) => {
+        this.searchResults.forEach((result) => {
             if (moment(result.lastVisitTime).isAfter(lastVisitTime))
-                seenEpisodes.push(parse(result.url));
+                seenEpisodes.push(provider.parseUrl(result.url));
         });
         return seenEpisodes;
     }

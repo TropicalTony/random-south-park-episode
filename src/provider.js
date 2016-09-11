@@ -4,29 +4,19 @@
  * Current provider is South Park CC.
  */
 export default {
+    /**
+     * South Park CC url without season and episode info
+     */
+    rootUrl: 'http://southpark.cc.com/full-episodes/',
 
     /**
-     * Test if given url is related to our providers
+     * Test if given url is related to our provider
      *
      * @param {String} url
      * @return {Boolean}
      */
-    isSouthparkUrl: (url) => {
+    matchesUrl: (url) => {
         return (/southpark.cc.com\/full-episodes/).test(url);
-    },
-
-    /**
-     * Get list of our provders and their helper functions
-     *
-     * @return {Object[]} providers
-     *  @return {String} providers[].rootUrl
-     *  @return {Function} providers[].parseUrl Helps to parse out season and episode numbers
-     */
-    getAllPossibleProviders: () => {
-        return [{
-            rootUrl: 'http://southpark.cc.com/full-episodes/',
-            parseUrl: parseSouthParkCCSeasonAndEpisode
-        }];
     },
 
     /**
@@ -38,20 +28,28 @@ export default {
      */
     getUrl: (season, episode) => {
         return getSouthparkCCUrl(season, episode);
+    },
+
+    /**
+     * Parse given url for getting season and episode numbers
+     *
+     * @param {String} url
+     * @return {Object} result
+     *  @return {Number} result.season
+     *  @return {Number} result.episode
+     */
+    parseUrl: (url) => {
+        const found = url.match(/s\d+e\d+/);
+
+        if (!found)
+            return {};
+
+        return {
+            season: parseInt(found[0].match(/\d+/g)[0], 10),
+            episode: parseInt(found[0].match(/\d+/g)[1], 10)
+        };
     }
 };
-
-function parseSouthParkCCSeasonAndEpisode(url) {
-    const found = url.match(/s\d+e\d+/);
-
-    if (!found)
-        return {};
-
-    return {
-        season: parseInt(found[0].match(/\d+/g)[0], 10),
-        episode: parseInt(found[0].match(/\d+/g)[1], 10)
-    };
-}
 
 function getSouthparkCCUrl(season, episode) {
     return `http://southpark.cc.com/full-episodes/s${pad(season)}e${pad(episode)}`;

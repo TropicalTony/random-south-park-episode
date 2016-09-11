@@ -20,7 +20,7 @@ describe('presenter', () => {
             },
             mixpanel: mixpanelSpy,
             provider: {
-                isSouthparkUrl: () => {
+                matchesUrl: () => {
                     return isSouthparkUrl;
                 }
             }

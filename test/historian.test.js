@@ -1,10 +1,11 @@
+import moment from 'moment';
 import Historian from 'historian';
 
 describe('historian', () => {
     let lastVisitTime, historian;
 
     beforeEach(() => {
-        jasmine.clock().mockDate(new Date(736043100000));
+        jasmine.clock().mockDate(moment());
 
         Historian.__set__({
             browser: {
@@ -19,16 +20,16 @@ describe('historian', () => {
                 searchFromHistory: (query, lastVisitTime, callback) => {
                     if (query === 'http://southpark.cc.com/full-episodes/') {
                         callback([{
-                            lastVisitTime: 743859800000,
+                            lastVisitTime: moment().subtract(50, 'days').valueOf(),
                             url: 'http://southpark.cc.com/full-episodes/s01e01'
                         }, {
-                            lastVisitTime: 743829100000,
+                            lastVisitTime: moment().subtract(30, 'days').valueOf(),
                             url: 'http://southpark.cc.com/full-episodes/s01e02'
                         }, {
-                            lastVisitTime: 708270700000,
+                            lastVisitTime: moment().subtract(95, 'days').valueOf(),
                             url: 'http://southpark.cc.com/full-episodes/s03e04'
                         }, {
-                            lastVisitTime: 783806800000,
+                            lastVisitTime: moment().subtract(1, 'days').valueOf(),
                             url: 'http://southpark.cc.com/full-episodes/s04e05'
                         }]);
                     }
@@ -39,7 +40,7 @@ describe('historian', () => {
     });
 
     it('sets last visit time to storage', () => {
-        expect(lastVisitTime).toBeDefined();
+        expect(lastVisitTime).toBe(moment().subtract(90, 'days').valueOf());
     });
 
     describe('getSeenEpisodes()', () => {
