@@ -86,6 +86,25 @@ describe('browser', () => {
         });
     });
 
+    describe('isNewTab()', () => {
+        it('knows Chrome new tab url', () => {
+            expect(browser.isNewTab('chrome://newtab/')).toBeTruthy();
+        });
+
+        it('knows Opera new tab url', () => {
+            expect(browser.isNewTab('chrome://startpage/')).toBeTruthy();
+        });
+
+        it('knows Firefox new tab urls', () => {
+            expect(browser.isNewTab('about:blank')).toBeTruthy();
+            expect(browser.isNewTab('about:newtab')).toBeTruthy();
+        });
+
+        it('knows when is not a new tab', () => {
+            expect(browser.isNewTab('chrome://extensions/')).toBeFalsy();
+        });
+    });
+
     describe('updateTab()', () => {
         beforeEach(() => {
             window.chrome = {

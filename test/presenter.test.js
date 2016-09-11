@@ -2,57 +2,59 @@ import presenter from 'presenter';
 
 describe('presenter', () => {
     let tabUrl, isSouthparkUrl;
-    let openTabSpy, updateTabSpy, mixpanelSpy;
+    let openTab, updateTab, isNewTab, mixpanel;
 
     beforeEach(() => {
-        openTabSpy = jasmine.createSpy('browser.openTab');
-        updateTabSpy = jasmine.createSpy('browser.updateTab');
-        mixpanelSpy = {trackShowEpisode: jasmine.createSpy('mixpanel.trackShowEpisode')};
-        isSouthparkUrl = false;
+        openTab = jasmine.createSpy('browser.openTab');
+        updateTab = jasmine.createSpy('browser.updateTab');
+        mixpanel = {
+            trackShowEpisode: jasmine.createSpy('mixpanel.trackShowEpisode')
+        };
 
         presenter.__set__({
             browser: {
                 getActiveTab: (callback) => {
                     callback({id: 123, url: tabUrl});
                 },
-                openTab: openTabSpy,
-                updateTab: updateTabSpy
+                openTab,
+                updateTab,
+                isNewTab: () => isNewTab
             },
-            mixpanel: mixpanelSpy,
             provider: {
                 matchesUrl: () => {
                     return isSouthparkUrl;
                 }
-            }
+            },
+            mixpanel
         });
     });
 
     describe('show()', () => {
         it('on same tab when new tab page is active', () => {
-            tabUrl = 'chrome://newtab/';
+            isNewTab = true;
 
             presenter.show({season: 8, episode: 3, url: 'http://southpark.cc.com/full-episodes/s08e03'});
-            expect(updateTabSpy).toHaveBeenCalledWith(123, 'http://southpark.cc.com/full-episodes/s08e03');
+            expect(updateTab).toHaveBeenCalledWith(123, 'http://southpark.cc.com/full-episodes/s08e03');
         });
 
         it('on same tab when south park episode page is active', () => {
-            tabUrl = 'http://southpark.cc.com/full-episodes/s01e02';
             isSouthparkUrl = true;
 
             presenter.show({season: 8, episode: 3, url: 'http://southpark.cc.com/full-episodes/s08e03'});
-            expect(updateTabSpy).toHaveBeenCalledWith(123, 'http://southpark.cc.com/full-episodes/s08e03');
+            expect(updateTab).toHaveBeenCalledWith(123, 'http://southpark.cc.com/full-episodes/s08e03');
         });
 
-        it('on new tab otherwise', () => {
-            tabUrl = 'chrome://extensions';
+        it('on other tab otherwise', () => {
+            isNewTab = false;
+            isSouthparkUrl = false;
 
             presenter.show({season: 8, episode: 3, url: 'http://southpark.cc.com/full-episodes/s08e03'});
-            expect(openTabSpy).toHaveBeenCalledWith('http://southpark.cc.com/full-episodes/s08e03');
+            expect(openTab).toHaveBeenCalledWith('http://southpark.cc.com/full-episodes/s08e03');
         });
 
         it('tracks event', () => {
             presenter.show({season: 8, episode: 3, url: 'http://southpark.cc.com/full-episodes/s08e03'});
-            expect(mixpanelSpy.trackShowEpisode).toHaveBeenCalledWith({
+            expect(mixpanel.trackShowEpisode).toHaveBeenCalledWith({
                 season: 8,
                 episode: 3,
                 url: 'http://southpark.cc.com/full-episodes/s08e03'

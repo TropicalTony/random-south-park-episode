@@ -44,6 +44,18 @@ export default {
     },
 
     /**
+     * Checks if given url responds to a new tab
+     *
+     * @param {String} url
+     * @return {Boolean}
+     */
+    isNewTab: (url) => {
+        return url === 'chrome://newtab/' || // Chrome
+            url === 'chrome://startpage/' || // Opera
+            url === 'about:blank' || url === 'about:newtab'; // Firefox
+    },
+
+    /**
      * Update given tab url
      *
      * See https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/tabs/update

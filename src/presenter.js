@@ -18,7 +18,7 @@ export default {
      */
     show: (episode) => {
         browser.getActiveTab((tab) => {
-            if (isNewTab(tab.url) || provider.matchesUrl(tab.url))
+            if (browser.isNewTab(tab.url) || provider.matchesUrl(tab.url))
                 browser.updateTab(tab.id, episode.url);
             else
                 browser.openTab(episode.url);
@@ -26,7 +26,3 @@ export default {
         mixpanel.trackShowEpisode(episode);
     }
 };
-
-function isNewTab(url) {
-    return url === 'chrome://newtab/';
-}
