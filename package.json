@@ -8,7 +8,7 @@
     "test": "karma start",
     "lint": "eslint .",
     "release": "webpack && zip -r dist/random-south-park-episode.zip . images dist -i 'images/icon-*.png' 'dist/*.js' 'manifest.json'",
-    "ci-test": "npm run lint && karma start --single-run"
+    "ci": "npm run lint && karma start --single-run"
   },
   "dependencies": {
     "bluebird": "^3.4.6",

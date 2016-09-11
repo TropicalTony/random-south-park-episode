@@ -1,3 +1,3 @@
 language: node_js
-node_js: "node"
-script: npm run ci-test
+node_js: node
+script: npm run ci
