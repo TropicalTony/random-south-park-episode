@@ -62,8 +62,6 @@ $ npm run firefox
 $ npm run lint
 ```
 
-
-
 #### Make a pull request
 
 Make sure the build is green and then make a [pull request](https://github.com/syyfilis/random-south-park-episode/pulls).
@@ -81,7 +79,7 @@ $ npm run start-promo
 Bump up version number in `manifest.json` and run
 
 ```
-$ npm run release
+$ npm run build
 ```
 
 You can find ready-to-release extension in `dist/random-south-park-episode.zip`.
