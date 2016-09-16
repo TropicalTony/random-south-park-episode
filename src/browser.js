@@ -85,7 +85,8 @@ export default {
      * (not supported in Firefox 48)
      *
      * @param {String} text
-     * @param {Double} text
+     * @param {Double} lastVisitTime
+     * @param {Callback} callback
      */
     searchFromHistory: (text, lastVisitTime, callback) => {
         if (!chrome.history.search)
