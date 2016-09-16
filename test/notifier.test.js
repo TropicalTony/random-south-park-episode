@@ -1,157 +1,54 @@
 import notifier from 'notifier';
 
 describe('notifier', () => {
-    let browser, database, mixpanel, presenter, storage, user;
-    let notification, allowToShowNotification, usageCount, createdNotification;
-    let triggerOk, triggerCancel, triggerClose;
+    let reviewNotifier, episodeNotifier, browser;
+    let allowToShowNotification;
 
     beforeEach(() => {
         browser = {
             canShowNotification: (callback) => {
                 allowToShowNotification = callback;
-            },
-            createNotification: (notification) => {
-                createdNotification = notification;
-            },
-            getFromStorage: (key) => storage[key],
-            setToStorage: ({key, value}) => {
-                storage[key] = value;
-            },
-            onNotificationButtonsClick: (okCallback, cancelCallback) => {
-                triggerOk = okCallback;
-                triggerCancel = cancelCallback;
-            },
-            onNotificationClose: (callback) => {
-                triggerClose = callback;
-            },
-            clearNotification: jasmine.createSpy('clearNotification')
+            }
         };
-        storage = {};
-        database = {
-            getEpisodeNotification: () => notification
+        reviewNotifier = {
+            show: jasmine.createSpy()
         };
-        mixpanel = {
-            trackShowNotification: jasmine.createSpy('trackShowNotification'),
-            trackOkNotification: jasmine.createSpy('trackOkNotification'),
-            trackCancelNotification: jasmine.createSpy('trackCancelNotification')
+        episodeNotifier = {
+            show: jasmine.createSpy()
         };
-        presenter = {
-            show: jasmine.createSpy('presenter.show')
-        };
-        user = {
-            getUsageCount: () => usageCount
-        };
+
         notifier.__set__({
             browser,
-            mixpanel,
-            database,
-            presenter,
-            user
+            reviewNotifier,
+            episodeNotifier
         });
     });
 
-    describe('notifyOnNeed()', () => {
-        it('does nothing when notification can not been shown', () => {
-            spyOn(database, 'getEpisodeNotification');
-
-            notifier.notifyOnNeed();
-
-            expect(database.getEpisodeNotification).not.toHaveBeenCalled();
+    describe('notify()', () => {
+        it('does nothing when not supported', () => {
+            notifier.notify();
+            expect(allowToShowNotification).toBeDefined();
+            expect(reviewNotifier.show).not.toHaveBeenCalled();
         });
 
-        describe('with ability to show notifications', () => {
-            describe('and episode notification exists', () => {
-                beforeEach(() => {
-                    notification = {
-                        title: 'Hello',
-                        message: 'Intro',
-                        ok: 'Lets do this',
-                        cancel: 'No',
-                        season: 4,
-                        episode: 5
-                    };
-                    notifier.notifyOnNeed();
-                    allowToShowNotification();
-                });
+        it('shows review notification at first', () => {
+            reviewNotifier.show.and.returnValue(true);
 
-                it('creates notification at first', () => {
-                    expect(createdNotification).toEqual(notification);
-                });
+            notifier.notify();
+            allowToShowNotification();
 
-                it('tracks notification showing event in Mixpanel', () => {
-                    expect(mixpanel.trackShowNotification).toHaveBeenCalledWith(notification);
-                });
+            expect(reviewNotifier.show).toHaveBeenCalled();
+            expect(episodeNotifier.show).not.toHaveBeenCalled();
+        });
 
-                it('presents episode on ok answer', () => {
-                    triggerOk();
-                    expect(presenter.show).toHaveBeenCalledWith({
-                        season: 4,
-                        episode: 5,
-                        url: 'http://southpark.cc.com/full-episodes/s04e05'
-                    });
-                    expect(browser.clearNotification).toHaveBeenCalled();
-                    expect(mixpanel.trackOkNotification).toHaveBeenCalledWith(notification);
-                });
+        it('shows episode notification when review notification is not shown', () => {
+            reviewNotifier.show.and.returnValue(false);
 
-                it('presents nothing on cancel answer', () => {
-                    triggerCancel();
-                    expect(presenter.show).not.toHaveBeenCalled();
-                    expect(browser.clearNotification).toHaveBeenCalled();
-                    expect(mixpanel.trackCancelNotification).toHaveBeenCalledWith(notification);
-                });
+            notifier.notify();
+            allowToShowNotification();
 
-                it('tracks cancel event when notification is closed', () => {
-                    triggerClose();
-                    expect(mixpanel.trackCancelNotification).toHaveBeenCalledWith(notification);
-                });
-
-                it('ignores the same notification on second time', () => {
-                    createdNotification = undefined;
-
-                    notifier.notifyOnNeed();
-                    allowToShowNotification();
-
-                    expect(createdNotification).toBeUndefined();
-                });
-            });
-
-            describe('and episode notification is not there to show', () => {
-                beforeEach(() => {
-                    notification = undefined;
-                });
-
-                it('does not show review notification when user is new', () => {
-                    usageCount = 10;
-
-                    notifier.notifyOnNeed();
-                    allowToShowNotification();
-
-                    expect(createdNotification).toBeUndefined();
-                });
-
-                it('shows review notification when user is on Chrome and has used extension over 50 times', () => {
-                    usageCount = 65;
-
-                    notifier.notifyOnNeed();
-                    allowToShowNotification();
-
-                    expect(createdNotification).toBeDefined();
-                });
-
-                it('ignores review notification on second time', () => {
-                    usageCount = 65;
-
-                    notifier.notifyOnNeed();
-                    allowToShowNotification();
-
-                    createdNotification = undefined;
-
-                    notifier.notifyOnNeed();
-                    allowToShowNotification();
-
-                    expect(createdNotification).toBeUndefined();
-                });
-            });
+            expect(reviewNotifier.show).toHaveBeenCalled();
+            expect(episodeNotifier.show).toHaveBeenCalled();
         });
     });
 });

@@ -13,7 +13,7 @@ describe('main', () => {
             reload: jasmine.createSpy('database.reload')
         };
         notifier = {
-            notifyOnNeed: jasmine.createSpy('notifier')
+            notify: jasmine.createSpy('notifier')
         };
         presenter = {
             show: jasmine.createSpy('show episode')
@@ -70,7 +70,7 @@ describe('main', () => {
         });
 
         it('show notification', () => {
-            expect(notifier.notifyOnNeed).toHaveBeenCalled();
+            expect(notifier.notify).toHaveBeenCalled();
         });
 
         it('show episode', () => {

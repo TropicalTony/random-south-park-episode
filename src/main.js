@@ -23,11 +23,12 @@ export default {
 
 function handleIconClick() {
     try {
+        picker.pick((episode) => presenter.show(episode));
+
         database.reload();
         user.registerUsage();
         mixpanel.trackIconClick();
-        notifier.notifyOnNeed();
-        picker.pick((episode) => presenter.show(episode));
+        notifier.notify();
     } catch (e) {
         bugsnag.notify(e);
         throw e;
