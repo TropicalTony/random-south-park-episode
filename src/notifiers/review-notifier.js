@@ -29,7 +29,7 @@ function hasBeenNotified() {
 function showNotification() {
     const notification = {
         title: 'How about a review?',
-        message: 'You can help us gain more users by giving us a review  in the extension store :)',
+        message: 'You can help us gain more users by writing a review in the extension store :)',
         ok: 'Write a review',
         cancel: 'How about NO!'
     };
@@ -57,5 +57,5 @@ function handleCancel(notification) {
 
 function markNotified(notification) {
     mixpanel.trackShowNotification(notification);
-    browser.setToStorage({key: NOTIFIED_REVIEW_STORAGE_KEY, value: notification});
+    browser.setToStorage({key: NOTIFIED_REVIEW_STORAGE_KEY, value: true});
 }
