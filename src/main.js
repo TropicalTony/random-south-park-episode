@@ -16,15 +16,27 @@ export default {
      * Tracks extension install-update and icon clicks
      */
     init: () => {
+        let serving = false;
+
         browser.onInstallOrUpdate(mixpanel.trackInstallOrUpdate);
-        browser.onIconClick(handleIconClick);
+        browser.onIconClick(() => {
+            if (!serving) {
+                serving = true;
+
+                handleIconClick(() => {
+                    serving = false;
+                });
+            }
+        });
     }
 };
 
-function handleIconClick() {
+function handleIconClick(finished) {
     try {
-        picker.pick((episode) => presenter.show(episode));
-
+        picker.pick((episode) => {
+            presenter.show(episode);
+            finished();
+        });
         database.reload();
         user.registerUsage();
         mixpanel.trackIconClick();
