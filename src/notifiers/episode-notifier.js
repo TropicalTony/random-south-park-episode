@@ -55,16 +55,16 @@ function showNotification(notification) {
 
 function handleOk(notification) {
     return () => {
+        mixpanel.trackOkNotification(notification);
         presenter.show(getEpisodeObj(notification));
         browser.clearNotification();
-        mixpanel.trackOkNotification(notification);
     };
 }
 
 function handleCancel(notification) {
     return () => {
-        browser.clearNotification();
         mixpanel.trackCancelNotification(notification);
+        browser.clearNotification();
     };
 }
 
