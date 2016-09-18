@@ -2,12 +2,13 @@
   "name": "random-south-park-episode",
   "private": true,
   "scripts": {
+    "clean": "rimraf dist",
     "start": "webpack --watch",
     "start-promo": "http-server -o -p 8060",
     "firefox": "web-ext run",
     "test": "karma start",
     "lint": "eslint .",
-    "build": "webpack && zip -r dist/random-south-park-episode.zip . images dist -i 'images/icon-*.png' 'dist/*.js' 'manifest.json'",
+    "build": "npm run clean && webpack && zip -r dist/random-south-park-episode.zip . images dist -i 'images/icon-*.png' 'dist/*.js' 'manifest.json'",
     "ci": "npm run lint && karma start --single-run"
   },
   "dependencies": {
