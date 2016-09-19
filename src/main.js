@@ -11,7 +11,6 @@ import user from 'user';
  * Extension starting point
  */
 export default {
-
     /**
      * Tracks extension install-update and icon clicks
      */
@@ -35,12 +34,12 @@ function handleIconClick(finished) {
     try {
         picker.pick((episode) => {
             presenter.show(episode);
+            notifier.notify();
             finished();
         });
         database.reload();
         user.registerUsage();
         mixpanel.trackIconClick();
-        notifier.notify();
     } catch (e) {
         bugsnag.notify(e);
         throw e;
