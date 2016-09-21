@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Random South Park Episode",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "short_name":"Random SP Episode",
   "description": "Watch random South Park episode",
   "author": [

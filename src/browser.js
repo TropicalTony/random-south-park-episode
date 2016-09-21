@@ -129,7 +129,7 @@ export default {
      * @callback callback Triggered when we can show notifications
      */
     canShowNotification: (callback) => {
-        if (!chrome.notifications.getPermissionLevel || bowser.name === 'opera')
+        if (!chrome.notifications.getPermissionLevel || bowser.name === 'Opera')
             return;
 
         chrome.notifications.getPermissionLevel((level) => {
