@@ -7,7 +7,7 @@
 
 ![Icon](images/small-tile.png)
 
-> A browser extension for watching an unseen random South Park episodes.
+> A browser extension for watching an unseen random South Park episode.
 
 &rarr; [Start using it!](http://syyfilis.github.io/random-south-park-episode/)
 
