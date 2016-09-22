@@ -1,4 +1,4 @@
-# Contributing to Random South Park Episode browser extension
+# Contributing
 
 ### Install dependencies
 
