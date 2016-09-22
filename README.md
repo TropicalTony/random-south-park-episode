@@ -4,9 +4,10 @@
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/d/gnejpgpadafimefcjbhnglbnfbboakjf.svg?maxAge=2592000)](https://chrome.google.com/webstore/detail/random-south-park-episode/gnejpgpadafimefcjbhnglbnfbboakjf)
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/rating/gnejpgpadafimefcjbhnglbnfbboakjf.svg?maxAge=2592000)](https://chrome.google.com/webstore/detail/random-south-park-episode/gnejpgpadafimefcjbhnglbnfbboakjf)
 
-A browser extension for watching an unseen random [South Park](https://en.wikipedia.org/wiki/South_Park) episode.
 
-![That's pretty cool](http://i.giphy.com/26tP7cDNJUZQy7w3u.gif)
+![Icon](images/small-tile.png)
+
+> A browser extension for watching an unseen random South Park episodes.
 
 &rarr; [Start using it!](http://syyfilis.github.io/random-south-park-episode/)
 
