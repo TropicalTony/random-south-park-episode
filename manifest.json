@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Random South Park Episode",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "short_name":"Random SP Episode",
   "description": "Watch random South Park episode",
   "author": [
@@ -21,8 +21,8 @@
   "permissions": [
     "tabs",
     "history",
-    "notifications"
+    "notifications",
+    "https://raw.githubusercontent.com/"
   ],
-  "content_security_policy": "script-src 'self' https://*.firebaseio.com; object-src 'self'",
   "offline_enabled": false
 }

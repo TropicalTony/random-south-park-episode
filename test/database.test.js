@@ -1,33 +1,21 @@
 import database from 'database';
 
 describe('database', () => {
-    let initializeAppSpy, deleteAppSpy, databaseRef, giveData;
+    let axios, giveData;
 
     beforeEach(() => {
-        initializeAppSpy = jasmine.createSpy('initializeApp');
-        deleteAppSpy = jasmine.createSpy('deleteApp');
-
-        database.__set__({
-            firebase: {
-                initializeApp: initializeAppSpy,
-                app: () => {
-                    return {delete: deleteAppSpy};
-                },
-                database: () => {
-                    return {
-                        ref: (ref) => {
-                            databaseRef = ref;
-                            return {
-                                on: (event, callback) => {
-                                    if (event === 'value')
-                                        giveData = callback;
-                                }
-                            };
-                        }
-                    };
-                }
+        axios = {
+            get: () => {
+                return {
+                    then: (callback) => {
+                        giveData = callback;
+                    }
+                };
             }
-        });
+        };
+        spyOn(axios, 'get').and.callThrough();
+
+        database.__set__({axios});
         database.init();
     });
 
@@ -35,35 +23,18 @@ describe('database', () => {
         expect(database.getEpisodes()).toBeDefined();
     });
 
-    it('initializes firebase', () => {
-        expect(initializeAppSpy).toHaveBeenCalledWith({
-            databaseURL: 'https://random-south-park-episode.firebaseio.com',
-            apiKey: 'AIzaSyBaKw13z1Rp98tbysXMsV8dI68mx38LOcU'
-        });
-    });
-
     it('tries to get data on init', () => {
-        expect(databaseRef).toBe('/');
-        expect(giveData).toBeDefined();
-    });
-
-    it('deletes the connection after data has arrived', () => {
-        giveData({val: () => {
-            return {};
-        }});
-        expect(deleteAppSpy).toHaveBeenCalled();
+        expect(axios.get).toHaveBeenCalledWith('https://raw.githubusercontent.com/syyfilis/random-south-park-episode/master/database.json');
     });
 
     describe('getEpisodes()', () => {
-        it('returns processed episodes object in array', () => {
+        it('returns episode objects in array', () => {
             giveData({
-                val: () => {
-                    return {seasons: [undefined, {
-                        episodes: {12: {}}
-                    }, {
-                        episodes: {3: {}}
-                    }
-                ]};
+                data: {
+                    episodes: [
+                        {season: 1, episode: 12},
+                        {season: 2, episode: 3},
+                    ]
                 }
             });
             expect(database.getEpisodes()).toEqual([
@@ -73,26 +44,13 @@ describe('database', () => {
         });
     });
 
-    describe('getLessFortunateCountries()', () => {
-        it('returns less fortunate countries in array', () => {
-            giveData({
-                val: () => {
-                    return {lessFortunateCountries: ['US']};
-                }
-            });
-            expect(database.getLessFortunateCountries()).toEqual(['US']);
-        });
-    });
-
     describe('getEpisodeNotification()', () => {
-        it('returns notifications list', () => {
+        it('returns notification object', () => {
             giveData({
-                val: () => {
-                    return {
-                        episodeNotification: {
-                            title: 'Check new episode'
-                        }
-                    };
+                data: {
+                    episodeNotification: {
+                        title: 'Check new episode'
+                    }
                 }
             });
             expect(database.getEpisodeNotification()).toEqual({

@@ -1,7 +1,8 @@
-import _ from 'lodash';
-import firebase from 'firebase';
+import axios from 'axios';
 
-// Fallback data when Firebase is too slow or not connecting
+const DATABASE_URL = 'https://raw.githubusercontent.com/syyfilis/random-south-park-episode/master/database.json';
+
+// Fallback data when GET request is too slow or failed
 let data = {episodes: [
     {season: 1, episode: 1},
     {season: 1, episode: 2},
@@ -18,20 +19,15 @@ let data = {episodes: [
  * Service for communicating with Firebase
  */
 export default {
+    /**
+     * Load initial data from database
+     */
+    init: () => loadData(),
 
     /**
-     * Load initial data from Firebase
+     * Reload data from database
      */
-    init: () => {
-        loadData();
-    },
-
-    /**
-     * Reload data from Firebase
-     */
-    reload: () => {
-        loadData();
-    },
+    reload: () => loadData(),
 
     /**
      * Gets all season-epsiodes
@@ -45,15 +41,6 @@ export default {
     },
 
     /**
-     * Get countries that can't watch South Park CC
-     *
-     * @return {String[]} countries
-     */
-    getLessFortunateCountries: () => {
-        return data.lessFortunateCountries;
-    },
-
-    /**
      * Get episode notification that needs to be shown
      *
      * @return {Object} episodeNotification
@@ -64,40 +51,7 @@ export default {
 };
 
 function loadData() {
-    // Wait for previous connection to be removed before connecting again
-    if (!_.isEmpty(firebase.apps))
-        return setTimeout(loadData, 50);
-
-    makeConnection();
-
-    firebase.database().ref('/').on('value', _.flow(setData, deleteConnection));
-}
-
-function makeConnection() {
-    firebase.initializeApp({
-        databaseURL: 'https://random-south-park-episode.firebaseio.com',
-        apiKey: 'AIzaSyBaKw13z1Rp98tbysXMsV8dI68mx38LOcU'
+    axios.get(DATABASE_URL).then((response) => {
+        data = response.data;
     });
-}
-
-function setData(snapshot) {
-    data = snapshot.val();
-    data.episodes = flatten(data.seasons);
-}
-
-function deleteConnection() {
-    firebase.app().delete();
-}
-
-function flatten(seasons) {
-    const result = [];
-
-    _.map(seasons, (season, seasonNr) => {
-        if (season)
-            _.map(season.episodes, (episode, episodeNr) => {
-                if (episode)
-                    result.push({season: parseInt(seasonNr, 10), episode: parseInt(episodeNr, 10)});
-            });
-    });
-    return result;
 }
