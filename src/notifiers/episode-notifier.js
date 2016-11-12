@@ -68,8 +68,8 @@ function handleCancel(notification) {
     };
 }
 
-function getEpisodeObj({season, episode}) {
-    return {season, episode, url: provider.getUrl(season, episode)};
+function getEpisodeObj({season, episode, huluId}) {
+    return {season, episode, huluId, url: provider.getUrl({season, episode, huluId})};
 }
 
 function markNotified(notification) {

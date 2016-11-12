@@ -3,7 +3,7 @@ import mixpanel from 'mixpanel';
 import user from 'user';
 
 const NOTIFIED_REVIEW_STORAGE_KEY = 'notifiedReview';
-const HARD_CORE_USAGE_LEVEL = 50;
+const HARD_CORE_USAGE_LEVEL = 25;
 
 export default {
     /**
