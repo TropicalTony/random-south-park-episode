@@ -2,7 +2,7 @@ import provider from 'provider';
 
 describe('provider', () => {
     it('has rootUrl', () => {
-        expect(provider.rootUrl).toBe('http://southpark.cc.com/full-episodes/');
+        expect(provider.getRootUrl()).toBe('http://southpark.cc.com/full-episodes/');
     });
 
     describe('matchesUrl()', () => {
@@ -17,7 +17,7 @@ describe('provider', () => {
 
     describe('getUrl()', () => {
         it('returns southpark cc url', () => {
-            expect(provider.getUrl(1, 12)).toBe('http://southpark.cc.com/full-episodes/s01e12');
+            expect(provider.getUrl({season: 1, episode: 12})).toBe('http://southpark.cc.com/full-episodes/s01e12');
         });
     });
 

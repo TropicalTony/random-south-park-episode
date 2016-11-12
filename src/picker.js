@@ -27,7 +27,7 @@ export default {
             const chosenOne = pickRandomly(unseenEpisodes);
 
             callback({
-                url: provider.getUrl(chosenOne.season, chosenOne.episode),
+                url: provider.getUrl(chosenOne),
                 season: chosenOne.season,
                 episode: chosenOne.episode
             });
@@ -60,7 +60,7 @@ function filterOutSeenEpisodes(seenEpisodes, allEpisodes) {
 
 function containsEpisode(list, obj) {
     for (let i = 0; i < list.length; i ++)
-        if (list[i].season === obj.season && list[i].episode === obj.episode)
+        if (list[i].season === obj.season && list[i].episode === obj.episode || list[i].huluId === obj.huluId)
             return true;
     return false;
 }

@@ -42,7 +42,7 @@ export default class Historian {
             if (this.searchResults)
                 resolve(this.getSeenEpisodesFromSearchResults(lastVisitTime));
             else
-                browser.searchFromHistory(provider.rootUrl, lastVisitTime.valueOf(), (results) => {
+                browser.searchFromHistory(provider.getRootUrl(), lastVisitTime.valueOf(), (results) => {
                     this.searchResults = results;
                     resolve(this.getSeenEpisodesFromSearchResults(lastVisitTime));
                 });

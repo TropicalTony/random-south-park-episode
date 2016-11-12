@@ -1,5 +1,6 @@
 import bugsnag from 'bugsnag';
 import mixpanel from 'mixpanel';
+import provider from 'provider';
 import database from 'database';
 import main from 'main';
 
@@ -8,5 +9,6 @@ import main from 'main';
  */
 bugsnag.init();
 mixpanel.init();
+provider.init();
 database.init();
 main.init();

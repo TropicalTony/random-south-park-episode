@@ -1,3 +1,8 @@
+import axios from 'axios';
+
+// Fallback code when ipinfo is not responding
+let userCountryCode = 'EE';
+
 /**
  * Episode provider related functions
  *
@@ -5,9 +10,23 @@
  */
 export default {
     /**
-     * South Park CC url without season and episode info
+     * Get user country code by ip address.
      */
-    rootUrl: 'http://southpark.cc.com/full-episodes/',
+    init: () => {
+        axios.get('http://ipinfo.io').then((response) => {
+            userCountryCode = response.data.country;
+        });
+    },
+
+    /**
+     * Given provider root url.
+     */
+    getRootUrl: () => {
+        if (userCountryCode === 'US') {
+            return 'http://hulu.com/watch/';
+        }
+        return 'http://southpark.cc.com/full-episodes/';
+    },
 
     /**
      * Test if given url is related to our provider
@@ -16,7 +35,10 @@ export default {
      * @return {Boolean}
      */
     matchesUrl: (url) => {
-        return (/southpark.cc.com\/full-episodes/).test(url);
+        if (userCountryCode === 'US') {
+            return (/hulu\.com\/watch/).test(url);
+        }
+        return (/southpark\.cc\.com\/full-episodes/).test(url);
     },
 
     /**
@@ -24,10 +46,14 @@ export default {
      *
      * @param {Number} season
      * @param {Number} episode
+     * @param {Number} huluId
      * @return {String} url
      */
-    getUrl: (season, episode) => {
-        return getSouthparkCCUrl(season, episode);
+    getUrl: ({season, episode, huluId}) => {
+        if (userCountryCode === 'US') {
+            return `http://hulu.com/watch/${huluId}`;
+        }
+        return `http://southpark.cc.com/full-episodes/s${pad(season)}e${pad(episode)}`;
     },
 
     /**
@@ -35,24 +61,34 @@ export default {
      *
      * @param {String} url
      * @return {Object} result
-     *  @return {Number} result.season
-     *  @return {Number} result.episode
      */
     parseUrl: (url) => {
-        const found = url.match(/s\d+e\d+/);
-
-        if (!found)
-            return {};
-
-        return {
-            season: parseInt(found[0].match(/\d+/g)[0], 10),
-            episode: parseInt(found[0].match(/\d+/g)[1], 10)
-        };
+        if (userCountryCode === 'US') {
+            return parseHuluUrl(url);
+        }
+        return parseCcUrl(url);
     }
 };
 
-function getSouthparkCCUrl(season, episode) {
-    return `http://southpark.cc.com/full-episodes/s${pad(season)}e${pad(episode)}`;
+function parseHuluUrl(url) {
+    const found = url.match(/watch\/([0-9]+)/);
+
+    if (!found)
+        return {};
+
+    return {huluId: parseInt(found[1], 10)};
+}
+
+function parseCcUrl(url) {
+    const found = url.match(/s\d+e\d+/);
+
+    if (!found)
+        return {};
+
+    return {
+        season: parseInt(found[0].match(/\d+/g)[0], 10),
+        episode: parseInt(found[0].match(/\d+/g)[1], 10)
+    };
 }
 
 function pad(num, size = 2) {

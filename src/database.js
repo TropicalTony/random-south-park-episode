@@ -4,15 +4,15 @@ const DATABASE_URL = 'https://raw.githubusercontent.com/syyfilis/random-south-pa
 
 // Fallback data when GET request is too slow or failed
 let data = {episodes: [
-    {season: 1, episode: 1},
-    {season: 1, episode: 2},
-    {season: 1, episode: 3},
-    {season: 5, episode: 4},
-    {season: 5, episode: 5},
-    {season: 5, episode: 6},
-    {season: 10, episode: 7},
-    {season: 10, episode: 8},
-    {season: 10, episode: 9}
+    {season: 1, episode: 1, huluId: 249837},
+    {season: 1, episode: 2, huluId: 249835},
+    {season: 1, episode: 3, huluId: 249836},
+    {season: 5, episode: 4, huluId: 250059},
+    {season: 5, episode: 5, huluId: 250061},
+    {season: 5, episode: 6, huluId: 249800},
+    {season: 10, episode: 7, huluId: 250024},
+    {season: 10, episode: 8, huluId: 250026},
+    {season: 10, episode: 9, huluId: 250028}
 ]};
 
 /**

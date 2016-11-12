@@ -34,9 +34,9 @@ function hasEpisodeBeenNotified(notification) {
     });
 }
 
-function hasSeenEpisode({season, episode}, seenEpisodes) {
+function hasSeenEpisode({season, episode, huluId}, seenEpisodes) {
     for (let i = 0; i < seenEpisodes.length; i ++)
-        if (seenEpisodes[i].season === season && seenEpisodes[i].episode === episode)
+        if (seenEpisodes[i].season === season && seenEpisodes[i].episode === episode || seenEpisodes[i].huluId === huluId)
             return true;
 
     return false;
