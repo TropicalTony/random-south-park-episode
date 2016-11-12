@@ -1,4 +1,3 @@
-import Promise from 'bluebird';
 import moment from 'moment';
 import browser from 'browser';
 import provider from 'provider';

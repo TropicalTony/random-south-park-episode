@@ -15,7 +15,7 @@ module.exports = function(config) {
         frameworks: ['jasmine'],
         browsers: ['PhantomJS'],
         webpack: webpackConfig,
-        files: ['test/bundle.js'],
+        files: ['./node_modules/promise-polyfill/promise.js', 'test/bundle.js'],
         preprocessors: {
             'test/bundle.js': ['webpack', 'sourcemap']
         },
