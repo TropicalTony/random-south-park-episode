@@ -1,9 +1,9 @@
 {
     "episodeNotification": {
         "season" : 20,
-        "episode" : 2,
+        "episode" : 7,
         "title" : "Check out a new episode",
-        "message" : "Do you want to watch the 2nd episode \"Skank Hunt\" from season 20?",
+        "message" : "Do you want to watch the 7th episode \"Oh, Jeez\" from season 20?",
         "ok" : "Yes",
         "cancel" : "Shut up, mimsy!"
     },
@@ -275,6 +275,12 @@
         {"season": 19, "episode": 8},
         {"season": 19, "episode": 9},
         {"season": 19, "episode": 10},
-        {"season": 20, "episode": 1}
+        {"season": 20, "episode": 1},
+        {"season": 20, "episode": 2},
+        {"season": 20, "episode": 3},
+        {"season": 20, "episode": 4},
+        {"season": 20, "episode": 5},
+        {"season": 20, "episode": 6},
+        {"season": 20, "episode": 7}
     ]
 }
