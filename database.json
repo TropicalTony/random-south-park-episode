@@ -1,10 +1,10 @@
 {
     "episodeNotification": {
         "season" : 20,
-        "episode" : 7,
-        "huluId": 1003502,
+        "episode" : 8,
+        "huluId": 1006082,
         "title" : "Check out a new episode",
-        "message" : "Do you want to watch the 7th episode \"Oh, Jeez\" from season 20?",
+        "message" : "Do you want to watch the 8th episode \"Members Only\" from season 20?",
         "ok" : "Yes",
         "cancel" : "Shut up, mimsy!"
     },
@@ -278,6 +278,7 @@
         {"season": 20, "episode": 3, "huluId": 987791},
         {"season": 20, "episode": 4, "huluId": 993260},
         {"season": 20, "episode": 5, "huluId": 995943},
-        {"season": 20, "episode": 6, "huluId": 998497}
+        {"season": 20, "episode": 6, "huluId": 998497},
+        {"season": 20, "episode": 7, "huluId": 1003502}
     ]
 }
