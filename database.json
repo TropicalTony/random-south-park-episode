@@ -1,10 +1,10 @@
 {
     "episodeNotification": {
         "season" : 20,
-        "episode" : 9,
-        "huluId": 1010515,
+        "episode" : 10,
+        "huluId": 1013011,
         "title" : "Check out a new episode",
-        "message" : "Do you want to watch the 9th episode \"Not Funny\" from season 20?",
+        "message" : "Do you want to watch the LAST episode \"The End of Serialization As We Know It\" from season 20?",
         "ok" : "Yes",
         "cancel" : "Shut up, mimsy!"
     },
@@ -280,6 +280,7 @@
         {"season": 20, "episode": 5, "huluId": 995943},
         {"season": 20, "episode": 6, "huluId": 998497},
         {"season": 20, "episode": 7, "huluId": 1003502},
-        {"season": 20, "episode": 8, "huluId": 1006082}
+        {"season": 20, "episode": 8, "huluId": 1006082},
+        {"season": 20, "episode": 9, "huluId": 1010515}
     ]
 }
