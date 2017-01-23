@@ -3,6 +3,7 @@
 [![Code Climate](https://codeclimate.com/github/syyfilis/random-south-park-episode/badges/gpa.svg)](https://codeclimate.com/github/syyfilis/random-south-park-episode)
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/d/gnejpgpadafimefcjbhnglbnfbboakjf.svg?maxAge=2592000)](https://chrome.google.com/webstore/detail/random-south-park-episode/gnejpgpadafimefcjbhnglbnfbboakjf)
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/rating/gnejpgpadafimefcjbhnglbnfbboakjf.svg?maxAge=2592000)](https://chrome.google.com/webstore/detail/random-south-park-episode/gnejpgpadafimefcjbhnglbnfbboakjf)
+[![StackShare](https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/ukupat/random-south-park-episode)
 
 
 ![Icon](images/small-tile.png)
